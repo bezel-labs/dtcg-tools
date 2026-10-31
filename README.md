@@ -1,8 +1,8 @@
-# DTCG Validator
+# DTCG Tools
 
-Composable, functional TypeScript validation for DTCG design token documents.
+A design token validator and TypeScript toolkit for the DTCG specification, with composable validators, exported types, alias resolution, and helpful utilities planned.
 
-Planned npm package: `@bezel-labs/dtcg-validator`.
+Planned npm package: `@bezel-labs/dtcg-tools`.
 
 **Status: initial scaffold.** The validator, exported types, tests, and React demo are not implemented yet. This package is not published to npm, and the package name has not been reserved. `private: true` prevents accidental publication until the package is ready.
 
