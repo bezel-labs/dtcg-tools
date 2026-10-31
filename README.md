@@ -1,4 +1,4 @@
-# DTCG Validator
+# W3C DTCG Validator
 
 Composable, functional TypeScript validation for DTCG design token documents.
 
