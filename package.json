@@ -1,23 +1,26 @@
 {
-  "name": "@bezel-labs/dtcg-validator",
+  "name": "@bezel-labs/dtcg-tools",
   "version": "0.0.0",
   "private": true,
-  "description": "Composable TypeScript validation for DTCG design token documents.",
+  "description": "TypeScript toolkit for DTCG design tokens: validator, types, alias resolution, and utilities (in development).",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bezel-labs/dtcg-validator.git"
+    "url": "git+https://github.com/bezel-labs/dtcg-tools.git"
   },
   "bugs": {
-    "url": "https://github.com/bezel-labs/dtcg-validator/issues"
+    "url": "https://github.com/bezel-labs/dtcg-tools/issues"
   },
-  "homepage": "https://github.com/bezel-labs/dtcg-validator#readme",
+  "homepage": "https://github.com/bezel-labs/dtcg-tools#readme",
   "keywords": [
     "dtcg",
     "design-tokens",
     "validator",
-    "typescript"
+    "validation",
+    "typescript",
+    "w3c",
+    "design-system"
   ],
   "scripts": {},
   "dependencies": {},
