@@ -1,0 +1,15 @@
+{
+  "base": {
+    "$type": "color",
+    "c": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0, 0, 0]
+      }
+    }
+  },
+  "ext": {
+    "$extends": "{base}",
+    "$type": "dimension"
+  }
+}

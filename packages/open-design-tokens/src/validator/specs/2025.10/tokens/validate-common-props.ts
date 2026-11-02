@@ -5,6 +5,7 @@ import { child, createIssue } from '../../../context.js';
 import { expectEnum, typeName } from '../../../primitives.js';
 import { TOKEN_TYPES } from '../constants.js';
 import type { IssueCode } from '../messages.js';
+import type { TokenType } from '../types/token.js';
 
 type Owner = 'token' | 'group';
 
@@ -31,7 +32,7 @@ export function validateType(
   owner: Owner,
   ctx: ValidationContext,
   issues: ValidationIssue[],
-): string | undefined {
+): TokenType | undefined {
   if (!hasOwn(node, '$type')) return undefined;
   const tctx = child(ctx, '$type');
   if (typeof node.$type !== 'string') {
@@ -43,7 +44,7 @@ export function validateType(
     return undefined;
   }
   return expectEnum(node.$type, TOKEN_TYPES, tctx, `${owner}.type.invalid` as IssueCode, issues)
-    ? node.$type
+    ? (node.$type as TokenType)
     : undefined;
 }
 

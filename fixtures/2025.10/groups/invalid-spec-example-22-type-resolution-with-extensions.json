@@ -1,0 +1,22 @@
+{
+  "base": {
+    "$type": "color",
+    "primary": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0, 0.4, 0.8],
+        "hex": "#0066cc"
+      }
+    }
+  },
+  "extended": {
+    "$extends": "{base}",
+    "$type": "dimension",
+    "spacing": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    }
+  }
+}

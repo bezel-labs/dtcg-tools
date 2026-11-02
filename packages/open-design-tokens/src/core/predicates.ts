@@ -8,7 +8,7 @@ export function isFiniteNumber(value: unknown): value is number {
 }
 
 /** Own-property check that never consults the prototype chain. */
-export function hasOwn<K extends string>(obj: object, key: K): obj is Record<K, unknown> {
+export function hasOwn(obj: object, key: string): boolean {
   return Object.hasOwn(obj, key);
 }
 
@@ -22,8 +22,12 @@ export function isGroup(value: unknown): value is Record<string, unknown> {
   return isPlainObject(value) && !hasOwn(value, '$value');
 }
 
-/** Alias syntax: `{group.token}`. Anchored and non-backtracking. */
-const ALIAS_RE = /^\{[^{}]+\}$/;
+/**
+ * Alias-shaped string: starts with `{` and ends with `}`. Anything of this shape
+ * is treated as an alias attempt and its grammar is checked separately, so a
+ * malformed alias is reported as such rather than as a plain string value.
+ */
+const ALIAS_RE = /^\{[\s\S]*\}$/;
 
 export function isAlias(value: unknown): value is `{${string}}` {
   return typeof value === 'string' && ALIAS_RE.test(value);

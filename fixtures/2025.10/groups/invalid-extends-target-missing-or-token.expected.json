@@ -1,0 +1,20 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "extends.target.missing",
+      "pointer": "/a/$extends",
+      "severity": "error"
+    },
+    {
+      "code": "extends.target.not-group",
+      "pointer": "/b/$extends",
+      "severity": "error"
+    },
+    {
+      "code": "extends.target.not-group",
+      "pointer": "/c/$ref",
+      "severity": "error"
+    }
+  ]
+}

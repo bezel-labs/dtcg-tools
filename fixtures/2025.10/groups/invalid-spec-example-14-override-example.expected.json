@@ -5,6 +5,11 @@
       "code": "token.type.missing",
       "pointer": "/input/field/background",
       "severity": "error"
+    },
+    {
+      "code": "token.type.missing",
+      "pointer": "/input-amount/field/width",
+      "severity": "error"
     }
   ]
 }

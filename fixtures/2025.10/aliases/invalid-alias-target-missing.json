@@ -1,0 +1,12 @@
+{
+  "a": {
+    "$type": "number",
+    "$value": "{nope}"
+  },
+  "g": {
+    "b": {
+      "$type": "number",
+      "$value": "{g.c}"
+    }
+  }
+}

@@ -41,6 +41,23 @@ export type IssueCode =
   | 'group.member.invalid'
   | 'group.root.not-token'
   | 'group.name.case-collision'
+  // §7 aliases (curly braces)
+  | 'alias.syntax.invalid'
+  | 'alias.target.missing'
+  | 'alias.target.not-token'
+  | 'alias.cycle'
+  | 'alias.type.mismatch'
+  // §7 references ($ref JSON pointers)
+  | 'ref.not-local'
+  | 'ref.syntax.invalid'
+  | 'ref.target.missing'
+  | 'ref.cycle'
+  | 'ref.type.mismatch'
+  // §6.4 group extension
+  | 'extends.target.missing'
+  | 'extends.target.not-group'
+  | 'extends.cycle'
+  | 'extends.inherited-token.invalid'
   // §8.1 color (Color Module 2025.10)
   | 'color.value.not-object'
   | 'color.color-space.missing'
@@ -160,6 +177,35 @@ export const MESSAGES: Record<IssueCode, (meta: Meta) => string> = {
   'group.name.case-collision': (m) =>
     `Names ${list(m.names)} differ only by case; tools that transform names may produce duplicates.`,
 
+  'alias.syntax.invalid': (m) =>
+    `Alias ${fmt(m.actual)} is malformed. Use "{group.token}" with non-empty, dot-separated names.`,
+  'alias.target.missing': (m) =>
+    `Alias ${fmt(m.alias)} does not resolve: no token at ${fmt(m.path)}.`,
+  'alias.target.not-token': (m) =>
+    `Alias ${fmt(m.alias)} points at a group, not a token. Curly-brace aliases can only target tokens (use "{${String(m.path ?? '')}.$root}" for a group's root token).`,
+  'alias.cycle': (m) =>
+    `Circular alias chain: ${list(m.chain)}. The value of every token in the chain is unknown.`,
+  'alias.type.mismatch': (m) =>
+    `Alias ${fmt(m.alias)} resolves to a ${fmt(m.actual)} token but this token is declared as ${fmt(m.expected)}.`,
+
+  'ref.not-local': (m) =>
+    `$ref ${fmt(m.actual)} must point inside this document and start with "#/". External and remote references are not supported.`,
+  'ref.syntax.invalid': (m) => `$ref ${fmt(m.actual)} is not a valid JSON pointer (RFC 6901).`,
+  'ref.target.missing': (m) =>
+    `$ref ${fmt(m.actual)} does not resolve: nothing exists at that location.`,
+  'ref.cycle': (m) => `Circular reference chain: ${list(m.chain)}.`,
+  'ref.type.mismatch': (m) =>
+    `$ref ${fmt(m.actual)} resolves to a ${fmt(m.actualType)} token but this token is declared as ${fmt(m.expected)}.`,
+
+  'extends.target.missing': (m) =>
+    `$extends ${fmt(m.actual)} does not resolve: no group at ${fmt(m.path)}.`,
+  'extends.target.not-group': (m) =>
+    `$extends ${fmt(m.actual)} must reference a group, but ${fmt(m.path)} is a token.`,
+  'extends.cycle': (m) =>
+    `Circular group extension: ${list(m.chain)}. A group cannot extend itself, an ancestor, or a group that extends it.`,
+  'extends.inherited-token.invalid': (m) =>
+    `Token ${fmt(m.token)} inherited from ${fmt(m.inheritedFrom)} is invalid in this group: ${fmt(m.reason)}.`,
+
   'color.value.not-object': (m) =>
     `A color value must be an object with "colorSpace" and "components", received ${fmt(m.actualType)}.`,
   'color.color-space.missing': () => 'A color value must have a "colorSpace" property.',
@@ -255,6 +301,20 @@ export const DEFAULT_SEVERITY: Record<IssueCode, Severity> = {
   'group.member.invalid': 'error',
   'group.root.not-token': 'error',
   'group.name.case-collision': 'warning',
+  'alias.syntax.invalid': 'error',
+  'alias.target.missing': 'error',
+  'alias.target.not-token': 'error',
+  'alias.cycle': 'error',
+  'alias.type.mismatch': 'error',
+  'ref.not-local': 'error',
+  'ref.syntax.invalid': 'error',
+  'ref.target.missing': 'error',
+  'ref.cycle': 'error',
+  'ref.type.mismatch': 'error',
+  'extends.target.missing': 'error',
+  'extends.target.not-group': 'error',
+  'extends.cycle': 'error',
+  'extends.inherited-token.invalid': 'error',
   'color.value.not-object': 'error',
   'color.color-space.missing': 'error',
   'color.color-space.invalid': 'error',

@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "ref.cycle",
+      "pointer": "/a/$value",
+      "severity": "error"
+    },
+    {
+      "code": "ref.cycle",
+      "pointer": "/b/$ref",
+      "severity": "error"
+    }
+  ]
+}

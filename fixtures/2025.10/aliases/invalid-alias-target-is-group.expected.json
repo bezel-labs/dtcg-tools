@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "alias.target.not-token",
+      "pointer": "/a/$value",
+      "severity": "error"
+    }
+  ]
+}

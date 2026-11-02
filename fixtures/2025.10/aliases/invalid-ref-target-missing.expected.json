@@ -1,0 +1,25 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "ref.target.missing",
+      "pointer": "/a/$value",
+      "severity": "error"
+    },
+    {
+      "code": "ref.target.missing",
+      "pointer": "/b/$value",
+      "severity": "error"
+    },
+    {
+      "code": "ref.target.missing",
+      "pointer": "/c/$value",
+      "severity": "error"
+    },
+    {
+      "code": "ref.target.missing",
+      "pointer": "/d/$value",
+      "severity": "error"
+    }
+  ]
+}

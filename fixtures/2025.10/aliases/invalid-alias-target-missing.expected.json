@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "alias.target.missing",
+      "pointer": "/a/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.target.missing",
+      "pointer": "/g/b/$value",
+      "severity": "error"
+    }
+  ]
+}

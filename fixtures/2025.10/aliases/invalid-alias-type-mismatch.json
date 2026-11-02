@@ -1,0 +1,22 @@
+{
+  "n": {
+    "$type": "number",
+    "$value": 1
+  },
+  "c": {
+    "$type": "color",
+    "$value": "{n}"
+  },
+  "g": {
+    "$type": "dimension",
+    "d": {
+      "$value": "{n}"
+    }
+  },
+  "r": {
+    "$type": "color",
+    "$value": {
+      "$ref": "#/n/$value"
+    }
+  }
+}

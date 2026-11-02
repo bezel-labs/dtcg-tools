@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "alias.target.missing",
+      "pointer": "/color/button/primary/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.target.missing",
+      "pointer": "/color/banner/background/$value",
+      "severity": "error"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "base": {
+    "$type": "number",
+    "x": {
+      "$value": 1
+    }
+  },
+  "ext": {
+    "$extends": "{base}"
+  },
+  "a": {
+    "$value": "{ext.x}"
+  }
+}

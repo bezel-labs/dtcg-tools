@@ -225,15 +225,16 @@
     "verbatim": true
   },
   {
-    "file": "color-module/naming/basic-example-20-naming-component.json",
+    "file": "color-module/naming/invalid-spec-example-20-naming-component.json",
     "spec": "color",
     "section": "7.1.3 Component",
     "anchor": "x7-1-3-component",
     "example": 20,
-    "kind": "basic",
+    "kind": "invalid",
     "verbatim": true,
-    "notes": "Aliases {color.brand.primary}, {color.palette.black} have no target inside this snippet.",
-    "incomplete": true
+    "notes": "Aliases {color.brand.primary}, {color.palette.black} have no target inside this snippet. As a standalone document those aliases are unresolvable.",
+    "source": "spec-example",
+    "expected": "color-module/naming/invalid-spec-example-20-naming-component.expected.json"
   },
   {
     "file": "color-module/naming/basic-example-21-naming-descriptive.json",
@@ -283,38 +284,41 @@
     "cleaned": ["removed // comments", "removed trailing commas"]
   },
   {
-    "file": "color-module/naming/basic-example-26-naming-alias-tokens.json",
+    "file": "color-module/naming/invalid-spec-example-26-naming-alias-tokens.json",
     "spec": "color",
     "section": "7.2.2 Alias Tokens",
     "anchor": "x7-2-2-alias-tokens",
     "example": 26,
-    "kind": "basic",
+    "kind": "invalid",
     "verbatim": true,
-    "notes": "Aliases {color.red.600}, {color.green.400}, {color.palette.black}, {color.red.700} have no target inside this snippet.",
-    "incomplete": true
+    "notes": "Aliases {color.red.600}, {color.green.400}, {color.palette.black}, {color.red.700} have no target inside this snippet. As a standalone document those aliases are unresolvable.",
+    "source": "spec-example",
+    "expected": "color-module/naming/invalid-spec-example-26-naming-alias-tokens.expected.json"
   },
   {
-    "file": "color-module/naming/basic-example-27-naming-alias-semantic.json",
+    "file": "color-module/naming/invalid-spec-example-27-naming-alias-semantic.json",
     "spec": "color",
     "section": "7.2.2 Alias Tokens",
     "anchor": "x7-2-2-alias-tokens",
     "example": 27,
-    "kind": "basic",
+    "kind": "invalid",
     "verbatim": false,
     "cleaned": ["removed // comments", "removed trailing commas"],
-    "notes": "Aliases {color.red.600}, {color.green.400} have no target inside this snippet.",
-    "incomplete": true
+    "notes": "Aliases {color.red.600}, {color.green.400} have no target inside this snippet. As a standalone document those aliases are unresolvable.",
+    "source": "spec-example",
+    "expected": "color-module/naming/invalid-spec-example-27-naming-alias-semantic.expected.json"
   },
   {
-    "file": "color-module/naming/basic-example-28-naming-component-tokens.json",
+    "file": "color-module/naming/invalid-spec-example-28-naming-component-tokens.json",
     "spec": "color",
     "section": "7.2.3 Component Tokens",
     "anchor": "x7-2-3-component-tokens",
     "example": 28,
-    "kind": "basic",
+    "kind": "invalid",
     "verbatim": true,
-    "notes": "Aliases {color.background.error}, {color.background.success}, {color.text.error}, {color.text.success} have no target inside this snippet.",
-    "incomplete": true
+    "notes": "Aliases {color.background.error}, {color.background.success}, {color.text.error}, {color.text.success} have no target inside this snippet. As a standalone document those aliases are unresolvable.",
+    "source": "spec-example",
+    "expected": "color-module/naming/invalid-spec-example-28-naming-component-tokens.expected.json"
   },
   {
     "file": "types/color/advanced-none-components.json",
@@ -1124,5 +1128,308 @@
     "kind": "invalid",
     "verbatim": false,
     "expected": "security/invalid-proto-as-value.expected.json"
+  },
+  {
+    "file": "groups/invalid-spec-example-16-invalid-circular-reference.json",
+    "spec": "format",
+    "section": "6.4.4 Circular Reference Prevention",
+    "anchor": "x6-4-4-circular-reference-prevention",
+    "example": 16,
+    "kind": "invalid",
+    "verbatim": false,
+    "cleaned": ["removed // comments", "removed trailing commas"],
+    "source": "spec-example",
+    "notes": "Deliberately invalid in the spec: a group extends its own ancestor.",
+    "expected": "groups/invalid-spec-example-16-invalid-circular-reference.expected.json"
+  },
+  {
+    "file": "groups/invalid-spec-example-17-another-circular-reference.json",
+    "spec": "format",
+    "section": "6.4.4 Circular Reference Prevention",
+    "anchor": "x6-4-4-circular-reference-prevention",
+    "example": 17,
+    "kind": "invalid",
+    "verbatim": false,
+    "cleaned": ["removed // comments", "removed trailing commas"],
+    "source": "spec-example",
+    "notes": "Deliberately invalid in the spec: two groups extend each other. The placeholder \"token\" members are empty groups.",
+    "expected": "groups/invalid-spec-example-17-another-circular-reference.expected.json"
+  },
+  {
+    "file": "groups/invalid-spec-example-18-valid-inheritance-patterns.json",
+    "spec": "format",
+    "section": "6.4.4 Circular Reference Prevention",
+    "anchor": "x6-4-4-circular-reference-prevention",
+    "example": 18,
+    "kind": "invalid",
+    "verbatim": false,
+    "cleaned": ["removed // comments", "removed trailing commas"],
+    "source": "spec-example",
+    "notes": "button-large.padding has no determinable $type: neither the token, its group, the extended group, nor any ancestor declares one (§5.2.2, §6.7.3).",
+    "expected": "groups/invalid-spec-example-18-valid-inheritance-patterns.expected.json"
+  },
+  {
+    "file": "groups/invalid-spec-example-22-type-resolution-with-extensions.json",
+    "spec": "format",
+    "section": "6.7.3 Type Inheritance",
+    "anchor": "x6-7-3-type-inheritance",
+    "example": 22,
+    "kind": "invalid",
+    "verbatim": false,
+    "cleaned": ["removed // comments", "removed trailing commas"],
+    "source": "spec-example",
+    "notes": "extended declares $type dimension and inherits a color-valued token with no own $type; the spec says both constraints must hold, so the inherited token is invalid in the extending group.",
+    "expected": "groups/invalid-spec-example-22-type-resolution-with-extensions.expected.json"
+  },
+  {
+    "file": "groups/invalid-spec-example-23-circular-reference-detection.json",
+    "spec": "format",
+    "section": "6.7.4 Circular Reference Detection",
+    "anchor": "x6-7-4-circular-reference-detection",
+    "example": 23,
+    "kind": "invalid",
+    "verbatim": false,
+    "cleaned": ["removed // comments", "removed trailing commas"],
+    "source": "spec-example",
+    "notes": "Deliberately invalid in the spec: a → b → c → a. The spec requires an error on all three groups.",
+    "expected": "groups/invalid-spec-example-23-circular-reference-detection.expected.json"
+  },
+  {
+    "file": "aliases/basic-example-31-alias-syntax.json",
+    "spec": "format",
+    "section": "7.1.1 Curly Brace Syntax (Token References)",
+    "anchor": "x7-1-1-curly-brace-syntax-token-references",
+    "example": 31,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "aliases/basic-example-32-json-pointer-syntax.json",
+    "spec": "format",
+    "section": "7.1.2 JSON Pointer Syntax (Required Support)",
+    "anchor": "x7-1-2-json-pointer-syntax-required-support",
+    "example": 32,
+    "kind": "basic",
+    "verbatim": true,
+    "notes": "Reference nodes: $ref in place of $value, one to a whole value and one to a sub-value fragment typed as number."
+  },
+  {
+    "file": "aliases/basic-example-33-chained-references.json",
+    "spec": "format",
+    "section": "7.2.2 Chained References",
+    "anchor": "x7-2-2-chained-references",
+    "example": 33,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "aliases/invalid-spec-example-34-circular-references.json",
+    "spec": "format",
+    "section": "7.2.3 Circular References",
+    "anchor": "x7-2-3-circular-references",
+    "example": 34,
+    "kind": "invalid",
+    "verbatim": false,
+    "cleaned": ["removed // comments"],
+    "source": "spec-example",
+    "notes": "Deliberately invalid in the spec: a → b → c → a. The spec requires an error on all tokens in the chain.",
+    "expected": "aliases/invalid-spec-example-34-circular-references.expected.json"
+  },
+  {
+    "file": "aliases/advanced-untyped-alias-takes-target-type.json",
+    "spec": "format",
+    "section": "7.2 Reference Resolution",
+    "anchor": "x7-2-reference-resolution",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Alias tokens with no $type take the resolved type of the chain end."
+  },
+  {
+    "file": "aliases/advanced-alias-to-root-token-and-special-names.json",
+    "spec": "format",
+    "section": "7.1.1 Curly Brace Syntax (Token References)",
+    "anchor": "x7-1-1-curly-brace-syntax-token-references",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "$root is addressable as a token name; ~1 escapes a slash in a $ref."
+  },
+  {
+    "file": "aliases/advanced-ref-fragments.json",
+    "spec": "format",
+    "section": "7.1.2 JSON Pointer Syntax (Required Support)",
+    "anchor": "x7-1-2-json-pointer-syntax-required-support",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Sub-value fragments are checked against the referencing token's type (0 is a number; \"srgb\" and \"color\" are strings, which are valid fontFamily values)."
+  },
+  {
+    "file": "aliases/advanced-alias-through-extended-group.json",
+    "spec": "format",
+    "section": "6.4 Extending Groups",
+    "anchor": "x6-4-extending-groups",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Curly aliases resolve through the merged $extends view, so inherited tokens are reachable."
+  },
+  {
+    "file": "aliases/invalid-alias-syntax.json",
+    "spec": "format",
+    "section": "7.4.5 Error Conditions",
+    "anchor": "x7-4-5-error-conditions",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "aliases/invalid-alias-syntax.expected.json"
+  },
+  {
+    "file": "aliases/invalid-alias-target-missing.json",
+    "spec": "format",
+    "section": "7.4.5 Error Conditions",
+    "anchor": "x7-4-5-error-conditions",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "aliases/invalid-alias-target-missing.expected.json"
+  },
+  {
+    "file": "aliases/invalid-alias-target-is-group.json",
+    "spec": "format",
+    "section": "7.1.1 Curly Brace Syntax (Token References)",
+    "anchor": "x7-1-1-curly-brace-syntax-token-references",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Curly aliases can only target tokens.",
+    "expected": "aliases/invalid-alias-target-is-group.expected.json"
+  },
+  {
+    "file": "aliases/invalid-alias-self-and-cycles.json",
+    "spec": "format",
+    "section": "7.2 Reference Resolution",
+    "anchor": "x7-2-reference-resolution",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Every token in a cycle is reported; a token aliasing into a cycle is reported too.",
+    "expected": "aliases/invalid-alias-self-and-cycles.expected.json"
+  },
+  {
+    "file": "aliases/invalid-alias-type-mismatch.json",
+    "spec": "format",
+    "section": "7.4.5 Error Conditions",
+    "anchor": "x7-4-5-error-conditions",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Declared or inherited type must match the resolved target type.",
+    "expected": "aliases/invalid-alias-type-mismatch.expected.json"
+  },
+  {
+    "file": "aliases/invalid-alias-to-untyped-token.json",
+    "spec": "format",
+    "section": "5.2.2 Type",
+    "anchor": "x5-2-2-type",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "An alias of a typeless token has no type either.",
+    "expected": "aliases/invalid-alias-to-untyped-token.expected.json"
+  },
+  {
+    "file": "aliases/invalid-ref-not-local-or-malformed.json",
+    "spec": "format",
+    "section": "7.1.2 JSON Pointer Syntax (Required Support)",
+    "anchor": "x7-1-2-json-pointer-syntax-required-support",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Only \"#/...\" pointers inside the document are followed; nothing is ever fetched.",
+    "expected": "aliases/invalid-ref-not-local-or-malformed.expected.json"
+  },
+  {
+    "file": "aliases/invalid-ref-target-missing.json",
+    "spec": "format",
+    "section": "7.4.5 Error Conditions",
+    "anchor": "x7-4-5-error-conditions",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Array indices must be in range and numeric; \"-\" is not accepted.",
+    "expected": "aliases/invalid-ref-target-missing.expected.json"
+  },
+  {
+    "file": "aliases/invalid-ref-fragment-wrong-type.json",
+    "spec": "format",
+    "section": "7.1.2 JSON Pointer Syntax (Required Support)",
+    "anchor": "x7-1-2-json-pointer-syntax-required-support",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "The fragment \"srgb\" is validated as a number and fails.",
+    "expected": "aliases/invalid-ref-fragment-wrong-type.expected.json"
+  },
+  {
+    "file": "aliases/invalid-ref-cycle.json",
+    "spec": "format",
+    "section": "7.2 Reference Resolution",
+    "anchor": "x7-2-reference-resolution",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "aliases/invalid-ref-cycle.expected.json"
+  },
+  {
+    "file": "groups/advanced-extends-nested-merge-and-override.json",
+    "spec": "format",
+    "section": "6.4.3 Inheritance Semantics",
+    "anchor": "x6-4-3-inheritance-semantics",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Nested groups merge; tokens at the same path are replaced wholesale; chains of extension are followed."
+  },
+  {
+    "file": "groups/advanced-extends-via-ref.json",
+    "spec": "format",
+    "section": "6.4.1 Equivalence to JSON Schema $ref",
+    "anchor": "x6-4-1-equivalence-to-json-schema-ref",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "$ref on a group is the JSON Schema spelling of $extends."
+  },
+  {
+    "file": "groups/advanced-extends-inherited-type-still-valid.json",
+    "spec": "format",
+    "section": "6.7.3 Type Inheritance",
+    "anchor": "x6-7-3-type-inheritance",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Inherited token keeps a compatible type in the extending group."
+  },
+  {
+    "file": "groups/invalid-extends-target-missing-or-token.json",
+    "spec": "format",
+    "section": "6.4 Extending Groups",
+    "anchor": "x6-4-extending-groups",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "groups/invalid-extends-target-missing-or-token.expected.json"
+  },
+  {
+    "file": "groups/invalid-extends-self-and-ancestor.json",
+    "spec": "format",
+    "section": "6.4.4 Circular Reference Prevention",
+    "anchor": "x6-4-4-circular-reference-prevention",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "groups/invalid-extends-self-and-ancestor.expected.json"
+  },
+  {
+    "file": "groups/invalid-extends-inherited-token-invalid-here.json",
+    "spec": "format",
+    "section": "6.7.3 Type Inheritance",
+    "anchor": "x6-7-3-type-inheritance",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "groups/invalid-extends-inherited-token-invalid-here.expected.json"
+  },
+  {
+    "file": "security/invalid-proto-aliases.json",
+    "spec": "format",
+    "section": "7.2 Reference Resolution",
+    "anchor": "x7-2-reference-resolution",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Aliases into prototype-ish names resolve as plain data; \"#/constructor\" is not an own property and does not resolve.",
+    "expected": "security/invalid-proto-aliases.expected.json"
   }
 ]

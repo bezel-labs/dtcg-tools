@@ -1,0 +1,42 @@
+{
+  "button": {
+    "color": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0, 1, 1],
+        "hex": "#00ffff"
+      }
+    },
+    "border": {
+      "$type": "border",
+      "$value": {
+        "width": {
+          "value": 1,
+          "unit": "px"
+        },
+        "style": "solid",
+        "color": "{button.color}"
+      }
+    }
+  },
+  "button-secondary": {
+    "$extends": "{button}",
+    "color": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.4, 0.4, 0.4]
+      }
+    }
+  },
+  "button-large": {
+    "$extends": "{button}",
+    "padding": {
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    }
+  }
+}

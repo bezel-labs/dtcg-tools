@@ -5,7 +5,11 @@ import { hasOwn, isPlainObject, isToken } from './predicates.js';
 export type SpecId = '2025.10';
 
 export interface NodeInfo {
-  kind: 'token' | 'group';
+  /**
+   * `token`: has `$value`. `reference`: has `$ref` but no `$value` and no
+   * child members (a JSON-pointer alias, §7.1.2). `group`: everything else.
+   */
+  kind: 'token' | 'group' | 'reference';
   /** Path segments from the root; the root group has `[]`. */
   path: readonly string[];
   pointer: string;
@@ -115,6 +119,11 @@ export function prepareDocument(input: unknown, options: PrepareOptions = {}): P
 
     const pointer = toJsonPointer(path);
     const isTok = isToken(obj);
+    const isRef =
+      !isTok &&
+      hasOwn(obj, '$ref') &&
+      typeof obj.$ref === 'string' &&
+      !Object.keys(obj).some((k) => !k.startsWith('$'));
 
     if (depth > MAX_DEPTH) {
       doc.structuralIssues.push({ code: 'document.too-deep', path, meta: { depth } });
@@ -128,7 +137,7 @@ export function prepareDocument(input: unknown, options: PrepareOptions = {}): P
     const ownType = hasOwn(obj, '$type') && typeof obj.$type === 'string' ? obj.$type : undefined;
     const underExtends = frame.underExtends || hasOwn(obj, '$extends') || hasOwn(obj, '$ref');
     doc.index.set(pointer, {
-      kind: isTok ? 'token' : 'group',
+      kind: isTok ? 'token' : isRef ? 'reference' : 'group',
       path,
       pointer,
       parentPointer: frame.parentPointer,
@@ -139,7 +148,7 @@ export function prepareDocument(input: unknown, options: PrepareOptions = {}): P
       depth,
     });
 
-    if (isTok) continue;
+    if (isTok || isRef) continue;
 
     // Group: descend into object members whose key is not a `$` property,
     // plus the reserved `$root` token.

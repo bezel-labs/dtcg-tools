@@ -1,0 +1,22 @@
+{
+  "a": {
+    "$type": "number",
+    "$value": 1
+  },
+  "b": {
+    "$type": "number",
+    "$value": "{a.}"
+  },
+  "c": {
+    "$type": "number",
+    "$value": "{}"
+  },
+  "d": {
+    "$type": "number",
+    "$value": "{a..a}"
+  },
+  "e": {
+    "$type": "number",
+    "$value": "{{a}}"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "base": {
+    "$type": "number",
+    "t": {
+      "$value": 1
+    }
+  },
+  "ext": {
+    "$ref": "#/base",
+    "u": {
+      "$value": 2
+    }
+  }
+}

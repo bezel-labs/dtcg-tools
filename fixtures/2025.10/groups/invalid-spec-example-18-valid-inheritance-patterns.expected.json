@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "token.type.missing",
+      "pointer": "/button-large/padding",
+      "severity": "error"
+    }
+  ]
+}

@@ -29,8 +29,7 @@ body {
   color: var(--fg);
 }
 .app {
-  max-width: 1200px;
-  margin: 0 auto;
+  width: 100%;
   padding: 16px;
 }
 .header h1 {
@@ -41,21 +40,36 @@ body {
   margin: 0 0 16px;
   color: var(--muted);
 }
-.panes {
+
+/* Two halves: examples left, workspace right. Stacked on narrow screens. */
+.layout {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+@media (min-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr 1fr;
+  }
+  .examples {
+    position: sticky;
+    top: 16px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+}
+.workspace {
   display: grid;
   gap: 16px;
   grid-template-columns: 1fr;
 }
-@media (min-width: 900px) {
-  .panes {
-    grid-template-columns: 1fr 1fr;
-  }
-}
+
 .pane {
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px;
-  min-height: 60vh;
 }
 .pane-title {
   display: block;
@@ -66,7 +80,8 @@ body {
 }
 .editor {
   width: 100%;
-  height: calc(60vh - 40px);
+  height: 48vh;
+  min-height: 280px;
   resize: vertical;
   font:
     13px / 1.5 ui-monospace,
@@ -131,4 +146,88 @@ body {
 }
 .message {
   grid-column: 2;
+}
+
+/* Examples */
+.hint {
+  color: var(--muted);
+  margin: 0 0 12px;
+}
+.area {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+.area summary {
+  cursor: pointer;
+  padding: 10px 12px;
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+}
+.area-title {
+  font-weight: 600;
+}
+.area-spec {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.example-list {
+  list-style: none;
+  margin: 0;
+  padding: 0 12px 12px;
+  display: grid;
+  gap: 12px;
+}
+.example {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+.example-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+.example-desc {
+  margin: 4px 0;
+  color: var(--muted);
+}
+.example-expect {
+  margin: 4px 0 8px;
+  font-size: 0.85rem;
+}
+.code-ok {
+  color: var(--ok);
+  font:
+    12px ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+}
+.example-json {
+  margin: 0;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  font:
+    12px / 1.5 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  overflow-x: auto;
+  max-height: 240px;
+}
+.load {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+}
+.load:hover {
+  border-color: var(--fg);
 }

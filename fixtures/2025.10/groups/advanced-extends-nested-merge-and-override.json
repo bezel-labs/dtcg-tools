@@ -1,0 +1,33 @@
+{
+  "base": {
+    "$type": "dimension",
+    "field": {
+      "width": {
+        "$value": {
+          "value": 1,
+          "unit": "px"
+        }
+      },
+      "height": {
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        }
+      }
+    }
+  },
+  "ext": {
+    "$extends": "{base}",
+    "field": {
+      "width": {
+        "$value": {
+          "value": 3,
+          "unit": "rem"
+        }
+      }
+    }
+  },
+  "chain": {
+    "$extends": "{ext}"
+  }
+}

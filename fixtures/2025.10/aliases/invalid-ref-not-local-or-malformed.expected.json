@@ -1,0 +1,30 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "ref.not-local",
+      "pointer": "/a/$value",
+      "severity": "error"
+    },
+    {
+      "code": "ref.not-local",
+      "pointer": "/b/$value",
+      "severity": "error"
+    },
+    {
+      "code": "ref.not-local",
+      "pointer": "/c/$value",
+      "severity": "error"
+    },
+    {
+      "code": "ref.syntax.invalid",
+      "pointer": "/d/$value",
+      "severity": "error"
+    },
+    {
+      "code": "ref.not-local",
+      "pointer": "/e/$ref",
+      "severity": "error"
+    }
+  ]
+}

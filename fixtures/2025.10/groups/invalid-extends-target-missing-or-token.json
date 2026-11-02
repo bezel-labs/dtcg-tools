@@ -1,0 +1,19 @@
+{
+  "t": {
+    "$type": "number",
+    "$value": 1
+  },
+  "a": {
+    "$extends": "{nope}"
+  },
+  "b": {
+    "$extends": "{t}"
+  },
+  "c": {
+    "$ref": "#/t",
+    "x": {
+      "$type": "number",
+      "$value": 1
+    }
+  }
+}

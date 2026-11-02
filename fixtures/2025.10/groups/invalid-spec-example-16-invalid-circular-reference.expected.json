@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "extends.cycle",
+      "pointer": "/button/secondary/$extends",
+      "severity": "error"
+    }
+  ]
+}

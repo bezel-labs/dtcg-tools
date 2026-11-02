@@ -1,0 +1,25 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "alias.target.missing",
+      "pointer": "/color/badge/background/error/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.target.missing",
+      "pointer": "/color/badge/background/success/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.target.missing",
+      "pointer": "/color/badge/text/error/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.target.missing",
+      "pointer": "/color/badge/text/success/$value",
+      "severity": "error"
+    }
+  ]
+}

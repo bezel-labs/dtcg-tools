@@ -1,0 +1,25 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "alias.syntax.invalid",
+      "pointer": "/b/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.syntax.invalid",
+      "pointer": "/c/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.syntax.invalid",
+      "pointer": "/d/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.syntax.invalid",
+      "pointer": "/e/$value",
+      "severity": "error"
+    }
+  ]
+}

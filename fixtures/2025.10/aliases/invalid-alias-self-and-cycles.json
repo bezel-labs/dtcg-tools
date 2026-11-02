@@ -1,0 +1,19 @@
+{
+  "self": {
+    "$type": "number",
+    "$value": "{self}"
+  },
+  "a": {
+    "$value": "{b}"
+  },
+  "b": {
+    "$value": "{a}"
+  },
+  "ok": {
+    "$type": "number",
+    "$value": 1
+  },
+  "c": {
+    "$value": "{a}"
+  }
+}

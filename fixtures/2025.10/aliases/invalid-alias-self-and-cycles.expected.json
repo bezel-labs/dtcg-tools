@@ -1,0 +1,25 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "alias.cycle",
+      "pointer": "/self/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.cycle",
+      "pointer": "/a/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.cycle",
+      "pointer": "/b/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.cycle",
+      "pointer": "/c/$value",
+      "severity": "error"
+    }
+  ]
+}

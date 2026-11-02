@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "extends.inherited-token.invalid",
+      "pointer": "/ext/c",
+      "severity": "error"
+    }
+  ]
+}

@@ -1,9 +1,11 @@
 import type { ValidationIssue } from '../../../../core/issue.js';
-import { hasOwn, isAlias, isPlainObject, isToken } from '../../../../core/predicates.js';
+import { hasOwn, isPlainObject, isToken } from '../../../../core/predicates.js';
 import type { NodeInfo } from '../../../../core/prepare.js';
 import type { ValidationContext } from '../../../context.js';
 import { child, createIssue } from '../../../context.js';
 import { typeName } from '../../../primitives.js';
+import { parseAlias } from '../aliases/parse.js';
+import type { Resolver } from '../aliases/resolver.js';
 import { GROUP_PROPS, ROOT_ONLY_PROPS, ROOT_TOKEN_NAME } from '../constants.js';
 import {
   validateDeprecated,
@@ -12,6 +14,7 @@ import {
   validateType,
 } from '../tokens/validate-common-props.js';
 import { validateName } from '../tokens/validate-name.js';
+import { validateExtends } from './validate-extends.js';
 import { validateNameCollisions } from './validate-name-collisions.js';
 
 /** `$extends` MUST be a group reference in alias syntax (§6.4); the target is resolved later. */
@@ -20,7 +23,10 @@ export function validateExtendsSyntax(
   ctx: ValidationContext,
   issues: ValidationIssue[],
 ): void {
-  if (hasOwn(group, '$extends') && !isAlias(group.$extends)) {
+  if (
+    hasOwn(group, '$extends') &&
+    (typeof group.$extends !== 'string' || !parseAlias(group.$extends))
+  ) {
     issues.push(
       createIssue(child(ctx, '$extends'), 'group.extends.invalid', { actual: group.$extends }),
     );
@@ -38,7 +44,11 @@ export function validateExtendsSyntax(
  * group with a legal name, the `$root` member, and case collisions between
  * sibling names.
  */
-export function validateGroup(node: NodeInfo, ctx: ValidationContext): ValidationIssue[] {
+export function validateGroup(
+  node: NodeInfo,
+  resolver: Resolver,
+  ctx: ValidationContext,
+): ValidationIssue[] {
   const issues: ValidationIssue[] = [];
   const group = node.raw;
   const isRoot = node.path.length === 0;
@@ -48,6 +58,7 @@ export function validateGroup(node: NodeInfo, ctx: ValidationContext): Validatio
   validateDeprecated(group, 'group', ctx, issues);
   validateExtensions(group, 'group', ctx, issues);
   validateExtendsSyntax(group, ctx, issues);
+  issues.push(...validateExtends(node, resolver, ctx));
 
   const memberNames: string[] = [];
   for (const key of Object.keys(group)) {

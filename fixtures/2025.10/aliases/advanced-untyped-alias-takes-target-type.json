@@ -1,0 +1,22 @@
+{
+  "base": {
+    "$type": "number",
+    "$value": 1
+  },
+  "a": {
+    "$value": "{base}"
+  },
+  "b": {
+    "$value": "{a}"
+  },
+  "c": {
+    "$value": {
+      "$ref": "#/b"
+    }
+  },
+  "d": {
+    "$value": {
+      "$ref": "#/base/$value"
+    }
+  }
+}

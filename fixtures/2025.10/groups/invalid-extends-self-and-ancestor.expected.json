@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "extends.cycle",
+      "pointer": "/a/$extends",
+      "severity": "error"
+    },
+    {
+      "code": "extends.cycle",
+      "pointer": "/b/c/$extends",
+      "severity": "error"
+    }
+  ]
+}

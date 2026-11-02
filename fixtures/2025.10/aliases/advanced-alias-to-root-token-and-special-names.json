@@ -1,0 +1,25 @@
+{
+  "g": {
+    "$type": "number",
+    "$root": {
+      "$value": 1
+    },
+    "with space": {
+      "$value": 2
+    },
+    "slash/name": {
+      "$value": 3
+    }
+  },
+  "a": {
+    "$value": "{g.$root}"
+  },
+  "b": {
+    "$value": "{g.with space}"
+  },
+  "c": {
+    "$value": {
+      "$ref": "#/g/slash~1name/$value"
+    }
+  }
+}

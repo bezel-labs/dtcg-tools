@@ -5,10 +5,26 @@ import type { ValidationContext } from '../../context.js';
 import { createIssue } from '../../context.js';
 import { typeName } from '../../primitives.js';
 import type { ValidationStats } from '../../result.js';
+import { createResolver } from './aliases/resolver.js';
 import { validateGroup } from './groups/validate-group.js';
 import { validateDesignToken } from './tokens/validate-design-token.js';
 
+export { parseAlias, parseRef } from './aliases/parse.js';
+export type {
+  AliasResolution,
+  ExtendsTarget,
+  MergedGroup,
+  MergedMember,
+  OwningToken,
+  PathLookup,
+  RefResolution,
+  Resolver,
+  Status,
+} from './aliases/resolver.js';
+export { createResolver, rawAt } from './aliases/resolver.js';
+export { validateAliasToken } from './aliases/validate-alias.js';
 export * from './constants.js';
+export { validateExtends } from './groups/validate-extends.js';
 export { validateExtendsSyntax, validateGroup } from './groups/validate-group.js';
 export { validateNameCollisions } from './groups/validate-name-collisions.js';
 export * from './messages.js';
@@ -58,15 +74,16 @@ export function validateDocument(
     issues.push(createIssue(ctxAt(ctx, s.path), s.code, s.meta));
   }
 
+  const resolver = createResolver(doc);
   for (const node of doc.index.values()) {
     const nctx = ctxAt(ctx, node.path);
     try {
       if (node.kind === 'group') {
         stats.groups += 1;
-        issues.push(...validateGroup(node, nctx));
+        issues.push(...validateGroup(node, resolver, nctx));
       } else {
         stats.tokens += 1;
-        const result = validateDesignToken(node, nctx);
+        const result = validateDesignToken(node, resolver, nctx);
         if (result.isAlias) stats.aliases += 1;
         issues.push(...result.issues);
       }

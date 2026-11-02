@@ -1,0 +1,34 @@
+{
+  "n": {
+    "$type": "number",
+    "$value": 1
+  },
+  "arr": {
+    "$type": "cubicBezier",
+    "$value": [0, 0, 1, 1]
+  },
+  "a": {
+    "$type": "number",
+    "$value": {
+      "$ref": "#/missing"
+    }
+  },
+  "b": {
+    "$type": "number",
+    "$value": {
+      "$ref": "#/arr/$value/4"
+    }
+  },
+  "c": {
+    "$type": "number",
+    "$value": {
+      "$ref": "#/arr/$value/-"
+    }
+  },
+  "d": {
+    "$type": "number",
+    "$value": {
+      "$ref": "#/n/$value/x"
+    }
+  }
+}

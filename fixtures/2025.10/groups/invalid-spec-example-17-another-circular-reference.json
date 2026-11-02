@@ -1,0 +1,10 @@
+{
+  "groupA": {
+    "$extends": "{groupB}",
+    "token": {}
+  },
+  "groupB": {
+    "$extends": "{groupA}",
+    "token": {}
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "__proto__": {
+    "$type": "number",
+    "$value": 1
+  },
+  "a": {
+    "$value": "{__proto__}"
+  },
+  "b": {
+    "$value": {
+      "$ref": "#/__proto__/$value"
+    }
+  },
+  "c": {
+    "$type": "number",
+    "$value": {
+      "$ref": "#/constructor"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "ref.target.missing",
+      "pointer": "/c/$value",
+      "severity": "error"
+    }
+  ]
+}
