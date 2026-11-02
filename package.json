@@ -65,7 +65,7 @@
     "size-limit": "14.3.0",
     "turbo": "2.11.10",
     "typedoc": "0.28.20",
-    "typescript": "6.0.3"
+    "typescript": "7.0.2"
   },
   "packageManager": "npm@10.9.4",
   "lint-staged": {
