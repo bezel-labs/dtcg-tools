@@ -1,0 +1,6 @@
+# Keep LF line endings on every platform so Biome, snapshots, and fixtures match CI.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.gif binary
+*.woff2 binary

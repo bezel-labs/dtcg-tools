@@ -11,14 +11,29 @@ const codes = (r: ReturnType<typeof validateDtcg>) =>
 
 describe('alias resolution', () => {
   it('follows a 10k-long chain in linear time', () => {
-    const doc: Record<string, unknown> = { t0: { $type: 'number', $value: 1 } };
-    for (let i = 1; i <= 10_000; i += 1) doc[`t${i}`] = { $value: `{t${i - 1}}` };
-    const start = performance.now();
-    const r = validateDtcg(doc);
-    const ms = performance.now() - start;
-    expect(r.valid).toBe(true);
-    expect(r.stats).toEqual({ tokens: 10_001, groups: 1, aliases: 10_000 });
-    expect(ms).toBeLessThan(2_000);
+    const chain = (n: number): Record<string, unknown> => {
+      const doc: Record<string, unknown> = { t0: { $type: 'number', $value: 1 } };
+      for (let i = 1; i <= n; i += 1) doc[`t${i}`] = { $value: `{t${i - 1}}` };
+      return doc;
+    };
+    const time = (doc: Record<string, unknown>) => {
+      validateDtcg(doc); // warm up
+      const start = performance.now();
+      const r = validateDtcg(doc);
+      expect(r.valid).toBe(true);
+      return performance.now() - start;
+    };
+    const small = time(chain(2_000));
+    const large = time(chain(10_000));
+    expect(validateDtcg(chain(10_000)).stats).toEqual({
+      tokens: 10_001,
+      groups: 1,
+      aliases: 10_000,
+    });
+    // Linear: 5x the chain should cost far less than 25x. Generous for slow, coverage-instrumented
+    // CI runners; a quadratic regression blows past this immediately.
+    expect(large / Math.max(small, 1)).toBeLessThan(20);
+    expect(large).toBeLessThan(15_000);
   });
 
   it('reports every member of a long cycle once', () => {

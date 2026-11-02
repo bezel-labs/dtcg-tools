@@ -3,7 +3,7 @@
  * Tests what users actually install: packs the package, installs the tarball
  * into a scratch project, imports every subpath with ESM and require(), runs
  * the dtcg-lint bin, and bundles the validator for the browser with esbuild
- * and executes it inside jsdom. Exits non-zero on any failure.
+ * and executes it inside a happy-dom window. Exits non-zero on any failure.
  */
 import { execFileSync, spawnSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
@@ -42,7 +42,7 @@ import * as all from 'open-design-tokens';
 const r = validateDtcg({ a: { $type: 'number', $value: 1 } });
 if (!r.valid) throw new Error('esm validate');
 if (!lintDtcg({ a: { $type: 'number', $value: 1 } }, { extends: ['recommended'] }).validation.valid) throw new Error('esm lint');
-if (typeof all.validateDtcg !== 'function' || typeof all.lint !== 'function') throw new Error('esm root');
+if (typeof all.validateDtcg !== 'function' || typeof all.lintDtcg !== 'function') throw new Error('esm root');
 console.log('✔ esm imports');
 `;
 writeFileSync(join(scratch, 'esm.mjs'), esm);
@@ -86,11 +86,16 @@ const bundle = await esbuild.build({
 const code = bundle.outputFiles[0].text;
 if (/\brequire\(["']node:/.test(code) || /from ["']node:/.test(code))
   fail('browser bundle references node builtins');
-const { JSDOM } = await import(join(root, 'node_modules', 'jsdom', 'lib', 'api.js'));
-const dom = new JSDOM('<!doctype html><html><body></body></html>', { runScripts: 'outside-only' });
-dom.window.eval(code);
-if (dom.window.__result !== true) fail('browser bundle did not validate in jsdom');
-console.log(`✔ browser bundle (${(code.length / 1024).toFixed(1)} kB) runs in jsdom`);
+const { Window } = await import(join(root, 'node_modules', 'happy-dom', 'lib', 'index.js'));
+const { createContext, runInContext } = await import('node:vm');
+const window = new Window({ url: 'https://example.test/' });
+const context = createContext(window);
+runInContext(code, context);
+if (window.__result !== true) fail('browser bundle did not validate in a browser-like window');
+await window.happyDOM.close();
+console.log(
+  `✔ browser bundle (${(code.length / 1024).toFixed(1)} kB) runs in a browser-like window`,
+);
 console.log(
   readFileSync(join(scratch, 'node_modules', 'open-design-tokens', 'package.json'), 'utf8').match(
     /"version": "[^"]+"/,

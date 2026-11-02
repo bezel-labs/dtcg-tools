@@ -16,7 +16,8 @@
       "!**/.next",
       "!**/out",
       "!**/.source",
-      "!**/next-env.d.ts"
+      "!**/next-env.d.ts",
+      "!.changeset"
     ]
   },
   "formatter": {

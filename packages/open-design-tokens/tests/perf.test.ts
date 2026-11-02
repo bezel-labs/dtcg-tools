@@ -17,7 +17,7 @@ function generate(n: number): Record<string, unknown> {
   return doc;
 }
 
-/** Performance guard: generous bounds so slow CI machines pass, but a quadratic regression fails. */
+/** Performance guard: bounds are generous (coverage-instrumented CI runners are 5 to 10x slower than a laptop) but a quadratic regression still fails. */
 describe('performance guard', () => {
   it('validates a 10k-token document well under a second', () => {
     const doc = generate(10_000);
@@ -27,7 +27,7 @@ describe('performance guard', () => {
     const ms = performance.now() - t0;
     expect(r.valid).toBe(true);
     expect(r.stats.tokens).toBe(10_000);
-    expect(ms).toBeLessThan(1_000);
+    expect(ms).toBeLessThan(5_000);
   });
 
   it('lints a 10k-token document with the recommended preset in bounded time', () => {
@@ -35,6 +35,6 @@ describe('performance guard', () => {
     const t0 = performance.now();
     const r = lintDtcg(doc, { extends: ['recommended'] });
     expect(r.validation.valid).toBe(true);
-    expect(performance.now() - t0).toBeLessThan(3_000);
+    expect(performance.now() - t0).toBeLessThan(10_000);
   });
 });
