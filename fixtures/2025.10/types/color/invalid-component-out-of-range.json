@@ -1,0 +1,37 @@
+{
+  "high": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1.5, 0, 0]
+    }
+  },
+  "low": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, -0.1, 0]
+    }
+  },
+  "pct": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "hsl",
+      "components": [10, 101, 50]
+    }
+  },
+  "lab": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "lab",
+      "components": [101, 0, 0]
+    }
+  },
+  "chroma": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "lch",
+      "components": [50, -1, 0]
+    }
+  }
+}

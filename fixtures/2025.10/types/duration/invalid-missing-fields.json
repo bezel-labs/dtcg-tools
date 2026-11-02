@@ -1,0 +1,14 @@
+{
+  "nounit": {
+    "$type": "duration",
+    "$value": {
+      "value": 100
+    }
+  },
+  "novalue": {
+    "$type": "duration",
+    "$value": {
+      "unit": "ms"
+    }
+  }
+}

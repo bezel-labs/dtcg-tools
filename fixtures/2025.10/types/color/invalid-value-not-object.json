@@ -1,0 +1,10 @@
+{
+  "s": {
+    "$type": "color",
+    "$value": "#ff0000"
+  },
+  "a": {
+    "$type": "color",
+    "$value": [1, 0, 0]
+  }
+}

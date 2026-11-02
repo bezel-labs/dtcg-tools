@@ -1,0 +1,10 @@
+{
+  "p3-with-hex": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "display-p3",
+      "components": [1, 0, 1],
+      "hex": "#000000"
+    }
+  }
+}

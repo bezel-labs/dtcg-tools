@@ -1,0 +1,14 @@
+{
+  "one": {
+    "$type": "fontFamily",
+    "$value": "Inter"
+  },
+  "many": {
+    "$type": "fontFamily",
+    "$value": ["Inter", "Helvetica Neue", "sans-serif"]
+  },
+  "empty": {
+    "$type": "fontFamily",
+    "$value": []
+  }
+}

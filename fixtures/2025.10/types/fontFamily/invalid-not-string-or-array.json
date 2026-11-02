@@ -1,0 +1,12 @@
+{
+  "n": {
+    "$type": "fontFamily",
+    "$value": 12
+  },
+  "o": {
+    "$type": "fontFamily",
+    "$value": {
+      "name": "Inter"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "dimension.value.not-number",
+      "pointer": "/s/$value/value",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.value.not-number",
+      "pointer": "/n/$value/value",
+      "severity": "error"
+    }
+  ]
+}

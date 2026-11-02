@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "font-family.name.not-string",
+      "pointer": "/f/$value/1",
+      "severity": "error"
+    },
+    {
+      "code": "font-family.name.not-string",
+      "pointer": "/f/$value/2",
+      "severity": "error"
+    }
+  ]
+}

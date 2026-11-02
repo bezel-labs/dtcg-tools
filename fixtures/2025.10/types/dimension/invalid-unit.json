@@ -1,0 +1,30 @@
+{
+  "em": {
+    "$type": "dimension",
+    "$value": {
+      "value": 1,
+      "unit": "em"
+    }
+  },
+  "upper": {
+    "$type": "dimension",
+    "$value": {
+      "value": 1,
+      "unit": "PX"
+    }
+  },
+  "pct": {
+    "$type": "dimension",
+    "$value": {
+      "value": 50,
+      "unit": "%"
+    }
+  },
+  "num": {
+    "$type": "dimension",
+    "$value": {
+      "value": 1,
+      "unit": 1
+    }
+  }
+}

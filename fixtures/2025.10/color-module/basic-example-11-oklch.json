@@ -1,0 +1,11 @@
+{
+  "Hot pink": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "oklch",
+      "components": [0.7016, 0.3225, 328.363],
+      "alpha": 1,
+      "hex": "#ff00ff"
+    }
+  }
+}

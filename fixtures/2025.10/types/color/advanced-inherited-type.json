@@ -1,0 +1,11 @@
+{
+  "palette": {
+    "$type": "color",
+    "red": {
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [1, 0, 0]
+      }
+    }
+  }
+}

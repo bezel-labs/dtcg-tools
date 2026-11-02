@@ -1,0 +1,6 @@
+{
+  "f": {
+    "$type": "fontFamily",
+    "$value": ["Inter", 12, null]
+  }
+}

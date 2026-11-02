@@ -1,0 +1,22 @@
+{
+  "color": {
+    "badge": {
+      "background": {
+        "error": {
+          "$value": "{color.background.error}"
+        },
+        "success": {
+          "$value": "{color.background.success}"
+        }
+      },
+      "text": {
+        "error": {
+          "$value": "{color.text.error}"
+        },
+        "success": {
+          "$value": "{color.text.success}"
+        }
+      }
+    }
+  }
+}

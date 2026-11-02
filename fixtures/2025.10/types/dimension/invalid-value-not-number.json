@@ -1,0 +1,16 @@
+{
+  "s": {
+    "$type": "dimension",
+    "$value": {
+      "value": "16",
+      "unit": "px"
+    }
+  },
+  "n": {
+    "$type": "dimension",
+    "$value": {
+      "value": null,
+      "unit": "px"
+    }
+  }
+}

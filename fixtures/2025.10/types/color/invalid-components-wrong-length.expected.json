@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "color.components.wrong-length",
+      "pointer": "/two/$value/components",
+      "severity": "error"
+    },
+    {
+      "code": "color.components.wrong-length",
+      "pointer": "/four/$value/components",
+      "severity": "error"
+    }
+  ]
+}

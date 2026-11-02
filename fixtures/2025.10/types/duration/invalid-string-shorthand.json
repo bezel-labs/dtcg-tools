@@ -1,0 +1,6 @@
+{
+  "d": {
+    "$type": "duration",
+    "$value": "100ms"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "hsl-min": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "hsl",
+      "components": [0, 50, 50]
+    }
+  },
+  "hsl-max": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "hsl",
+      "components": [359.999, 50, 50]
+    }
+  },
+  "hwb-max": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "hwb",
+      "components": [359.9, 10, 10]
+    }
+  },
+  "lch-max": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "lch",
+      "components": [50, 30, 359.5]
+    }
+  },
+  "oklch-max": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "oklch",
+      "components": [0.5, 0.1, 359.99]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "hsl-no-hue": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "hsl",
+      "components": ["none", 0, 100]
+    }
+  },
+  "lch-no-hue": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "lch",
+      "components": [50, 0, "none"]
+    }
+  },
+  "srgb-no-red": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": ["none", 0.5, 0.5]
+    }
+  },
+  "all-none": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "oklch",
+      "components": ["none", "none", "none"]
+    }
+  }
+}

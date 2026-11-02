@@ -1,0 +1,34 @@
+{
+  "short": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 1, 1],
+      "hex": "#fff"
+    }
+  },
+  "eight": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 1, 1],
+      "hex": "#ffffffff"
+    }
+  },
+  "nohash": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 1, 1],
+      "hex": "ffffff"
+    }
+  },
+  "num": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 1, 1],
+      "hex": 16777215
+    }
+  }
+}

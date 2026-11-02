@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "color.component.out-of-range",
+      "pointer": "/hsl/$value/components/0",
+      "severity": "error"
+    },
+    {
+      "code": "color.component.out-of-range",
+      "pointer": "/oklch/$value/components/2",
+      "severity": "error"
+    }
+  ]
+}

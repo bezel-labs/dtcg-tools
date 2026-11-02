@@ -1,0 +1,23 @@
+{
+  "zero": {
+    "$type": "duration",
+    "$value": {
+      "value": 0,
+      "unit": "ms"
+    }
+  },
+  "frac": {
+    "$type": "duration",
+    "$value": {
+      "value": 0.25,
+      "unit": "s"
+    }
+  },
+  "long": {
+    "$type": "duration",
+    "$value": {
+      "value": 90000,
+      "unit": "ms"
+    }
+  }
+}

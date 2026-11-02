@@ -1,0 +1,20 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "font-weight.keyword.invalid",
+      "pointer": "/cased/$value",
+      "severity": "error"
+    },
+    {
+      "code": "font-weight.keyword.invalid",
+      "pointer": "/spaced/$value",
+      "severity": "error"
+    },
+    {
+      "code": "font-weight.keyword.invalid",
+      "pointer": "/unknown/$value",
+      "severity": "error"
+    }
+  ]
+}

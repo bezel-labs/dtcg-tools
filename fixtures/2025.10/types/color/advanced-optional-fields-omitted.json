@@ -1,0 +1,33 @@
+{
+  "no-alpha-no-hex": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0.1, 0.2, 0.3]
+    }
+  },
+  "alpha-only": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0, 0],
+      "alpha": 0
+    }
+  },
+  "hex-only": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 1, 1],
+      "hex": "#ffffff"
+    }
+  },
+  "uppercase-hex": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0, 0],
+      "hex": "#FF0000"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "cubic-bezier.value.not-array",
+      "pointer": "/s/$value",
+      "severity": "error"
+    },
+    {
+      "code": "cubic-bezier.value.not-array",
+      "pointer": "/o/$value",
+      "severity": "error"
+    }
+  ]
+}

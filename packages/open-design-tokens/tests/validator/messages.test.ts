@@ -16,7 +16,7 @@ describe('message catalog', () => {
 
   it('codes follow <section>.<field>.<problem> or <section>.<problem>', () => {
     for (const code of ISSUE_CODES) {
-      expect(code).toMatch(/^[a-z]+(\.[a-z-]+){1,2}$/);
+      expect(code).toMatch(/^[a-z][a-z-]*(\.[a-z][a-z-]*){1,2}$/);
     }
   });
 });

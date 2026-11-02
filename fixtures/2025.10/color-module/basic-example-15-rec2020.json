@@ -1,0 +1,11 @@
+{
+  "Hot pink": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "rec2020",
+      "components": [1, 0, 1],
+      "alpha": 1,
+      "hex": "#ff00ff"
+    }
+  }
+}

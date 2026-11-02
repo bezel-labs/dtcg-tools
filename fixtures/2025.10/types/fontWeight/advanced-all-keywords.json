@@ -1,0 +1,74 @@
+{
+  "thin": {
+    "$type": "fontWeight",
+    "$value": "thin"
+  },
+  "hairline": {
+    "$type": "fontWeight",
+    "$value": "hairline"
+  },
+  "extra-light": {
+    "$type": "fontWeight",
+    "$value": "extra-light"
+  },
+  "ultra-light": {
+    "$type": "fontWeight",
+    "$value": "ultra-light"
+  },
+  "light": {
+    "$type": "fontWeight",
+    "$value": "light"
+  },
+  "normal": {
+    "$type": "fontWeight",
+    "$value": "normal"
+  },
+  "regular": {
+    "$type": "fontWeight",
+    "$value": "regular"
+  },
+  "book": {
+    "$type": "fontWeight",
+    "$value": "book"
+  },
+  "medium": {
+    "$type": "fontWeight",
+    "$value": "medium"
+  },
+  "semi-bold": {
+    "$type": "fontWeight",
+    "$value": "semi-bold"
+  },
+  "demi-bold": {
+    "$type": "fontWeight",
+    "$value": "demi-bold"
+  },
+  "bold": {
+    "$type": "fontWeight",
+    "$value": "bold"
+  },
+  "extra-bold": {
+    "$type": "fontWeight",
+    "$value": "extra-bold"
+  },
+  "ultra-bold": {
+    "$type": "fontWeight",
+    "$value": "ultra-bold"
+  },
+  "black": {
+    "$type": "fontWeight",
+    "$value": "black"
+  },
+  "heavy": {
+    "$type": "fontWeight",
+    "$value": "heavy"
+  },
+  "extra-black": {
+    "$type": "fontWeight",
+    "$value": "extra-black"
+  },
+  "ultra-black": {
+    "$type": "fontWeight",
+    "$value": "ultra-black"
+  }
+}

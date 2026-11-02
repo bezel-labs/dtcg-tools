@@ -1,0 +1,27 @@
+{
+  "color": {
+    "green": {
+      "400": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.42, 0.73, 0.63]
+        }
+      },
+      "500": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.15, 0.56, 0.42]
+        }
+      },
+      "600": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.07, 0.5, 0.36]
+        }
+      }
+    }
+  }
+}

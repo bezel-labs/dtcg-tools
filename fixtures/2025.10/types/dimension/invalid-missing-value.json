@@ -1,0 +1,8 @@
+{
+  "d": {
+    "$type": "dimension",
+    "$value": {
+      "unit": "px"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "Hot pink": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "hsl",
+      "components": [330, 100, 50],
+      "alpha": 1,
+      "hex": "#ff00ff"
+    }
+  }
+}

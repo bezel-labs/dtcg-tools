@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "color.components.not-array",
+      "pointer": "/c/$value/components",
+      "severity": "error"
+    }
+  ]
+}

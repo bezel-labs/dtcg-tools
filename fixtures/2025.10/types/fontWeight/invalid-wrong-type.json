@@ -1,0 +1,12 @@
+{
+  "b": {
+    "$type": "fontWeight",
+    "$value": true
+  },
+  "o": {
+    "$type": "fontWeight",
+    "$value": {
+      "value": 400
+    }
+  }
+}

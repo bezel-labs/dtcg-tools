@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "color.value.not-object",
+      "pointer": "/s/$value",
+      "severity": "error"
+    },
+    {
+      "code": "color.value.not-object",
+      "pointer": "/a/$value",
+      "severity": "error"
+    }
+  ]
+}

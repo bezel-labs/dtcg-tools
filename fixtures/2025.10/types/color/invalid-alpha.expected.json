@@ -1,0 +1,20 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "color.alpha.not-number",
+      "pointer": "/str/$value/alpha",
+      "severity": "error"
+    },
+    {
+      "code": "color.alpha.out-of-range",
+      "pointer": "/high/$value/alpha",
+      "severity": "error"
+    },
+    {
+      "code": "color.alpha.out-of-range",
+      "pointer": "/neg/$value/alpha",
+      "severity": "error"
+    }
+  ]
+}

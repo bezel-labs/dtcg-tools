@@ -1,0 +1,11 @@
+{
+  "White": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "hsl",
+      "components": ["none", 0, 100],
+      "alpha": 1,
+      "hex": "#ffffff"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "zero": {
+    "$type": "fontWeight",
+    "$value": 0
+  },
+  "over": {
+    "$type": "fontWeight",
+    "$value": 1001
+  },
+  "neg": {
+    "$type": "fontWeight",
+    "$value": -100
+  }
+}

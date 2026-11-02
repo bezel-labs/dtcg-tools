@@ -1,0 +1,22 @@
+{
+  "color": {
+    "green": {
+      "10": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.13, 0.7, 0.67],
+          "alpha": 0.1
+        }
+      },
+      "20": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.13, 0.7, 0.67],
+          "alpha": 0.2
+        }
+      }
+    }
+  }
+}

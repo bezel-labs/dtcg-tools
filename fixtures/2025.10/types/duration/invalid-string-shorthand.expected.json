@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "duration.value.not-object",
+      "pointer": "/d/$value",
+      "severity": "error"
+    }
+  ]
+}

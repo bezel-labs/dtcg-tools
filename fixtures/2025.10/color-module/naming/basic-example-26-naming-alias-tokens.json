@@ -1,0 +1,20 @@
+{
+  "color": {
+    "background": {
+      "error": {
+        "$value": "{color.red.600}"
+      },
+      "success": {
+        "$value": "{color.green.400}"
+      }
+    },
+    "text": {
+      "base": {
+        "$value": "{color.palette.black}"
+      },
+      "errorHover": {
+        "$value": "{color.red.700}"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "Duration-Quick": {
+    "$value": {
+      "value": 100,
+      "unit": "ms"
+    },
+    "$type": "duration"
+  },
+  "Duration-Long": {
+    "$value": {
+      "value": 1.5,
+      "unit": "s"
+    },
+    "$type": "duration"
+  }
+}

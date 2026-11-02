@@ -1,0 +1,30 @@
+{
+  "lab-wide": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "lab",
+      "components": [50, -160, 160]
+    }
+  },
+  "lch-chroma": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "lch",
+      "components": [50, 230, 10]
+    }
+  },
+  "oklab-wide": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "oklab",
+      "components": [0.5, -0.5, 0.5]
+    }
+  },
+  "oklch-chroma": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "oklch",
+      "components": [0.5, 0.5, 10]
+    }
+  }
+}

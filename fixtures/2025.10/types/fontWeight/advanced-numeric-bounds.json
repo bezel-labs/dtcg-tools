@@ -1,0 +1,14 @@
+{
+  "min": {
+    "$type": "fontWeight",
+    "$value": 1
+  },
+  "max": {
+    "$type": "fontWeight",
+    "$value": 1000
+  },
+  "fraction": {
+    "$type": "fontWeight",
+    "$value": 350.5
+  }
+}

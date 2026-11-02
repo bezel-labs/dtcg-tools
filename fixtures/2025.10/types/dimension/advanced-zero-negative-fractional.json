@@ -1,0 +1,30 @@
+{
+  "zero": {
+    "$type": "dimension",
+    "$value": {
+      "value": 0,
+      "unit": "px"
+    }
+  },
+  "negative": {
+    "$type": "dimension",
+    "$value": {
+      "value": -4,
+      "unit": "px"
+    }
+  },
+  "fraction": {
+    "$type": "dimension",
+    "$value": {
+      "value": 0.125,
+      "unit": "rem"
+    }
+  },
+  "big": {
+    "$type": "dimension",
+    "$value": {
+      "value": 1000000,
+      "unit": "px"
+    }
+  }
+}

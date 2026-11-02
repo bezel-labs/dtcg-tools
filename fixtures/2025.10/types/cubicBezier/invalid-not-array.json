@@ -1,0 +1,12 @@
+{
+  "s": {
+    "$type": "cubicBezier",
+    "$value": "ease-in"
+  },
+  "o": {
+    "$type": "cubicBezier",
+    "$value": {
+      "x1": 0
+    }
+  }
+}

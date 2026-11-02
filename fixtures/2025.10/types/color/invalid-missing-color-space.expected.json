@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "color.color-space.missing",
+      "pointer": "/c/$value",
+      "severity": "error"
+    }
+  ]
+}

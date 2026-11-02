@@ -1,0 +1,14 @@
+{
+  "s": {
+    "$type": "number",
+    "$value": "2.3"
+  },
+  "n": {
+    "$type": "number",
+    "$value": null
+  },
+  "b": {
+    "$type": "number",
+    "$value": true
+  }
+}

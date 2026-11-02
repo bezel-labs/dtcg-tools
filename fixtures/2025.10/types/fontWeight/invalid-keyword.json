@@ -1,0 +1,14 @@
+{
+  "cased": {
+    "$type": "fontWeight",
+    "$value": "Bold"
+  },
+  "spaced": {
+    "$type": "fontWeight",
+    "$value": "semi bold"
+  },
+  "unknown": {
+    "$type": "fontWeight",
+    "$value": "chunky"
+  }
+}

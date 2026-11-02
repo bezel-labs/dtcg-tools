@@ -1,0 +1,23 @@
+{
+  "sec": {
+    "$type": "duration",
+    "$value": {
+      "value": 1,
+      "unit": "sec"
+    }
+  },
+  "upper": {
+    "$type": "duration",
+    "$value": {
+      "value": 1,
+      "unit": "MS"
+    }
+  },
+  "minutes": {
+    "$type": "duration",
+    "$value": {
+      "value": 1,
+      "unit": "min"
+    }
+  }
+}

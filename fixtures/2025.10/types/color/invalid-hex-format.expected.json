@@ -1,0 +1,25 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "color.hex.invalid",
+      "pointer": "/short/$value/hex",
+      "severity": "error"
+    },
+    {
+      "code": "color.hex.invalid",
+      "pointer": "/eight/$value/hex",
+      "severity": "error"
+    },
+    {
+      "code": "color.hex.invalid",
+      "pointer": "/nohash/$value/hex",
+      "severity": "error"
+    },
+    {
+      "code": "color.hex.invalid",
+      "pointer": "/num/$value/hex",
+      "severity": "error"
+    }
+  ]
+}

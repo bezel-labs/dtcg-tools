@@ -1,0 +1,19 @@
+{
+  "color": {
+    "green": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.67, 0.79, 0.74]
+      }
+    },
+    "shadow": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0, 0, 0],
+        "alpha": 0.53
+      }
+    }
+  }
+}

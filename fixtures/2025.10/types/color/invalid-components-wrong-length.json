@@ -1,0 +1,16 @@
+{
+  "two": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0]
+    }
+  },
+  "four": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [1, 0, 0, 1]
+    }
+  }
+}

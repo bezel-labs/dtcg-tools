@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "font-weight.value.invalid",
+      "pointer": "/b/$value",
+      "severity": "error"
+    },
+    {
+      "code": "font-weight.value.invalid",
+      "pointer": "/o/$value",
+      "severity": "error"
+    }
+  ]
+}

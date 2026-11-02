@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "duration.unit.missing",
+      "pointer": "/nounit/$value",
+      "severity": "error"
+    },
+    {
+      "code": "duration.value.missing",
+      "pointer": "/novalue/$value",
+      "severity": "error"
+    }
+  ]
+}

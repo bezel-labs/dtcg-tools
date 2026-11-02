@@ -1,0 +1,725 @@
+[
+  {
+    "file": "types/dimension/basic-example-39-dimension.json",
+    "spec": "format",
+    "section": "8.2 Dimension",
+    "anchor": "x8-2-dimension",
+    "example": 39,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "types/fontFamily/basic-example-40-font-family.json",
+    "spec": "format",
+    "section": "8.3 Font family",
+    "anchor": "x8-3-font-family",
+    "example": 40,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "types/fontWeight/basic-example-41-font-weight.json",
+    "spec": "format",
+    "section": "8.4 Font weight",
+    "anchor": "x8-4-font-weight",
+    "example": 41,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "types/duration/basic-example-42-duration.json",
+    "spec": "format",
+    "section": "8.5 Duration",
+    "anchor": "x8-5-duration",
+    "example": 42,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "types/cubicBezier/basic-example-43-cubic-bezier.json",
+    "spec": "format",
+    "section": "8.6 Cubic Bézier",
+    "anchor": "x8-6-cubic-bezier",
+    "example": 43,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "types/number/basic-example-44-number.json",
+    "spec": "format",
+    "section": "8.7 Number",
+    "anchor": "x8-7-number",
+    "example": 44,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-01-format.json",
+    "spec": "color",
+    "section": "4.1 Format",
+    "anchor": "x4-1-format",
+    "example": 1,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-02-none-keyword.json",
+    "spec": "color",
+    "section": "4.1.1.1 Using the none keyword",
+    "anchor": "x4-1-1-1-using-the-none-keyword",
+    "example": 2,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-03-hue-zero.json",
+    "spec": "color",
+    "section": "4.1.1.1 Using the none keyword",
+    "anchor": "x4-1-1-1-using-the-none-keyword",
+    "example": 3,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-04-srgb.json",
+    "spec": "color",
+    "section": "4.2.1.1 Components",
+    "anchor": "x4-2-1-1-components",
+    "example": 4,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-05-srgb-linear.json",
+    "spec": "color",
+    "section": "4.2.2.1 Components",
+    "anchor": "x4-2-2-1-components",
+    "example": 5,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-06-hsl.json",
+    "spec": "color",
+    "section": "4.2.3.1 Components",
+    "anchor": "x4-2-3-1-components",
+    "example": 6,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-07-hwb.json",
+    "spec": "color",
+    "section": "4.2.4.1 Components",
+    "anchor": "x4-2-4-1-components",
+    "example": 7,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-08-lab.json",
+    "spec": "color",
+    "section": "4.2.5.1 Components",
+    "anchor": "x4-2-5-1-components",
+    "example": 8,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-09-lch.json",
+    "spec": "color",
+    "section": "4.2.6.1 Components",
+    "anchor": "x4-2-6-1-components",
+    "example": 9,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-10-oklab.json",
+    "spec": "color",
+    "section": "4.2.7.1 Components",
+    "anchor": "x4-2-7-1-components",
+    "example": 10,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-11-oklch.json",
+    "spec": "color",
+    "section": "4.2.8.1 Components",
+    "anchor": "x4-2-8-1-components",
+    "example": 11,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-12-display-p3.json",
+    "spec": "color",
+    "section": "4.2.9.1 Components",
+    "anchor": "x4-2-9-1-components",
+    "example": 12,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-13-a98-rgb.json",
+    "spec": "color",
+    "section": "4.2.10.1 Components",
+    "anchor": "x4-2-10-1-components",
+    "example": 13,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-14-prophoto-rgb.json",
+    "spec": "color",
+    "section": "4.2.11.1 Components",
+    "anchor": "x4-2-11-1-components",
+    "example": 14,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-15-rec2020.json",
+    "spec": "color",
+    "section": "4.2.12.1 Components",
+    "anchor": "x4-2-12-1-components",
+    "example": 15,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-16-xyz-d65.json",
+    "spec": "color",
+    "section": "4.2.13.1 Components",
+    "anchor": "x4-2-13-1-components",
+    "example": 16,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/basic-example-17-xyz-d50.json",
+    "spec": "color",
+    "section": "4.2.14.1 Components",
+    "anchor": "x4-2-14-1-components",
+    "example": 17,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/naming/basic-example-18-naming-base.json",
+    "spec": "color",
+    "section": "7.1.1 Base",
+    "anchor": "x7-1-1-base",
+    "example": 18,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/naming/basic-example-19-naming-alias.json",
+    "spec": "color",
+    "section": "7.1.2 Alias",
+    "anchor": "x7-1-2-alias",
+    "example": 19,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/naming/basic-example-20-naming-component.json",
+    "spec": "color",
+    "section": "7.1.3 Component",
+    "anchor": "x7-1-3-component",
+    "example": 20,
+    "kind": "basic",
+    "verbatim": true,
+    "notes": "Aliases {color.brand.primary}, {color.palette.black} have no target inside this snippet.",
+    "incomplete": true
+  },
+  {
+    "file": "color-module/naming/basic-example-21-naming-descriptive.json",
+    "spec": "color",
+    "section": "7.2.1.1 Descriptive",
+    "anchor": "x7-2-1-1-descriptive",
+    "example": 21,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/naming/basic-example-22-naming-ordered-scale.json",
+    "spec": "color",
+    "section": "7.2.1.2.1 Ordered scales",
+    "anchor": "x7-2-1-2-1-ordered-scales",
+    "example": 22,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/naming/basic-example-23-naming-ordered-scale-numeric.json",
+    "spec": "color",
+    "section": "7.2.1.2.1 Ordered scales",
+    "anchor": "x7-2-1-2-1-ordered-scales",
+    "example": 23,
+    "kind": "basic",
+    "verbatim": false,
+    "cleaned": ["removed // comments", "removed trailing commas"]
+  },
+  {
+    "file": "color-module/naming/basic-example-24-naming-bounded-scale.json",
+    "spec": "color",
+    "section": "7.2.1.2.2 Bounded scales",
+    "anchor": "x7-2-1-2-2-bounded-scales",
+    "example": 24,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "color-module/naming/basic-example-25-naming-generated-scale.json",
+    "spec": "color",
+    "section": "7.2.1.2.3 Computer generated scales",
+    "anchor": "x7-2-1-2-3-computer-generated-scales",
+    "example": 25,
+    "kind": "basic",
+    "verbatim": false,
+    "cleaned": ["removed // comments", "removed trailing commas"]
+  },
+  {
+    "file": "color-module/naming/basic-example-26-naming-alias-tokens.json",
+    "spec": "color",
+    "section": "7.2.2 Alias Tokens",
+    "anchor": "x7-2-2-alias-tokens",
+    "example": 26,
+    "kind": "basic",
+    "verbatim": true,
+    "notes": "Aliases {color.red.600}, {color.green.400}, {color.palette.black}, {color.red.700} have no target inside this snippet.",
+    "incomplete": true
+  },
+  {
+    "file": "color-module/naming/basic-example-27-naming-alias-semantic.json",
+    "spec": "color",
+    "section": "7.2.2 Alias Tokens",
+    "anchor": "x7-2-2-alias-tokens",
+    "example": 27,
+    "kind": "basic",
+    "verbatim": false,
+    "cleaned": ["removed // comments", "removed trailing commas"],
+    "notes": "Aliases {color.red.600}, {color.green.400} have no target inside this snippet.",
+    "incomplete": true
+  },
+  {
+    "file": "color-module/naming/basic-example-28-naming-component-tokens.json",
+    "spec": "color",
+    "section": "7.2.3 Component Tokens",
+    "anchor": "x7-2-3-component-tokens",
+    "example": 28,
+    "kind": "basic",
+    "verbatim": true,
+    "notes": "Aliases {color.background.error}, {color.background.success}, {color.text.error}, {color.text.success} have no target inside this snippet.",
+    "incomplete": true
+  },
+  {
+    "file": "types/color/advanced-none-components.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "The \"none\" keyword is allowed in any component position."
+  },
+  {
+    "file": "types/color/advanced-hue-bounds.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Hue is [0, 360): 360 itself is rejected (see invalid-hue-360)."
+  },
+  {
+    "file": "types/color/advanced-unbounded-axes.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "a/b and chroma are \"theoretically unbounded\" per the Color Module, so no range error."
+  },
+  {
+    "file": "types/color/advanced-optional-fields-omitted.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "types/color/advanced-hex-fallback-non-srgb.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "The hex/components consistency warning only applies to srgb; other spaces are not compared."
+  },
+  {
+    "file": "types/color/advanced-inherited-type.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Token inherits $type from its group."
+  },
+  {
+    "file": "types/color/invalid-unknown-color-space.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "colorSpace is case-sensitive; meta.suggestion carries the correct casing.",
+    "expected": "types/color/invalid-unknown-color-space.expected.json"
+  },
+  {
+    "file": "types/color/invalid-missing-color-space.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/color/invalid-missing-color-space.expected.json"
+  },
+  {
+    "file": "types/color/invalid-missing-components.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/color/invalid-missing-components.expected.json"
+  },
+  {
+    "file": "types/color/invalid-components-not-array.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/color/invalid-components-not-array.expected.json"
+  },
+  {
+    "file": "types/color/invalid-components-wrong-length.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/color/invalid-components-wrong-length.expected.json"
+  },
+  {
+    "file": "types/color/invalid-component-not-number.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/color/invalid-component-not-number.expected.json"
+  },
+  {
+    "file": "types/color/invalid-hue-360.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/color/invalid-hue-360.expected.json"
+  },
+  {
+    "file": "types/color/invalid-component-out-of-range.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/color/invalid-component-out-of-range.expected.json"
+  },
+  {
+    "file": "types/color/invalid-alpha.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/color/invalid-alpha.expected.json"
+  },
+  {
+    "file": "types/color/invalid-hex-format.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/color/invalid-hex-format.expected.json"
+  },
+  {
+    "file": "types/color/invalid-hex-mismatch.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Warning only: the document is still valid DTCG.",
+    "expected": "types/color/invalid-hex-mismatch.expected.json"
+  },
+  {
+    "file": "types/color/invalid-value-not-object.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Legacy hex strings are not valid 2025.10 color values.",
+    "expected": "types/color/invalid-value-not-object.expected.json"
+  },
+  {
+    "file": "types/color/invalid-unknown-property.json",
+    "spec": "color",
+    "section": "8.1 Color / Color Module 4",
+    "anchor": "x8-1-color",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Spec is silent on extra keys; reported as a warning.",
+    "expected": "types/color/invalid-unknown-property.expected.json"
+  },
+  {
+    "file": "types/dimension/advanced-zero-negative-fractional.json",
+    "spec": "format",
+    "section": "8.2 Dimension",
+    "anchor": "x8-2-dimension",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "types/dimension/invalid-missing-unit.json",
+    "spec": "format",
+    "section": "8.2 Dimension",
+    "anchor": "x8-2-dimension",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "unit is required even when value is 0.",
+    "expected": "types/dimension/invalid-missing-unit.expected.json"
+  },
+  {
+    "file": "types/dimension/invalid-missing-value.json",
+    "spec": "format",
+    "section": "8.2 Dimension",
+    "anchor": "x8-2-dimension",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/dimension/invalid-missing-value.expected.json"
+  },
+  {
+    "file": "types/dimension/invalid-unit.json",
+    "spec": "format",
+    "section": "8.2 Dimension",
+    "anchor": "x8-2-dimension",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/dimension/invalid-unit.expected.json"
+  },
+  {
+    "file": "types/dimension/invalid-value-not-number.json",
+    "spec": "format",
+    "section": "8.2 Dimension",
+    "anchor": "x8-2-dimension",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/dimension/invalid-value-not-number.expected.json"
+  },
+  {
+    "file": "types/dimension/invalid-string-shorthand.json",
+    "spec": "format",
+    "section": "8.2 Dimension",
+    "anchor": "x8-2-dimension",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "CSS-style strings are not valid 2025.10 dimension values.",
+    "expected": "types/dimension/invalid-string-shorthand.expected.json"
+  },
+  {
+    "file": "types/fontFamily/advanced-single-and-list.json",
+    "spec": "format",
+    "section": "8.3 Font family",
+    "anchor": "x8-3-font-family",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "An empty array is syntactically allowed by the spec."
+  },
+  {
+    "file": "types/fontFamily/invalid-not-string-or-array.json",
+    "spec": "format",
+    "section": "8.3 Font family",
+    "anchor": "x8-3-font-family",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/fontFamily/invalid-not-string-or-array.expected.json"
+  },
+  {
+    "file": "types/fontFamily/invalid-array-entry-not-string.json",
+    "spec": "format",
+    "section": "8.3 Font family",
+    "anchor": "x8-3-font-family",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/fontFamily/invalid-array-entry-not-string.expected.json"
+  },
+  {
+    "file": "types/fontWeight/advanced-all-keywords.json",
+    "spec": "format",
+    "section": "8.4 Font weight",
+    "anchor": "x8-4-font-weight",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "types/fontWeight/advanced-numeric-bounds.json",
+    "spec": "format",
+    "section": "8.4 Font weight",
+    "anchor": "x8-4-font-weight",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "types/fontWeight/invalid-number-out-of-range.json",
+    "spec": "format",
+    "section": "8.4 Font weight",
+    "anchor": "x8-4-font-weight",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/fontWeight/invalid-number-out-of-range.expected.json"
+  },
+  {
+    "file": "types/fontWeight/invalid-keyword.json",
+    "spec": "format",
+    "section": "8.4 Font weight",
+    "anchor": "x8-4-font-weight",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Keywords are case-sensitive; \"Bold\" carries meta.suggestion \"bold\".",
+    "expected": "types/fontWeight/invalid-keyword.expected.json"
+  },
+  {
+    "file": "types/fontWeight/invalid-wrong-type.json",
+    "spec": "format",
+    "section": "8.4 Font weight",
+    "anchor": "x8-4-font-weight",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/fontWeight/invalid-wrong-type.expected.json"
+  },
+  {
+    "file": "types/duration/advanced-fractional-and-zero.json",
+    "spec": "format",
+    "section": "8.5 Duration",
+    "anchor": "x8-5-duration",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "types/duration/invalid-unit.json",
+    "spec": "format",
+    "section": "8.5 Duration",
+    "anchor": "x8-5-duration",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/duration/invalid-unit.expected.json"
+  },
+  {
+    "file": "types/duration/invalid-missing-fields.json",
+    "spec": "format",
+    "section": "8.5 Duration",
+    "anchor": "x8-5-duration",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/duration/invalid-missing-fields.expected.json"
+  },
+  {
+    "file": "types/duration/invalid-value-not-number.json",
+    "spec": "format",
+    "section": "8.5 Duration",
+    "anchor": "x8-5-duration",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/duration/invalid-value-not-number.expected.json"
+  },
+  {
+    "file": "types/duration/invalid-string-shorthand.json",
+    "spec": "format",
+    "section": "8.5 Duration",
+    "anchor": "x8-5-duration",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/duration/invalid-string-shorthand.expected.json"
+  },
+  {
+    "file": "types/cubicBezier/advanced-y-unbounded.json",
+    "spec": "format",
+    "section": "8.6 Cubic Bézier",
+    "anchor": "x8-6-cubic-bezier",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "y coordinates may be any real number; only x is restricted to [0, 1]."
+  },
+  {
+    "file": "types/cubicBezier/invalid-x-out-of-range.json",
+    "spec": "format",
+    "section": "8.6 Cubic Bézier",
+    "anchor": "x8-6-cubic-bezier",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/cubicBezier/invalid-x-out-of-range.expected.json"
+  },
+  {
+    "file": "types/cubicBezier/invalid-wrong-length.json",
+    "spec": "format",
+    "section": "8.6 Cubic Bézier",
+    "anchor": "x8-6-cubic-bezier",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/cubicBezier/invalid-wrong-length.expected.json"
+  },
+  {
+    "file": "types/cubicBezier/invalid-point-not-number.json",
+    "spec": "format",
+    "section": "8.6 Cubic Bézier",
+    "anchor": "x8-6-cubic-bezier",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/cubicBezier/invalid-point-not-number.expected.json"
+  },
+  {
+    "file": "types/cubicBezier/invalid-not-array.json",
+    "spec": "format",
+    "section": "8.6 Cubic Bézier",
+    "anchor": "x8-6-cubic-bezier",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/cubicBezier/invalid-not-array.expected.json"
+  },
+  {
+    "file": "types/number/advanced-sign-and-fraction.json",
+    "spec": "format",
+    "section": "8.7 Number",
+    "anchor": "x8-7-number",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "types/number/invalid-not-number.json",
+    "spec": "format",
+    "section": "8.7 Number",
+    "anchor": "x8-7-number",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "types/number/invalid-not-number.expected.json"
+  }
+]

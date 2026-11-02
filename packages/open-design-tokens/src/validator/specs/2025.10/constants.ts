@@ -60,36 +60,53 @@ export const COLOR_SPACES = [
 ] as const;
 
 export interface ComponentRange {
-  min: number;
-  max: number;
+  /** Human-readable component name used in diagnostics. */
+  name: string;
+  /** Omitted when the spec says the axis is unbounded. */
+  min?: number;
+  max?: number;
   /** Hue components are in degrees with an exclusive upper bound. */
-  hue?: true;
+  maxExclusive?: true;
 }
 
-const UNIT: ComponentRange = { min: 0, max: 1 };
-const PERCENT: ComponentRange = { min: 0, max: 100 };
-const HUE: ComponentRange = { min: 0, max: 360, hue: true };
-const RGB: readonly [ComponentRange, ComponentRange, ComponentRange] = [UNIT, UNIT, UNIT];
+const unit = (name: string): ComponentRange => ({ name, min: 0, max: 1 });
+const percent = (name: string): ComponentRange => ({ name, min: 0, max: 100 });
+const hue: ComponentRange = { name: 'hue', min: 0, max: 360, maxExclusive: true };
+/** "Theoretically unbounded" per the Color Module; only finiteness is checked. */
+const unbounded = (name: string): ComponentRange => ({ name });
+const nonNegative = (name: string): ComponentRange => ({ name, min: 0 });
+const RGB: readonly [ComponentRange, ComponentRange, ComponentRange] = [
+  unit('red'),
+  unit('green'),
+  unit('blue'),
+];
+const XYZ: readonly [ComponentRange, ComponentRange, ComponentRange] = [
+  unit('x'),
+  unit('y'),
+  unit('z'),
+];
 
-/** Allowed numeric range per component for each color space. */
+/** Allowed numeric range per component for each color space. Every supported space has 3 components. */
+export const COLOR_COMPONENT_COUNT = 3;
+
 export const COLOR_COMPONENT_RANGES: Record<
   (typeof COLOR_SPACES)[number],
   readonly [ComponentRange, ComponentRange, ComponentRange]
 > = {
   srgb: RGB,
   'srgb-linear': RGB,
-  hsl: [HUE, PERCENT, PERCENT],
-  hwb: [HUE, PERCENT, PERCENT],
-  lab: [PERCENT, { min: -125, max: 125 }, { min: -125, max: 125 }],
-  lch: [PERCENT, { min: 0, max: 150 }, HUE],
-  oklab: [UNIT, { min: -0.4, max: 0.4 }, { min: -0.4, max: 0.4 }],
-  oklch: [UNIT, { min: 0, max: 0.4 }, HUE],
+  hsl: [hue, percent('saturation'), percent('lightness')],
+  hwb: [hue, percent('whiteness'), percent('blackness')],
+  lab: [percent('lightness'), unbounded('a'), unbounded('b')],
+  lch: [percent('lightness'), nonNegative('chroma'), hue],
+  oklab: [unit('lightness'), unbounded('a'), unbounded('b')],
+  oklch: [unit('lightness'), nonNegative('chroma'), hue],
   'display-p3': RGB,
   'a98-rgb': RGB,
   'prophoto-rgb': RGB,
   rec2020: RGB,
-  'xyz-d65': RGB,
-  'xyz-d50': RGB,
+  'xyz-d65': XYZ,
+  'xyz-d50': XYZ,
 };
 
 export const DIMENSION_UNITS = ['px', 'rem'] as const;
@@ -119,6 +136,13 @@ export const FONT_WEIGHT_ALIASES = {
 } as const;
 
 export const FONT_WEIGHT_RANGE = { min: 1, max: 1000 } as const;
+
+export const ALPHA_RANGE = { min: 0, max: 1 } as const;
+
+/** 6-digit CSS hex color, the only form the Color Module allows for `hex`. */
+export const HEX_COLOR_RE = /^#[0-9a-fA-F]{6}$/;
+
+export const CUBIC_BEZIER_X_RANGE = { min: 0, max: 1 } as const;
 
 export const STROKE_STYLES = [
   'solid',

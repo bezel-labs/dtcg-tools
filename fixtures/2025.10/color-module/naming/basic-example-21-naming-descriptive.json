@@ -1,0 +1,20 @@
+{
+  "color": {
+    "grass": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.67, 0.79, 0.74]
+      }
+    },
+    "brand": {
+      "watermelon": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.91, 0.28, 0.42]
+        }
+      }
+    }
+  }
+}

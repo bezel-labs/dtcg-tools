@@ -1,0 +1,30 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "color.component.out-of-range",
+      "pointer": "/high/$value/components/0",
+      "severity": "error"
+    },
+    {
+      "code": "color.component.out-of-range",
+      "pointer": "/low/$value/components/1",
+      "severity": "error"
+    },
+    {
+      "code": "color.component.out-of-range",
+      "pointer": "/pct/$value/components/1",
+      "severity": "error"
+    },
+    {
+      "code": "color.component.out-of-range",
+      "pointer": "/lab/$value/components/0",
+      "severity": "error"
+    },
+    {
+      "code": "color.component.out-of-range",
+      "pointer": "/chroma/$value/components/1",
+      "severity": "error"
+    }
+  ]
+}

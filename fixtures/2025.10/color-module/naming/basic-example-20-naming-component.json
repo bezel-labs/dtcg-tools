@@ -1,0 +1,14 @@
+{
+  "color": {
+    "button": {
+      "primary": {
+        "$value": "{color.brand.primary}"
+      }
+    },
+    "banner": {
+      "background": {
+        "$value": "{color.palette.black}"
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "hsl": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "hsl",
+      "components": [360, 50, 50]
+    }
+  },
+  "oklch": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "oklch",
+      "components": [0.5, 0.1, 360]
+    }
+  }
+}

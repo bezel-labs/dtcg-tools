@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "duration.value.not-number",
+      "pointer": "/s/$value/value",
+      "severity": "error"
+    }
+  ]
+}

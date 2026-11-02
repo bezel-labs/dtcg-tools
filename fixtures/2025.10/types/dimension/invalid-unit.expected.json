@@ -1,0 +1,25 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "dimension.unit.invalid",
+      "pointer": "/em/$value/unit",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.unit.invalid",
+      "pointer": "/upper/$value/unit",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.unit.invalid",
+      "pointer": "/pct/$value/unit",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.unit.invalid",
+      "pointer": "/num/$value/unit",
+      "severity": "error"
+    }
+  ]
+}

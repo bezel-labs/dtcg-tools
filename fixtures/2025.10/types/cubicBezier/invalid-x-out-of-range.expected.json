@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "cubic-bezier.x.out-of-range",
+      "pointer": "/p1/$value/0",
+      "severity": "error"
+    },
+    {
+      "code": "cubic-bezier.x.out-of-range",
+      "pointer": "/p2/$value/2",
+      "severity": "error"
+    }
+  ]
+}

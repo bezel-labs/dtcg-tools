@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "dimension.unit.missing",
+      "pointer": "/d/$value",
+      "severity": "error"
+    }
+  ]
+}

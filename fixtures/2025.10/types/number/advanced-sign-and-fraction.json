@@ -1,0 +1,14 @@
+{
+  "neg": {
+    "$type": "number",
+    "$value": -1.5
+  },
+  "zero": {
+    "$type": "number",
+    "$value": 0
+  },
+  "exp": {
+    "$type": "number",
+    "$value": 1e-7
+  }
+}

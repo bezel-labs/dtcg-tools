@@ -1,0 +1,9 @@
+{
+  "s": {
+    "$type": "duration",
+    "$value": {
+      "value": "100",
+      "unit": "ms"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "dimension.value.not-object",
+      "pointer": "/d/$value",
+      "severity": "error"
+    }
+  ]
+}
