@@ -1,0 +1,73 @@
+{
+  "solid": {
+    "$type": "strokeStyle",
+    "$value": "solid"
+  },
+  "dashed": {
+    "$type": "strokeStyle",
+    "$value": "dashed"
+  },
+  "dotted": {
+    "$type": "strokeStyle",
+    "$value": "dotted"
+  },
+  "double": {
+    "$type": "strokeStyle",
+    "$value": "double"
+  },
+  "groove": {
+    "$type": "strokeStyle",
+    "$value": "groove"
+  },
+  "ridge": {
+    "$type": "strokeStyle",
+    "$value": "ridge"
+  },
+  "outset": {
+    "$type": "strokeStyle",
+    "$value": "outset"
+  },
+  "inset": {
+    "$type": "strokeStyle",
+    "$value": "inset"
+  },
+  "round": {
+    "$type": "strokeStyle",
+    "$value": {
+      "dashArray": [
+        {
+          "value": 1,
+          "unit": "px"
+        }
+      ],
+      "lineCap": "round"
+    }
+  },
+  "butt": {
+    "$type": "strokeStyle",
+    "$value": {
+      "dashArray": [],
+      "lineCap": "butt"
+    }
+  },
+  "square": {
+    "$type": "strokeStyle",
+    "$value": {
+      "dashArray": [
+        {
+          "value": 1,
+          "unit": "px"
+        },
+        {
+          "value": 2,
+          "unit": "px"
+        },
+        {
+          "value": 3,
+          "unit": "px"
+        }
+      ],
+      "lineCap": "square"
+    }
+  }
+}

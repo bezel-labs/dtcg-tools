@@ -1,0 +1,25 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "composite.property.missing",
+      "pointer": "/a/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.type.mismatch",
+      "pointer": "/a/$value/color",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.value.not-object",
+      "pointer": "/a/$value/width",
+      "severity": "error"
+    },
+    {
+      "code": "composite.value.not-object",
+      "pointer": "/b/$value",
+      "severity": "error"
+    }
+  ]
+}

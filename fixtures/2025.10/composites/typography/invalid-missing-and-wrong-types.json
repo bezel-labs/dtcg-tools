@@ -1,0 +1,14 @@
+{
+  "t": {
+    "$type": "typography",
+    "$value": {
+      "fontFamily": 3,
+      "fontSize": {
+        "value": 16,
+        "unit": "px"
+      },
+      "fontWeight": "Bold",
+      "lineHeight": "1.5"
+    }
+  }
+}

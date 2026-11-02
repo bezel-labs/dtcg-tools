@@ -1431,5 +1431,296 @@
     "verbatim": false,
     "notes": "Aliases into prototype-ish names resolve as plain data; \"#/constructor\" is not an own property and does not resolve.",
     "expected": "security/invalid-proto-aliases.expected.json"
+  },
+  {
+    "file": "aliases/basic-example-35-color-component-references.json",
+    "spec": "format",
+    "section": "7.3.1 Color Component References",
+    "anchor": "x7-3-1-color-component-references",
+    "example": 35,
+    "kind": "basic",
+    "verbatim": false,
+    "cleaned": ["removed // comments"],
+    "notes": "Property-level $ref fragments inside color components."
+  },
+  {
+    "file": "aliases/basic-example-36-dimension-component-references.json",
+    "spec": "format",
+    "section": "7.3.2 Dimension Component References",
+    "anchor": "x7-3-2-dimension-component-references",
+    "example": 36,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "aliases/invalid-spec-example-37-typography-component-references.json",
+    "spec": "format",
+    "section": "7.3.3 Typography Component References",
+    "anchor": "x7-3-3-typography-component-references",
+    "example": 37,
+    "kind": "invalid",
+    "verbatim": true,
+    "source": "spec-example",
+    "expected": "aliases/invalid-spec-example-37-typography-component-references.expected.json",
+    "notes": "The typography values omit letterSpacing, which §9.8 requires. The $ref fragments themselves resolve correctly."
+  },
+  {
+    "file": "composites/shadow/basic-example-45-composite-token.json",
+    "spec": "format",
+    "section": "9.1 Array aliasing in composite types",
+    "anchor": "x9-1-array-aliasing-in-composite-types",
+    "example": 45,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "composites/shadow/basic-example-46-advanced-composite-token.json",
+    "spec": "format",
+    "section": "9.1 Array aliasing in composite types",
+    "anchor": "x9-1-array-aliasing-in-composite-types",
+    "example": 46,
+    "kind": "basic",
+    "verbatim": true,
+    "notes": "Sub-values aliased to typed tokens; an untyped alias of the composite token takes its type."
+  },
+  {
+    "file": "composites/strokeStyle/basic-example-47-string-stroke-style.json",
+    "spec": "format",
+    "section": "9.3.1 String value",
+    "anchor": "x9-3-1-string-value",
+    "example": 47,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "composites/strokeStyle/basic-example-48-object-stroke-style.json",
+    "spec": "format",
+    "section": "9.3.2 Object value",
+    "anchor": "x9-3-2-object-value",
+    "example": 48,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "composites/strokeStyle/basic-example-49-object-stroke-style-using-references.json",
+    "spec": "format",
+    "section": "9.3.2 Object value",
+    "anchor": "x9-3-2-object-value",
+    "example": 49,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "composites/border/invalid-spec-example-52-border.json",
+    "spec": "format",
+    "section": "9.4 Border",
+    "anchor": "x9-4-border",
+    "example": 52,
+    "kind": "invalid",
+    "verbatim": true,
+    "source": "spec-example",
+    "notes": "{color.focusring} is not defined in the snippet, so the alias is unresolvable.",
+    "expected": "composites/border/invalid-spec-example-52-border.expected.json"
+  },
+  {
+    "file": "composites/transition/basic-example-53-transition.json",
+    "spec": "format",
+    "section": "9.5 Transition",
+    "anchor": "x9-5-transition",
+    "example": 53,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "composites/shadow/invalid-spec-example-54-shadow.json",
+    "spec": "format",
+    "section": "9.6 Shadow",
+    "anchor": "x9-6-shadow",
+    "example": 54,
+    "kind": "invalid",
+    "verbatim": false,
+    "cleaned": ["added missing comma between members", "added missing closing brace"],
+    "source": "spec-example",
+    "notes": "The spec text is missing a comma between members (cleaned); {base.shadow}, {brand.accent}, and {highlight.shadow} are not defined in the snippet.",
+    "expected": "composites/shadow/invalid-spec-example-54-shadow.expected.json"
+  },
+  {
+    "file": "composites/gradient/basic-example-55-gradient.json",
+    "spec": "format",
+    "section": "9.7 Gradient",
+    "anchor": "x9-7-gradient",
+    "example": 55,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "composites/gradient/basic-example-56-gradient-with-omitted-start-stop.json",
+    "spec": "format",
+    "section": "9.7 Gradient",
+    "anchor": "x9-7-gradient",
+    "example": 56,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "composites/gradient/invalid-spec-example-57-gradient-using-references.json",
+    "spec": "format",
+    "section": "9.7 Gradient",
+    "anchor": "x9-7-gradient",
+    "example": 57,
+    "kind": "invalid",
+    "verbatim": true,
+    "source": "spec-example",
+    "notes": "{brand.secondary} is not defined in the snippet.",
+    "expected": "composites/gradient/invalid-spec-example-57-gradient-using-references.expected.json"
+  },
+  {
+    "file": "composites/typography/invalid-spec-example-58-typography.json",
+    "spec": "format",
+    "section": "9.8 Typography",
+    "anchor": "x9-8-typography",
+    "example": 58,
+    "kind": "invalid",
+    "verbatim": true,
+    "source": "spec-example",
+    "notes": "{font.serif}, {font.size.smallest}, and {font.weight.normal} are not defined in the snippet.",
+    "expected": "composites/typography/invalid-spec-example-58-typography.expected.json"
+  },
+  {
+    "file": "composites/strokeStyle/advanced-all-keywords-and-caps.json",
+    "spec": "format",
+    "section": "9.3 Stroke style",
+    "anchor": "x9-3-stroke-style",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Odd-length dash arrays are allowed (repeated by consumers)."
+  },
+  {
+    "file": "composites/strokeStyle/invalid-keyword-and-shape.json",
+    "spec": "format",
+    "section": "9.3 Stroke style",
+    "anchor": "x9-3-stroke-style",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "composites/strokeStyle/invalid-keyword-and-shape.expected.json"
+  },
+  {
+    "file": "composites/strokeStyle/invalid-dash-array-entries.json",
+    "spec": "format",
+    "section": "9.3 Stroke style",
+    "anchor": "x9-3-stroke-style",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Each dash entry must be a dimension value or a reference to a dimension token.",
+    "expected": "composites/strokeStyle/invalid-dash-array-entries.expected.json"
+  },
+  {
+    "file": "composites/border/advanced-aliases-and-object-style.json",
+    "spec": "format",
+    "section": "9.4 Border",
+    "anchor": "x9-4-border",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "composites/border/invalid-missing-and-wrong-types.json",
+    "spec": "format",
+    "section": "9.4 Border",
+    "anchor": "x9-4-border",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "composites/border/invalid-missing-and-wrong-types.expected.json"
+  },
+  {
+    "file": "composites/transition/invalid-missing-and-wrong-types.json",
+    "spec": "format",
+    "section": "9.5 Transition",
+    "anchor": "x9-5-transition",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "composites/transition/invalid-missing-and-wrong-types.expected.json"
+  },
+  {
+    "file": "composites/shadow/advanced-layered-with-aliases-and-inset.json",
+    "spec": "format",
+    "section": "9.1 Array aliasing in composite types",
+    "anchor": "x9-1-array-aliasing-in-composite-types",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Array entries may be shadow objects or references to shadow tokens; no flattening."
+  },
+  {
+    "file": "composites/shadow/invalid-bad-entries-and-inset.json",
+    "spec": "format",
+    "section": "9.6 Shadow",
+    "anchor": "x9-6-shadow",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "composites/shadow/invalid-bad-entries-and-inset.expected.json"
+  },
+  {
+    "file": "composites/gradient/advanced-position-clamping-warning.json",
+    "spec": "format",
+    "section": "9.7 Gradient",
+    "anchor": "x9-7-gradient",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Positions outside [0, 1] are clamped by consumers, so this is a warning and the document stays valid.",
+    "expected": "composites/gradient/advanced-position-clamping-warning.expected.json"
+  },
+  {
+    "file": "composites/gradient/invalid-bad-stops.json",
+    "spec": "format",
+    "section": "9.7 Gradient",
+    "anchor": "x9-7-gradient",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "\"solid\" is not alias-shaped, so it is an invalid stop rather than an alias error.",
+    "expected": "composites/gradient/invalid-bad-stops.expected.json"
+  },
+  {
+    "file": "composites/typography/invalid-missing-and-wrong-types.json",
+    "spec": "format",
+    "section": "9.8 Typography",
+    "anchor": "x9-8-typography",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "composites/typography/invalid-missing-and-wrong-types.expected.json"
+  },
+  {
+    "file": "aliases/advanced-property-level-refs-everywhere.json",
+    "spec": "format",
+    "section": "7.3 Property-Level References",
+    "anchor": "x7-3-property-level-references",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "$ref fragments may appear at any depth inside a value."
+  },
+  {
+    "file": "aliases/invalid-property-level-ref-errors.json",
+    "spec": "format",
+    "section": "7.3 Property-Level References",
+    "anchor": "x7-3-property-level-references",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "A failed fragment reference suppresses further checks on that value; a resolved fragment of the wrong type is reported by the value validator.",
+    "expected": "aliases/invalid-property-level-ref-errors.expected.json"
+  },
+  {
+    "file": "composites/advanced-alias-of-composite-takes-type.json",
+    "spec": "format",
+    "section": "9.1 Array aliasing in composite types",
+    "anchor": "x9-1-array-aliasing-in-composite-types",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "composites/invalid-alias-of-composite-type-mismatch.json",
+    "spec": "format",
+    "section": "9.1 Array aliasing in composite types",
+    "anchor": "x9-1-array-aliasing-in-composite-types",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "composites/invalid-alias-of-composite-type-mismatch.expected.json"
   }
 ]

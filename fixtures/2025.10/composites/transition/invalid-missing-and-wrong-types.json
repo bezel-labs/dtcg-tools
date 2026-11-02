@@ -1,0 +1,12 @@
+{
+  "t": {
+    "$type": "transition",
+    "$value": {
+      "duration": {
+        "value": 1,
+        "unit": "px"
+      },
+      "timingFunction": [2, 0, 0, 1]
+    }
+  }
+}

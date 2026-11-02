@@ -4,9 +4,9 @@ import type { NodeInfo } from '../../../../core/prepare.js';
 import type { ValidationContext } from '../../../context.js';
 import { child, createIssue } from '../../../context.js';
 import type { Resolver } from '../aliases/resolver.js';
-import { PRIMITIVE_TOKEN_TYPES, TOKEN_TYPES } from '../constants.js';
-import type { PrimitiveTokenType, TokenType } from '../types/token.js';
-import { PRIMITIVE_VALUE_VALIDATORS } from '../values/index.js';
+import { validateValueOfType } from '../composites/sub-value.js';
+import { TOKEN_TYPES } from '../constants.js';
+import type { TokenType } from '../types/token.js';
 
 /**
  * Resolves a group's `$extends`/`$ref` target (§6.4): it must exist, be a
@@ -67,7 +67,7 @@ export function validateExtends(
     const ownType = typeof member.value.$type === 'string' ? member.value.$type : undefined;
     const hereType: TokenType | undefined = isKnown(ownType) ? ownType : groupType;
     if (hereType === originType) continue;
-    const reason = describeInheritedProblem(member.value, hereType);
+    const reason = describeInheritedProblem(member.value, hereType, resolver);
     if (reason) {
       issues.push(
         createIssue(child(ctx, name), 'extends.inherited-token.invalid', {
@@ -90,18 +90,13 @@ function isKnown(t: unknown): t is TokenType {
 function describeInheritedProblem(
   token: Record<string, unknown>,
   type: TokenType | undefined,
+  resolver: Resolver,
 ): string | undefined {
   if (type === undefined) return 'no $type can be determined for it here';
   const value = token.$value;
   if (typeof value === 'string' && value.startsWith('{')) return undefined; // alias: judged at its origin
   if (isPlainObject(value) && hasOwn(value, '$ref')) return undefined;
-  if ((PRIMITIVE_TOKEN_TYPES as readonly string[]).includes(type)) {
-    const sub = PRIMITIVE_VALUE_VALIDATORS[type as PrimitiveTokenType](value, {
-      spec: '2025.10',
-      path: [],
-    });
-    const first = sub.find((i) => i.severity === 'error');
-    if (first) return `as ${type}, ${first.message}`;
-  }
-  return undefined;
+  const sub = validateValueOfType(type, value, { spec: '2025.10', path: [] }, resolver);
+  const first = sub.find((i) => i.severity === 'error');
+  return first ? `as ${type}, ${first.message}` : undefined;
 }

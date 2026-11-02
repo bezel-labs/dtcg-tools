@@ -1,0 +1,45 @@
+{
+  "base": {
+    "$type": "dimension",
+    "$value": {
+      "value": 4,
+      "unit": "px"
+    }
+  },
+  "a": {
+    "$type": "dimension",
+    "$value": {
+      "value": {
+        "$ref": "#/base/$value/nope"
+      },
+      "unit": "px"
+    }
+  },
+  "b": {
+    "$type": "dimension",
+    "$value": {
+      "value": {
+        "$ref": "http://x"
+      },
+      "unit": "px"
+    }
+  },
+  "c": {
+    "$type": "dimension",
+    "$value": {
+      "value": {
+        "$ref": "#/base/$value/unit"
+      },
+      "unit": "px"
+    }
+  },
+  "d": {
+    "$type": "dimension",
+    "$value": {
+      "value": {
+        "$ref": "#/d/$value/value"
+      },
+      "unit": "px"
+    }
+  }
+}

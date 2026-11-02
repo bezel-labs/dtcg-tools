@@ -9,6 +9,8 @@ import { createResolver } from './aliases/resolver.js';
 import { validateGroup } from './groups/validate-group.js';
 import { validateDesignToken } from './tokens/validate-design-token.js';
 
+export type { Dereferenced } from './aliases/dereference.js';
+export { dereference } from './aliases/dereference.js';
 export { parseAlias, parseRef } from './aliases/parse.js';
 export type {
   AliasResolution,
@@ -23,6 +25,7 @@ export type {
 } from './aliases/resolver.js';
 export { createResolver, rawAt } from './aliases/resolver.js';
 export { validateAliasToken } from './aliases/validate-alias.js';
+export * from './composites/index.js';
 export * from './constants.js';
 export { validateExtends } from './groups/validate-extends.js';
 export { validateExtendsSyntax, validateGroup } from './groups/validate-group.js';

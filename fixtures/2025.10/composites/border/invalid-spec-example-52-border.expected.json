@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "alias.target.missing",
+      "pointer": "/border/focusring/$value/color",
+      "severity": "error"
+    }
+  ]
+}

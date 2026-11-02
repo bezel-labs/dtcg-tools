@@ -1,0 +1,50 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "alias.type.mismatch",
+      "pointer": "/a/$value/0",
+      "severity": "error"
+    },
+    {
+      "code": "shadow.item.invalid",
+      "pointer": "/a/$value/1",
+      "severity": "error"
+    },
+    {
+      "code": "shadow.inset.not-boolean",
+      "pointer": "/a/$value/2/inset",
+      "severity": "error"
+    },
+    {
+      "code": "value.unknown-property",
+      "pointer": "/a/$value/2/extra",
+      "severity": "warning"
+    },
+    {
+      "code": "shadow.value.invalid",
+      "pointer": "/b/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/c/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/c/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/c/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/c/$value",
+      "severity": "error"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "n": {
+    "$type": "number",
+    "$value": 1
+  },
+  "s": {
+    "$type": "strokeStyle",
+    "$value": {
+      "dashArray": [
+        {
+          "value": 1,
+          "unit": "px"
+        },
+        "{n}",
+        5,
+        "{nope}"
+      ],
+      "lineCap": "round"
+    }
+  }
+}

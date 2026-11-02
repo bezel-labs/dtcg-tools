@@ -1,0 +1,25 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "composite.property.missing",
+      "pointer": "/t/$value",
+      "severity": "error"
+    },
+    {
+      "code": "font-family.value.invalid",
+      "pointer": "/t/$value/fontFamily",
+      "severity": "error"
+    },
+    {
+      "code": "font-weight.keyword.invalid",
+      "pointer": "/t/$value/fontWeight",
+      "severity": "error"
+    },
+    {
+      "code": "number.value.not-number",
+      "pointer": "/t/$value/lineHeight",
+      "severity": "error"
+    }
+  ]
+}

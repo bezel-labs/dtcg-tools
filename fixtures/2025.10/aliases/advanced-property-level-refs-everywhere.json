@@ -1,0 +1,68 @@
+{
+  "base": {
+    "$type": "shadow",
+    "$value": {
+      "color": {
+        "colorSpace": "srgb",
+        "components": [0, 0, 0]
+      },
+      "offsetX": {
+        "value": 0,
+        "unit": "px"
+      },
+      "offsetY": {
+        "value": 2,
+        "unit": "px"
+      },
+      "blur": {
+        "value": 4,
+        "unit": "px"
+      },
+      "spread": {
+        "value": 0,
+        "unit": "px"
+      }
+    }
+  },
+  "c": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [
+        {
+          "$ref": "#/base/$value/color/components/0"
+        },
+        0,
+        0
+      ],
+      "alpha": {
+        "$ref": "#/base/$value/color/components/1"
+      }
+    }
+  },
+  "s": {
+    "$type": "shadow",
+    "$value": {
+      "color": {
+        "$ref": "#/base/$value/color"
+      },
+      "offsetX": {
+        "$ref": "#/base/$value/offsetX"
+      },
+      "offsetY": {
+        "value": 1,
+        "unit": "px"
+      },
+      "blur": {
+        "value": {
+          "$ref": "#/base/$value/blur/value"
+        },
+        "unit": "px"
+      },
+      "spread": {
+        "value": 0,
+        "unit": "px"
+      }
+    }
+  }
+}

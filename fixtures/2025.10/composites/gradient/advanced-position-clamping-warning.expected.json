@@ -1,0 +1,15 @@
+{
+  "valid": true,
+  "issues": [
+    {
+      "code": "gradient.position.out-of-range",
+      "pointer": "/g/$value/0/position",
+      "severity": "warning"
+    },
+    {
+      "code": "gradient.position.out-of-range",
+      "pointer": "/g/$value/1/position",
+      "severity": "warning"
+    }
+  ]
+}

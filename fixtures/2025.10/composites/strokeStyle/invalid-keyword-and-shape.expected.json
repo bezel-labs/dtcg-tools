@@ -1,0 +1,40 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "stroke-style.keyword.invalid",
+      "pointer": "/a/$value",
+      "severity": "error"
+    },
+    {
+      "code": "stroke-style.value.invalid",
+      "pointer": "/b/$value",
+      "severity": "error"
+    },
+    {
+      "code": "stroke-style.dash-array.not-array",
+      "pointer": "/c/$value/dashArray",
+      "severity": "error"
+    },
+    {
+      "code": "stroke-style.line-cap.invalid",
+      "pointer": "/c/$value/lineCap",
+      "severity": "error"
+    },
+    {
+      "code": "value.unknown-property",
+      "pointer": "/c/$value/extra",
+      "severity": "warning"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/d/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/d/$value",
+      "severity": "error"
+    }
+  ]
+}

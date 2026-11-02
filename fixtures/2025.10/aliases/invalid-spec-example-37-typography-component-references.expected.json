@@ -1,0 +1,20 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "composite.property.missing",
+      "pointer": "/base/text/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/headings/h1/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/headings/h2/$value",
+      "severity": "error"
+    }
+  ]
+}

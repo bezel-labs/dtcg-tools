@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "alias.type.mismatch",
+      "pointer": "/b/$value",
+      "severity": "error"
+    }
+  ]
+}

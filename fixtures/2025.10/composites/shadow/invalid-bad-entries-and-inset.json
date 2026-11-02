@@ -1,0 +1,50 @@
+{
+  "n": {
+    "$type": "number",
+    "$value": 1
+  },
+  "a": {
+    "$type": "shadow",
+    "$value": [
+      "{n}",
+      3,
+      {
+        "color": {
+          "colorSpace": "srgb",
+          "components": [0, 0, 0]
+        },
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 2,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 4,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        },
+        "inset": "yes",
+        "extra": 1
+      }
+    ]
+  },
+  "b": {
+    "$type": "shadow",
+    "$value": "none"
+  },
+  "c": {
+    "$type": "shadow",
+    "$value": {
+      "color": {
+        "colorSpace": "srgb",
+        "components": [0, 0, 0]
+      }
+    }
+  }
+}

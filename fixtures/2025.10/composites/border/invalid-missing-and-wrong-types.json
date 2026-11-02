@@ -1,0 +1,17 @@
+{
+  "n": {
+    "$type": "number",
+    "$value": 1
+  },
+  "a": {
+    "$type": "border",
+    "$value": {
+      "color": "{n}",
+      "width": "thin"
+    }
+  },
+  "b": {
+    "$type": "border",
+    "$value": "solid"
+  }
+}

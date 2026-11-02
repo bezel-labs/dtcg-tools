@@ -58,6 +58,19 @@ export type IssueCode =
   | 'extends.target.not-group'
   | 'extends.cycle'
   | 'extends.inherited-token.invalid'
+  // §9 composites
+  | 'composite.property.missing'
+  | 'composite.value.not-object'
+  | 'stroke-style.value.invalid'
+  | 'stroke-style.keyword.invalid'
+  | 'stroke-style.dash-array.not-array'
+  | 'stroke-style.line-cap.invalid'
+  | 'shadow.value.invalid'
+  | 'shadow.item.invalid'
+  | 'shadow.inset.not-boolean'
+  | 'gradient.value.not-array'
+  | 'gradient.stop.invalid'
+  | 'gradient.position.out-of-range'
   // §8.1 color (Color Module 2025.10)
   | 'color.value.not-object'
   | 'color.color-space.missing'
@@ -206,6 +219,31 @@ export const MESSAGES: Record<IssueCode, (meta: Meta) => string> = {
   'extends.inherited-token.invalid': (m) =>
     `Token ${fmt(m.token)} inherited from ${fmt(m.inheritedFrom)} is invalid in this group: ${fmt(m.reason)}.`,
 
+  'composite.property.missing': (m) =>
+    `A ${fmt(m.type)} value must have a ${fmt(m.property)} property (${fmt(m.expectedType)} value or reference).`,
+  'composite.value.not-object': (m) =>
+    `A ${fmt(m.type)} value must be an object with ${list(m.properties)}, received ${fmt(m.actualType)}.`,
+  'stroke-style.value.invalid': (m) =>
+    `A strokeStyle value must be a keyword string or an object with "dashArray" and "lineCap", received ${fmt(m.actualType)}.`,
+  'stroke-style.keyword.invalid': (m) =>
+    `Unknown stroke style ${fmt(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
+  'stroke-style.dash-array.not-array': (m) =>
+    `"dashArray" must be an array of dimension values or references, received ${fmt(m.actualType)}.`,
+  'stroke-style.line-cap.invalid': (m) =>
+    `"lineCap" must be one of ${list(m.allowed)}, received ${fmt(m.actual)}.${suggest(m)}`,
+  'shadow.value.invalid': (m) =>
+    `A shadow value must be a shadow object or an array of shadow objects and references, received ${fmt(m.actualType)}.`,
+  'shadow.item.invalid': (m) =>
+    `Shadow entry ${fmt(m.index)} must be a shadow object or a reference to a shadow token, received ${fmt(m.actualType)}.`,
+  'shadow.inset.not-boolean': (m) =>
+    `"inset" must be true or false, received ${fmt(m.actualType)}.`,
+  'gradient.value.not-array': (m) =>
+    `A gradient value must be an array of gradient stops and references, received ${fmt(m.actualType)}.`,
+  'gradient.stop.invalid': (m) =>
+    `Gradient entry ${fmt(m.index)} must be a stop object with "color" and "position" or a reference to a gradient token, received ${fmt(m.actualType)}.`,
+  'gradient.position.out-of-range': (m) =>
+    `Gradient stop position ${fmt(m.actual)} is outside [0, 1] and will be clamped by consumers.`,
+
   'color.value.not-object': (m) =>
     `A color value must be an object with "colorSpace" and "components", received ${fmt(m.actualType)}.`,
   'color.color-space.missing': () => 'A color value must have a "colorSpace" property.',
@@ -315,6 +353,18 @@ export const DEFAULT_SEVERITY: Record<IssueCode, Severity> = {
   'extends.target.not-group': 'error',
   'extends.cycle': 'error',
   'extends.inherited-token.invalid': 'error',
+  'composite.property.missing': 'error',
+  'composite.value.not-object': 'error',
+  'stroke-style.value.invalid': 'error',
+  'stroke-style.keyword.invalid': 'error',
+  'stroke-style.dash-array.not-array': 'error',
+  'stroke-style.line-cap.invalid': 'error',
+  'shadow.value.invalid': 'error',
+  'shadow.item.invalid': 'error',
+  'shadow.inset.not-boolean': 'error',
+  'gradient.value.not-array': 'error',
+  'gradient.stop.invalid': 'error',
+  'gradient.position.out-of-range': 'warning',
   'color.value.not-object': 'error',
   'color.color-space.missing': 'error',
   'color.color-space.invalid': 'error',

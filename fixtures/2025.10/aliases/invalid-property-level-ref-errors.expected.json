@@ -1,0 +1,25 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "ref.target.missing",
+      "pointer": "/a/$value/value",
+      "severity": "error"
+    },
+    {
+      "code": "ref.not-local",
+      "pointer": "/b/$value/value",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.value.not-number",
+      "pointer": "/c/$value/value",
+      "severity": "error"
+    },
+    {
+      "code": "ref.cycle",
+      "pointer": "/d/$value/value",
+      "severity": "error"
+    }
+  ]
+}

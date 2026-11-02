@@ -1,0 +1,20 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "composite.property.missing",
+      "pointer": "/t/$value",
+      "severity": "error"
+    },
+    {
+      "code": "duration.unit.invalid",
+      "pointer": "/t/$value/duration/unit",
+      "severity": "error"
+    },
+    {
+      "code": "cubic-bezier.x.out-of-range",
+      "pointer": "/t/$value/timingFunction/0",
+      "severity": "error"
+    }
+  ]
+}

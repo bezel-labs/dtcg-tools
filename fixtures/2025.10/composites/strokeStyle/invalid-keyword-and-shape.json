@@ -1,0 +1,22 @@
+{
+  "a": {
+    "$type": "strokeStyle",
+    "$value": "Dashed"
+  },
+  "b": {
+    "$type": "strokeStyle",
+    "$value": 3
+  },
+  "c": {
+    "$type": "strokeStyle",
+    "$value": {
+      "dashArray": "x",
+      "lineCap": "flat",
+      "extra": 1
+    }
+  },
+  "d": {
+    "$type": "strokeStyle",
+    "$value": {}
+  }
+}

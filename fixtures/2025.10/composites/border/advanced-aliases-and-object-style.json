@@ -1,0 +1,45 @@
+{
+  "c": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0, 0]
+    }
+  },
+  "w": {
+    "$type": "dimension",
+    "$value": {
+      "value": 1,
+      "unit": "px"
+    }
+  },
+  "s": {
+    "$type": "strokeStyle",
+    "$value": "dotted"
+  },
+  "b": {
+    "$type": "border",
+    "$value": {
+      "color": "{c}",
+      "width": "{w}",
+      "style": "{s}"
+    }
+  },
+  "b2": {
+    "$type": "border",
+    "$value": {
+      "color": {
+        "colorSpace": "srgb",
+        "components": [0, 0, 0]
+      },
+      "width": {
+        "value": 2,
+        "unit": "px"
+      },
+      "style": {
+        "dashArray": ["{w}"],
+        "lineCap": "round"
+      }
+    }
+  }
+}

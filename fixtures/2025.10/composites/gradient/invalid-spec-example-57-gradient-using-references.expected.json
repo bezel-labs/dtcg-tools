@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "alias.target.missing",
+      "pointer": "/gradient-with-references/$value/1/color",
+      "severity": "error"
+    }
+  ]
+}

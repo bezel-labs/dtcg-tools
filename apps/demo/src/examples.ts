@@ -426,4 +426,144 @@ export const EXAMPLE_GROUPS: ExampleGroup[] = [
       },
     ],
   },
+  {
+    area: 'Composite types',
+    spec: '§9 strokeStyle, border, transition, shadow, gradient, typography',
+    examples: [
+      {
+        title: 'Shadow with aliased sub-values',
+        description:
+          'Sub-values may be explicit values or aliases to tokens of the right type; an untyped alias of the shadow takes its type.',
+        expect: [],
+        json: j({
+          space: { small: { $type: 'dimension', $value: { value: 0.5, unit: 'rem' } } },
+          color: {
+            shadow: {
+              $type: 'color',
+              $value: { colorSpace: 'srgb', components: [0, 0, 0], alpha: 0.5 },
+            },
+          },
+          shadow: {
+            medium: {
+              $type: 'shadow',
+              $value: {
+                color: '{color.shadow}',
+                offsetX: '{space.small}',
+                offsetY: '{space.small}',
+                blur: { value: 1.5, unit: 'rem' },
+                spread: { value: 0, unit: 'rem' },
+              },
+            },
+          },
+          card: { $value: '{shadow.medium}' },
+        }),
+      },
+      {
+        title: 'Layered shadow array',
+        description:
+          'A shadow value may be an array of shadow objects and references to shadow tokens; references are not flattened.',
+        expect: [],
+        json: j({
+          base: {
+            $type: 'shadow',
+            $value: {
+              color: { colorSpace: 'srgb', components: [0, 0, 0] },
+              offsetX: { value: 0, unit: 'px' },
+              offsetY: { value: 2, unit: 'px' },
+              blur: { value: 4, unit: 'px' },
+              spread: { value: 0, unit: 'px' },
+            },
+          },
+          layered: {
+            $type: 'shadow',
+            $value: [
+              '{base}',
+              {
+                color: { colorSpace: 'srgb', components: [1, 0, 0] },
+                offsetX: { value: 0, unit: 'px' },
+                offsetY: { value: 8, unit: 'px' },
+                blur: { value: 16, unit: 'px' },
+                spread: { value: 0, unit: 'px' },
+                inset: true,
+              },
+            ],
+          },
+        }),
+      },
+      {
+        title: 'Missing and mistyped sub-values',
+        description:
+          'Each composite lists its required sub-values; an alias must point at a token of the expected type.',
+        expect: ['composite.property.missing', 'alias.type.mismatch', 'dimension.value.not-object'],
+        json: j({
+          n: { $type: 'number', $value: 1 },
+          b: { $type: 'border', $value: { color: '{n}', width: 'thin' } },
+        }),
+      },
+      {
+        title: 'Stroke style keyword and object',
+        description:
+          'A keyword from the fixed list, or { dashArray, lineCap } with dimension entries and round/butt/square.',
+        expect: ['stroke-style.keyword.invalid', 'stroke-style.line-cap.invalid'],
+        json: j({
+          ok: {
+            $type: 'strokeStyle',
+            $value: { dashArray: [{ value: 4, unit: 'px' }], lineCap: 'round' },
+          },
+          a: { $type: 'strokeStyle', $value: 'Dashed' },
+          b: { $type: 'strokeStyle', $value: { dashArray: [], lineCap: 'flat' } },
+        }),
+      },
+      {
+        title: 'Gradient stops and position clamping',
+        description:
+          'Stops need color and position; positions outside [0, 1] are clamped by consumers, so they only warn.',
+        expect: ['gradient.position.out-of-range', 'gradient.stop.invalid'],
+        json: j({
+          g: {
+            $type: 'gradient',
+            $value: [
+              { color: { colorSpace: 'srgb', components: [0, 0, 1] }, position: 0 },
+              { color: { colorSpace: 'srgb', components: [1, 0, 0] }, position: 1.5 },
+              'solid',
+            ],
+          },
+        }),
+      },
+      {
+        title: 'Typography with references',
+        description:
+          'Five required sub-values; aliases must resolve to tokens of the matching type.',
+        expect: ['composite.property.missing', 'alias.target.missing'],
+        json: j({
+          t: {
+            $type: 'typography',
+            $value: {
+              fontFamily: '{font.serif}',
+              fontSize: { value: 16, unit: 'px' },
+              fontWeight: 400,
+              lineHeight: 1.5,
+            },
+          },
+        }),
+      },
+      {
+        title: 'Property-level $ref fragments',
+        description:
+          'A $ref may point at any part of another value (§7.3); the fragment is validated in place.',
+        expect: ['dimension.value.not-number'],
+        json: j({
+          base: { $type: 'dimension', $value: { value: 16, unit: 'px' } },
+          ok: {
+            $type: 'dimension',
+            $value: { value: { $ref: '#/base/$value/value' }, unit: 'rem' },
+          },
+          bad: {
+            $type: 'dimension',
+            $value: { value: { $ref: '#/base/$value/unit' }, unit: 'px' },
+          },
+        }),
+      },
+    ],
+  },
 ];

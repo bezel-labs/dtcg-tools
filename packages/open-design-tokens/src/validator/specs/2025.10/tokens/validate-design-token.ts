@@ -4,11 +4,12 @@ import type { NodeInfo } from '../../../../core/prepare.js';
 import type { ValidationContext } from '../../../context.js';
 import { child, createIssue } from '../../../context.js';
 import { typeName } from '../../../primitives.js';
+import { dereference } from '../aliases/dereference.js';
 import type { Resolver } from '../aliases/resolver.js';
 import { validateAliasToken } from '../aliases/validate-alias.js';
-import { PRIMITIVE_TOKEN_TYPES, TOKEN_PROPS } from '../constants.js';
-import type { PrimitiveTokenType, TokenType } from '../types/token.js';
-import { PRIMITIVE_VALUE_VALIDATORS } from '../values/index.js';
+import { validateValueOfType } from '../composites/sub-value.js';
+import { TOKEN_PROPS } from '../constants.js';
+import type { TokenType } from '../types/token.js';
 import {
   validateDeprecated,
   validateDescription,
@@ -20,10 +21,6 @@ export interface TokenValidation {
   issues: ValidationIssue[];
   /** `true` when the token's value is an alias or `$ref`. */
   isAlias: boolean;
-}
-
-function isPrimitiveType(type: string): type is PrimitiveTokenType {
-  return (PRIMITIVE_TOKEN_TYPES as readonly string[]).includes(type);
 }
 
 /** Properties allowed on a reference node (`$ref` in place of `$value`). */
@@ -83,9 +80,11 @@ export function validateDesignToken(
     }
     // A $ref to a sub-value fragment carries a concrete value to check against this token's type.
     const fragment = fragmentValue(node, resolver);
-    if (fragment.present && isPrimitiveType(type)) {
+    if (fragment.present) {
       const fctx = isRefNode ? child(ctx, '$ref') : vctx;
-      issues.push(...PRIMITIVE_VALUE_VALIDATORS[type](fragment.value, fctx));
+      const deref = dereference(fragment.value, fctx, resolver, node.pointer);
+      issues.push(...deref.issues);
+      if (!deref.failed) issues.push(...validateValueOfType(type, deref.value, fctx, resolver));
     }
     return { issues, isAlias };
   }
@@ -95,10 +94,11 @@ export function validateDesignToken(
     return { issues, isAlias };
   }
 
-  if (isPrimitiveType(type)) {
-    issues.push(...PRIMITIVE_VALUE_VALIDATORS[type](value, vctx));
-  }
-  // Composite types are validated in a later milestone.
+  // Property-level references (§7.3) are resolved first; then the value is
+  // checked against its type, including composite sub-values and aliases.
+  const deref = dereference(value, vctx, resolver, node.pointer);
+  issues.push(...deref.issues);
+  if (!deref.failed) issues.push(...validateValueOfType(type, deref.value, vctx, resolver));
   return { issues, isAlias };
 }
 

@@ -1,0 +1,34 @@
+{
+  "s": {
+    "$type": "shadow",
+    "$value": {
+      "color": {
+        "colorSpace": "srgb",
+        "components": [0, 0, 0]
+      },
+      "offsetX": {
+        "value": 0,
+        "unit": "px"
+      },
+      "offsetY": {
+        "value": 2,
+        "unit": "px"
+      },
+      "blur": {
+        "value": 4,
+        "unit": "px"
+      },
+      "spread": {
+        "value": 0,
+        "unit": "px"
+      }
+    }
+  },
+  "a": {
+    "$value": "{s}"
+  },
+  "b": {
+    "$type": "shadow",
+    "$value": "{a}"
+  }
+}

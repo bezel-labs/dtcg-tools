@@ -1,0 +1,30 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "composite.property.missing",
+      "pointer": "/g/$value/0",
+      "severity": "error"
+    },
+    {
+      "code": "gradient.stop.invalid",
+      "pointer": "/g/$value/1",
+      "severity": "error"
+    },
+    {
+      "code": "alias.type.mismatch",
+      "pointer": "/g/$value/2/position",
+      "severity": "error"
+    },
+    {
+      "code": "gradient.stop.invalid",
+      "pointer": "/g/$value/3",
+      "severity": "error"
+    },
+    {
+      "code": "gradient.value.not-array",
+      "pointer": "/h/$value",
+      "severity": "error"
+    }
+  ]
+}
