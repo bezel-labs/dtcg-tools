@@ -1,0 +1,36 @@
+{
+  "name": "open-design-tokens",
+  "version": "0.0.1",
+  "description": "TypeScript toolkit for validating and linting DTCG design tokens.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bezel-labs/open-design-tokens.git",
+    "directory": "packages/open-design-tokens"
+  },
+  "bugs": {
+    "url": "https://github.com/bezel-labs/open-design-tokens/issues"
+  },
+  "homepage": "https://github.com/bezel-labs/open-design-tokens#readme",
+  "keywords": [
+    "dtcg",
+    "design-tokens",
+    "validator",
+    "validation",
+    "linter",
+    "typescript",
+    "w3c",
+    "design-system"
+  ],
+  "files": [
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20.19"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": false
+  }
+}

@@ -1,23 +1,24 @@
 {
-  "name": "@bezel-labs/dtcg-tools",
+  "name": "open-design-tokens-monorepo",
   "version": "0.0.0",
   "private": true,
-  "description": "TypeScript toolkit for DTCG design tokens: validator, types, alias resolution, and utilities (in development).",
+  "description": "TypeScript toolkit for validating and linting DTCG design tokens.",
   "type": "module",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bezel-labs/dtcg-tools.git"
+    "url": "git+https://github.com/bezel-labs/open-design-tokens.git"
   },
   "bugs": {
-    "url": "https://github.com/bezel-labs/dtcg-tools/issues"
+    "url": "https://github.com/bezel-labs/open-design-tokens/issues"
   },
-  "homepage": "https://github.com/bezel-labs/dtcg-tools#readme",
+  "homepage": "https://github.com/bezel-labs/open-design-tokens#readme",
   "keywords": [
     "dtcg",
     "design-tokens",
     "validator",
     "validation",
+    "linter",
     "typescript",
     "w3c",
     "design-system"
