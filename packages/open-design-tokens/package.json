@@ -23,14 +23,50 @@
     "w3c",
     "design-system"
   ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./validator": {
+      "types": "./dist/validator.d.ts",
+      "default": "./dist/validator.js"
+    },
+    "./linter": {
+      "types": "./dist/linter.d.ts",
+      "default": "./dist/linter.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "dtcg-lint": "./dist/cli.js"
+  },
   "files": [
-    "README.md"
+    "dist"
   ],
   "engines": {
     "node": ">=20.19"
   },
   "publishConfig": {
     "access": "public",
-    "provenance": false
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check .",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "fast-check": "4.10.2",
+    "tsup": "9.0.0",
+    "typescript": "6.0.3",
+    "vitest": "5.1.0"
   }
 }

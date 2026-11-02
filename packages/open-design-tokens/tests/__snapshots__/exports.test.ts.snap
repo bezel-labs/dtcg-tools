@@ -1,0 +1,54 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`public exports > linter entry 1`] = `
+[
+  "LINTER_STATUS",
+]
+`;
+
+exports[`public exports > validator entry 1`] = `
+[
+  "COLOR_COMPONENT_RANGES",
+  "COLOR_SPACES",
+  "COMPOSITE_TOKEN_TYPES",
+  "DEFAULT_SEVERITY",
+  "DIMENSION_UNITS",
+  "DURATION_UNITS",
+  "FONT_WEIGHT_ALIASES",
+  "FONT_WEIGHT_RANGE",
+  "FORBIDDEN_NAME_CHARS",
+  "ISSUE_CODES",
+  "LATEST_SPEC",
+  "LINE_CAPS",
+  "MAX_DEPTH",
+  "MESSAGES",
+  "PRIMITIVE_TOKEN_TYPES",
+  "RESERVED_PROPS",
+  "SPEC_ID",
+  "SPEC_IDS",
+  "STROKE_STYLES",
+  "SUB_FIELD_TYPES",
+  "TOKEN_TYPES",
+  "child",
+  "createIssue",
+  "createRootContext",
+  "escapePointerSegment",
+  "fmt",
+  "hasOwn",
+  "isAlias",
+  "isAliasOrReference",
+  "isFiniteNumber",
+  "isGroup",
+  "isPlainObject",
+  "isReference",
+  "isToken",
+  "isTokenOfType",
+  "parseJsonPointer",
+  "toDotPath",
+  "toJsonPointer",
+  "unescapePointerSegment",
+  "validate",
+  "validateDocument",
+  "validateDtcg",
+]
+`;

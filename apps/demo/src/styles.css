@@ -1,0 +1,134 @@
+:root {
+  color-scheme: light dark;
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #666;
+  --border: #ddd;
+  --ok: #1a7f37;
+  --error: #cf222e;
+  --warning: #9a6700;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d1117;
+    --fg: #e6edf3;
+    --muted: #9198a1;
+    --border: #30363d;
+    --ok: #3fb950;
+    --error: #f85149;
+    --warning: #d29922;
+  }
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+}
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px;
+}
+.header h1 {
+  margin: 0 0 4px;
+  font-size: 1.5rem;
+}
+.header p {
+  margin: 0 0 16px;
+  color: var(--muted);
+}
+.panes {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 900px) {
+  .panes {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.pane {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  min-height: 60vh;
+}
+.pane-title {
+  display: block;
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+.editor {
+  width: 100%;
+  height: calc(60vh - 40px);
+  resize: vertical;
+  font:
+    13px / 1.5 ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px;
+}
+.status {
+  font-weight: 600;
+  margin: 0 0 12px;
+}
+.status-ok {
+  color: var(--ok);
+}
+.status-error {
+  color: var(--error);
+}
+.issues {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.issue {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 8px;
+  align-items: baseline;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+.badge {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #fff;
+}
+.badge-error {
+  background: var(--error);
+}
+.badge-warning {
+  background: var(--warning);
+}
+.path,
+.code {
+  font:
+    12px ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+}
+.code {
+  color: var(--muted);
+  grid-column: 2;
+}
+.message {
+  grid-column: 2;
+}

@@ -23,7 +23,27 @@
     "w3c",
     "design-system"
   ],
-  "scripts": {},
-  "dependencies": {},
-  "devDependencies": {}
+  "engines": {
+    "node": ">=20.19"
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "dev": "turbo run dev",
+    "check": "biome check .",
+    "format": "biome format --write .",
+    "ci": "biome ci ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.4",
+    "turbo": "2.11.10",
+    "typescript": "6.0.3"
+  },
+  "packageManager": "npm@10.9.4"
 }
