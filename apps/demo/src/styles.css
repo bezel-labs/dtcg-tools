@@ -142,10 +142,6 @@ body {
 }
 .code {
   color: var(--muted);
-  grid-column: 2;
-}
-.message {
-  grid-column: 2;
 }
 
 /* Examples */
@@ -230,4 +226,71 @@ body {
 }
 .load:hover {
   border-color: var(--fg);
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.toolbar button,
+.toolbar .toggle {
+  font: inherit;
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+}
+.toolbar button:hover {
+  border-color: var(--fg);
+}
+.toolbar .toggle {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+}
+.spec-link {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* Issue rows */
+.issue-button {
+  all: unset;
+  display: grid;
+  grid-template-columns: auto auto auto 1fr;
+  gap: 4px 8px;
+  align-items: baseline;
+  width: 100%;
+  cursor: pointer;
+}
+.badge-lint {
+  background: var(--muted);
+}
+.where {
+  font:
+    12px ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    monospace;
+  color: var(--muted);
+  min-width: 5ch;
+}
+.issue-button .path {
+  grid-column: 4;
+}
+.issue-button .message,
+.issue-button .code {
+  grid-column: 2 / -1;
+}
+.issue-button:hover .message,
+.issue-button:focus-visible .message {
+  text-decoration: underline;
 }

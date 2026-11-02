@@ -3,6 +3,7 @@
  * into the editor so every rule can be exercised by hand. `expect` lists the
  * issue codes the validator should report (empty means valid).
  */
+import invalidProject from '../../../fixtures/2025.10/samples/invalid-full.json?raw';
 import fullProject from '../../../fixtures/2025.10/samples/valid-full.json?raw';
 
 export interface Example {
@@ -26,6 +27,9 @@ const color = (components: unknown[], extra: Record<string, unknown> = {}) => ({
 
 /** The realistic, feature-complete sample loaded when the playground opens. */
 export const FULL_PROJECT_JSON: string = fullProject;
+
+/** The same project with one deliberate mistake per rule family. */
+export const INVALID_PROJECT_JSON: string = invalidProject;
 
 export const EXAMPLE_GROUPS: ExampleGroup[] = [
   {

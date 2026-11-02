@@ -1806,5 +1806,15 @@
     "kind": "advanced",
     "verbatim": false,
     "notes": "A complete, realistic design tokens file for a fictional design system exercising every feature: all 13 types, nested groups, $root, $extends and $ref extension, chained aliases, reference nodes, property-level $ref, layered shadows, gradients, deprecations, descriptions, and extensions. Loaded by default in the playground."
+  },
+  {
+    "file": "samples/invalid-full.json",
+    "spec": "format",
+    "section": "Full project sample",
+    "anchor": "x4-file-format",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "samples/invalid-full.expected.json",
+    "notes": "A deliberately broken copy of the valid sample: one mistake per rule family (names, types, every value type, aliases, $ref, $extends, composites). The \"Invalid sample\" button in the playground loads it."
   }
 ]

@@ -1,0 +1,270 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "color.hex.mismatch",
+      "pointer": "/color/palette/neutral/900/$value/hex",
+      "severity": "warning"
+    },
+    {
+      "code": "name.forbidden-character",
+      "pointer": "/color/palette/neutral/gray.500",
+      "severity": "error"
+    },
+    {
+      "code": "color.color-space.invalid",
+      "pointer": "/color/palette/blue/500/$value/colorSpace",
+      "severity": "error"
+    },
+    {
+      "code": "color.components.wrong-length",
+      "pointer": "/color/palette/blue/600/$value/components",
+      "severity": "error"
+    },
+    {
+      "code": "color.value.not-object",
+      "pointer": "/color/palette/blue/700/$value",
+      "severity": "error"
+    },
+    {
+      "code": "color.component.out-of-range",
+      "pointer": "/color/palette/accent/violet/$value/components/2",
+      "severity": "error"
+    },
+    {
+      "code": "color.alpha.out-of-range",
+      "pointer": "/color/palette/accent/teal/$value/alpha",
+      "severity": "error"
+    },
+    {
+      "code": "value.unknown-property",
+      "pointer": "/color/palette/accent/pink/$value",
+      "severity": "warning"
+    },
+    {
+      "code": "group.name.case-collision",
+      "pointer": "/color/brand",
+      "severity": "warning"
+    },
+    {
+      "code": "alias.target.missing",
+      "pointer": "/color/brand/strong/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.target.not-token",
+      "pointer": "/color/brand/subdued/$value",
+      "severity": "error"
+    },
+    {
+      "code": "token.description.not-string",
+      "pointer": "/color/text/primary/$description",
+      "severity": "error"
+    },
+    {
+      "code": "alias.cycle",
+      "pointer": "/color/text/link/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.cycle",
+      "pointer": "/color/text/linkHover/$value",
+      "severity": "error"
+    },
+    {
+      "code": "ref.not-local",
+      "pointer": "/color/text/external/$value",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.unit.missing",
+      "pointer": "/dimension/space/1/$value",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.value.not-number",
+      "pointer": "/dimension/space/2/$value/value",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.unit.invalid",
+      "pointer": "/dimension/space/3/$value/unit",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.value.not-object",
+      "pointer": "/dimension/space/4/$value",
+      "severity": "error"
+    },
+    {
+      "code": "value.unknown-property",
+      "pointer": "/dimension/space/6/$value",
+      "severity": "warning"
+    },
+    {
+      "code": "token.type.invalid",
+      "pointer": "/dimension/radius/md/$type",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.value.not-object",
+      "pointer": "/dimension/mystery/$value",
+      "severity": "error"
+    },
+    {
+      "code": "font-family.name.not-string",
+      "pointer": "/font/family/sans/$value/1",
+      "severity": "error"
+    },
+    {
+      "code": "font-family.value.invalid",
+      "pointer": "/font/family/mono/$value",
+      "severity": "error"
+    },
+    {
+      "code": "font-weight.keyword.invalid",
+      "pointer": "/font/weight/regular/$value",
+      "severity": "error"
+    },
+    {
+      "code": "font-weight.number.out-of-range",
+      "pointer": "/font/weight/heavy/$value",
+      "severity": "error"
+    },
+    {
+      "code": "number.value.not-number",
+      "pointer": "/font/lineHeight/normal/$value",
+      "severity": "error"
+    },
+    {
+      "code": "duration.unit.invalid",
+      "pointer": "/motion/duration/fast/$value/unit",
+      "severity": "error"
+    },
+    {
+      "code": "duration.unit.missing",
+      "pointer": "/motion/duration/slow/$value",
+      "severity": "error"
+    },
+    {
+      "code": "cubic-bezier.x.out-of-range",
+      "pointer": "/motion/easing/standard/$value/0",
+      "severity": "error"
+    },
+    {
+      "code": "cubic-bezier.value.wrong-length",
+      "pointer": "/motion/easing/short/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/motion/transition/fade/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/typography/body/$value",
+      "severity": "error"
+    },
+    {
+      "code": "alias.type.mismatch",
+      "pointer": "/typography/heading/$value/fontSize",
+      "severity": "error"
+    },
+    {
+      "code": "ref.target.missing",
+      "pointer": "/typography/caption/$value/lineHeight",
+      "severity": "error"
+    },
+    {
+      "code": "dimension.value.not-object",
+      "pointer": "/stroke/focus/$value/dashArray/1",
+      "severity": "error"
+    },
+    {
+      "code": "stroke-style.line-cap.invalid",
+      "pointer": "/stroke/focus/$value/lineCap",
+      "severity": "error"
+    },
+    {
+      "code": "stroke-style.keyword.invalid",
+      "pointer": "/stroke/dotted/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/border/default/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.value.not-object",
+      "pointer": "/border/danger/$value",
+      "severity": "error"
+    },
+    {
+      "code": "composite.property.missing",
+      "pointer": "/shadow/elevation/1/$value",
+      "severity": "error"
+    },
+    {
+      "code": "shadow.item.invalid",
+      "pointer": "/shadow/elevation/2/$value/1",
+      "severity": "error"
+    },
+    {
+      "code": "alias.type.mismatch",
+      "pointer": "/shadow/elevation/2/$value/2/color",
+      "severity": "error"
+    },
+    {
+      "code": "shadow.inset.not-boolean",
+      "pointer": "/shadow/elevation/2/$value/2/inset",
+      "severity": "error"
+    },
+    {
+      "code": "gradient.position.out-of-range",
+      "pointer": "/gradient/brand/$value/1/position",
+      "severity": "warning"
+    },
+    {
+      "code": "gradient.stop.invalid",
+      "pointer": "/gradient/brand/$value/2",
+      "severity": "error"
+    },
+    {
+      "code": "group.member.invalid",
+      "pointer": "/component/badge",
+      "severity": "error"
+    },
+    {
+      "code": "color.value.not-object",
+      "pointer": "/component/button/text/$value",
+      "severity": "error"
+    },
+    {
+      "code": "extends.target.missing",
+      "pointer": "/component/buttonSecondary/$extends",
+      "severity": "error"
+    },
+    {
+      "code": "extends.target.not-group",
+      "pointer": "/component/buttonDanger/$extends",
+      "severity": "error"
+    },
+    {
+      "code": "extends.cycle",
+      "pointer": "/component/buttonLoop/$extends",
+      "severity": "error"
+    },
+    {
+      "code": "token.type.missing",
+      "pointer": "/component/card/padding",
+      "severity": "error"
+    },
+    {
+      "code": "group.root.not-token",
+      "pointer": "/component/card/$root",
+      "severity": "error"
+    }
+  ]
+}

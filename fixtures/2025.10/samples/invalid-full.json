@@ -1,0 +1,390 @@
+{
+  "$description": "Lumen Design System — a deliberately broken copy of the core tokens. Each mistake exercises a different rule.",
+  "color": {
+    "$type": "color",
+    "palette": {
+      "neutral": {
+        "0": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [1, 1, 1],
+            "hex": "#ffffff"
+          }
+        },
+        "900": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.09, 0.11, 0.15],
+            "hex": "#000000"
+          }
+        },
+        "gray.500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.5, 0.5, 0.5]
+          }
+        }
+      },
+      "blue": {
+        "500": {
+          "$value": {
+            "colorSpace": "sRGB",
+            "components": [0.18, 0.43, 0.96]
+          }
+        },
+        "600": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.11, 0.33, 0.82, 1]
+          }
+        },
+        "700": {
+          "$value": "#17439f"
+        }
+      },
+      "accent": {
+        "violet": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [0.62, 0.21, 360]
+          }
+        },
+        "teal": {
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.1, 0.78, 0.74],
+            "alpha": 1.2
+          }
+        },
+        "pink": {
+          "$value": {
+            "colorSpace": "hsl",
+            "components": ["none", 100, 50],
+            "hex": "#ff0080",
+            "opacity": 0.5
+          }
+        }
+      }
+    },
+    "brand": {
+      "$root": {
+        "$value": "{color.palette.blue.500}"
+      },
+      "strong": {
+        "$value": "{color.palette.blue.800}"
+      },
+      "subdued": {
+        "$value": "{color.palette.blue}"
+      },
+      "Strong": {
+        "$value": "{color.palette.blue.600}"
+      }
+    },
+    "text": {
+      "primary": {
+        "$value": "{color.palette.neutral.900}",
+        "$description": 42
+      },
+      "link": {
+        "$value": "{color.text.linkHover}"
+      },
+      "linkHover": {
+        "$value": "{color.text.link}"
+      },
+      "external": {
+        "$value": {
+          "$ref": "https://example.com/tokens.json#/color/brand"
+        }
+      }
+    }
+  },
+  "dimension": {
+    "$type": "dimension",
+    "space": {
+      "1": {
+        "$value": {
+          "value": 4
+        }
+      },
+      "2": {
+        "$value": {
+          "value": "8",
+          "unit": "px"
+        }
+      },
+      "3": {
+        "$value": {
+          "value": 12,
+          "unit": "em"
+        }
+      },
+      "4": {
+        "$value": "16px"
+      },
+      "5": {
+        "$value": {
+          "value": 20,
+          "unit": "px"
+        },
+        "$deprecated": "soon"
+      },
+      "6": {
+        "$value": {
+          "value": 24,
+          "unit": "px",
+          "$comment": "why"
+        }
+      }
+    },
+    "radius": {
+      "md": {
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        },
+        "$type": "Dimension"
+      }
+    },
+    "mystery": {
+      "$value": 7
+    }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": {
+        "$value": ["Inter", 12]
+      },
+      "mono": {
+        "$value": {
+          "name": "Menlo"
+        }
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": {
+        "$value": "Regular"
+      },
+      "heavy": {
+        "$value": 1001
+      }
+    },
+    "lineHeight": {
+      "$type": "number",
+      "normal": {
+        "$value": "1.5"
+      }
+    }
+  },
+  "motion": {
+    "duration": {
+      "$type": "duration",
+      "fast": {
+        "$value": {
+          "value": 120,
+          "unit": "sec"
+        }
+      },
+      "slow": {
+        "$value": {
+          "value": 400
+        }
+      }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "standard": {
+        "$value": [1.2, 0, 0, 1]
+      },
+      "short": {
+        "$value": [0, 0, 1]
+      }
+    },
+    "transition": {
+      "$type": "transition",
+      "fade": {
+        "$value": {
+          "duration": "{motion.duration.fast}",
+          "timingFunction": "{motion.easing.standard}"
+        }
+      }
+    }
+  },
+  "typography": {
+    "$type": "typography",
+    "body": {
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "{dimension.space.2}",
+        "fontWeight": "{font.weight.regular}",
+        "lineHeight": 1.5
+      }
+    },
+    "heading": {
+      "$value": {
+        "fontFamily": "Fraunces",
+        "fontSize": "{color.brand.$root}",
+        "fontWeight": 700,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "px"
+        },
+        "lineHeight": 1.2
+      }
+    },
+    "caption": {
+      "$value": {
+        "fontFamily": "Inter",
+        "fontSize": {
+          "value": 12,
+          "unit": "px"
+        },
+        "fontWeight": 400,
+        "letterSpacing": {
+          "value": 0,
+          "unit": "px"
+        },
+        "lineHeight": {
+          "$ref": "#/typography/body/$value/nope"
+        }
+      }
+    }
+  },
+  "stroke": {
+    "$type": "strokeStyle",
+    "focus": {
+      "$value": {
+        "dashArray": [
+          {
+            "value": 4,
+            "unit": "px"
+          },
+          "short"
+        ],
+        "lineCap": "flat"
+      }
+    },
+    "dotted": {
+      "$value": "Dotted"
+    }
+  },
+  "border": {
+    "$type": "border",
+    "default": {
+      "$value": {
+        "color": "{color.palette.neutral.0}",
+        "width": "{dimension.space.1}"
+      }
+    },
+    "danger": {
+      "$value": "solid"
+    }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "elevation": {
+      "1": {
+        "$value": {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.08
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 2,
+            "unit": "px"
+          }
+        }
+      },
+      "2": {
+        "$value": [
+          "{shadow.elevation.1}",
+          "none",
+          {
+            "color": "{dimension.space.5}",
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 4,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 12,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            },
+            "inset": "yes"
+          }
+        ]
+      }
+    }
+  },
+  "gradient": {
+    "$type": "gradient",
+    "brand": {
+      "$value": [
+        {
+          "color": "{color.brand.$root}",
+          "position": 0
+        },
+        {
+          "color": "{color.palette.accent.violet}",
+          "position": 1.5
+        },
+        "end"
+      ]
+    }
+  },
+  "component": {
+    "button": {
+      "$type": "color",
+      "background": {
+        "$value": "{color.brand.$root}"
+      },
+      "text": {
+        "$value": 1
+      }
+    },
+    "buttonSecondary": {
+      "$extends": "{component.buttons}",
+      "background": {
+        "$value": "{color.palette.neutral.0}"
+      }
+    },
+    "buttonDanger": {
+      "$extends": "{component.button.background}"
+    },
+    "buttonLoop": {
+      "$extends": "{component.buttonLoop}"
+    },
+    "card": {
+      "padding": {
+        "$value": {
+          "value": 24,
+          "unit": "px"
+        }
+      },
+      "$root": {
+        "title": {
+          "$type": "number",
+          "$value": 1
+        }
+      }
+    },
+    "badge": "not an object"
+  }
+}
