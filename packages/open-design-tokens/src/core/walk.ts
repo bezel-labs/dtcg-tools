@@ -5,11 +5,11 @@ export interface Visitor {
   group?(node: NodeInfo): void;
 }
 
-/** Visits every indexed node in document order. */
+/** Visits every indexed node in document order. Reference nodes (`$ref` in place of `$value`) are tokens. */
 export function walkDocument(doc: PreparedDocument, visitor: Visitor): void {
   for (const node of doc.index.values()) {
-    if (node.kind === 'token') visitor.token?.(node);
-    else visitor.group?.(node);
+    if (node.kind === 'group') visitor.group?.(node);
+    else visitor.token?.(node);
   }
 }
 

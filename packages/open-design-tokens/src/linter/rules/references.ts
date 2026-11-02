@@ -6,7 +6,7 @@ export interface AliasDepthOptions {
 }
 
 export const aliasMaxDepth = defineRule<AliasDepthOptions>({
-  id: 'alias-max-depth',
+  id: 'max-alias-depth',
   meta: {
     description: 'Alias chains resolve within a maximum number of hops.',
     defaultSeverity: 'warning',

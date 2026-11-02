@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * `dtcg-lint`: validate and lint DTCG token files.
+ * `dtcg-lint`: validates DTCG token files against the specification, then lints them.
  *
  *   dtcg-lint <files or globs...> [--config <path>] [--format pretty|json|github] [--no-color]
  *
@@ -10,12 +10,14 @@ import { readFileSync } from 'node:fs';
 import { relative } from 'node:path';
 import { parseArgs } from 'node:util';
 import { resolveConfig } from './linter/config.js';
-import { lint } from './linter/engine.js';
+import { lintDtcg } from './linter/engine.js';
 import { FORMATTERS, type FormatName } from './linter/formatters/index.js';
 import { expandFiles } from './linter/node/files.js';
 import { loadConfig } from './linter/node/load-config.js';
 
 const USAGE = `Usage: dtcg-lint <files...> [options]
+
+Validates DTCG token files against the specification, then lints them with your config.
 
 Options:
   --config <path>     Lint config (dtcg-lint.config.{json,mjs,js,ts}); defaults to one in the current directory
@@ -82,7 +84,7 @@ async function main(argv: readonly string[]): Promise<number> {
       failed = true;
       continue;
     }
-    const result = lint(source, {}, { resolved });
+    const result = lintDtcg(source, {}, { resolved });
     if (!result.valid) failed = true;
     outputs.push(formatter(result, { file: relative(cwd, file) || file, color }));
   }

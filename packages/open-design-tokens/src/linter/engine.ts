@@ -1,4 +1,3 @@
-import { fmt } from '../core/issue.js';
 import { toIssuePath } from '../core/path.js';
 import { isAlias, isPlainObject, isReference, isToken } from '../core/predicates.js';
 import type { PreparedDocument } from '../core/prepare.js';
@@ -7,24 +6,18 @@ import { parseAlias, parseRef } from '../validator/specs/2025.10/aliases/parse.j
 import type { Resolver } from '../validator/specs/2025.10/aliases/resolver.js';
 import { createResolver } from '../validator/specs/2025.10/aliases/resolver.js';
 import { validateDtcg } from '../validator/validate-dtcg.js';
-import type { ResolveOptions } from './config.js';
 import { resolveConfig } from './config.js';
 import type {
   LintConfig,
   LintContext,
   LintIssue,
-  LintReport,
+  LintOptions,
   LintResult,
   ReferenceGraph,
-  ResolvedConfig,
+  RuleReport,
   RuleVisitor,
-  Skipped,
+  SkippedCheck,
 } from './types.js';
-
-export interface LintOptions extends ResolveOptions {
-  /** A config already passed through `resolveConfig`; takes precedence over `config`. */
-  resolved?: ResolvedConfig;
-}
 
 // Control characters are escaped so rule messages cannot inject terminal sequences.
 // biome-ignore lint/suspicious/noControlCharactersInRegex: escaping control characters is the purpose
@@ -73,7 +66,7 @@ export function buildReferenceGraph(doc: PreparedDocument, resolver: Resolver): 
  * cascade into misleading policy findings. Never throws on document input;
  * configuration mistakes are programmer errors and do throw.
  */
-export function lint(
+export function lintDtcg(
   input: unknown,
   config: LintConfig = {},
   options: LintOptions = {},
@@ -82,7 +75,7 @@ export function lint(
   const validation = validateDtcg(doc);
   const resolved = options.resolved ?? resolveConfig(config, options);
   const issues: LintIssue[] = [];
-  const skipped: Skipped[] = [];
+  const skipped: SkippedCheck[] = [];
 
   if (
     validation.issues.some(
@@ -109,7 +102,7 @@ export function lint(
       references,
       options: ruleOptions,
       isInvalid,
-      report(r: LintReport) {
+      report(r: RuleReport) {
         const path = Array.isArray(r.path)
           ? toIssuePath(r.path as readonly string[])
           : (r.path as LintIssue['path']);
@@ -147,7 +140,7 @@ export function lint(
 function finish(
   validation: LintResult['validation'],
   issues: LintIssue[],
-  skipped: Skipped[],
+  skipped: SkippedCheck[],
 ): LintResult {
   const errors = issues.filter((i) => i.severity === 'error');
   const warnings = issues.filter((i) => i.severity === 'warning');
@@ -160,6 +153,3 @@ function finish(
     validation,
   };
 }
-
-/** Re-exported for rule authors who build messages from user values. */
-export { fmt };

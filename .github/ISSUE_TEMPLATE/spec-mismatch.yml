@@ -1,0 +1,31 @@
+name: Spec mismatch
+description: The validator disagrees with the DTCG specification text.
+labels: [spec]
+body:
+  - type: input
+    id: section
+    attributes:
+      label: Spec section link
+      placeholder: https://www.designtokens.org/tr/2025.10/format/#x8-2-dimension
+    validations:
+      required: true
+  - type: textarea
+    id: quote
+    attributes:
+      label: Normative text
+      description: Quote the MUST/SHOULD/MAY sentence(s) involved.
+    validations:
+      required: true
+  - type: textarea
+    id: tokens
+    attributes:
+      label: Tokens JSON that shows the disagreement
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: behaviour
+    attributes:
+      label: What the validator does today
+    validations:
+      required: true

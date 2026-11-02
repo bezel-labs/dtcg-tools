@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { createResolver, prepareDocument, validateDtcg } from '../../src/validator/index.js';
+import {
+  createResolver,
+  prepareDocument,
+  validateAliasToken,
+  validateDtcg,
+} from '../../src/validator/index.js';
 
 const codes = (r: ReturnType<typeof validateDtcg>) =>
   r.issues.map((i) => `${i.code} ${i.path.pointer}`);
@@ -82,6 +87,47 @@ describe('alias resolution', () => {
       'alias.cycle /a/$value',
       'alias.cycle /b/$value',
       'alias.cycle /c/$value',
+    ]);
+  });
+});
+
+describe('public alias helpers', () => {
+  const doc = {
+    base: { $type: 'number', $value: 1 },
+    a: { $value: '{base}' },
+    c: { $type: 'color', $value: '{base}' },
+    r: { $ref: '#/base' },
+    frag: { $type: 'dimension', $value: { value: { $ref: '#/base/$value' }, unit: 'px' } },
+    bad: { $type: 'dimension', $value: { value: { $ref: '#/nope' }, unit: 'px' } },
+  };
+
+  it('validateAliasToken checks a token by pointer with inferred or explicit type', () => {
+    expect(validateAliasToken(doc, '/a')).toMatchObject({
+      resolved: true,
+      resolvedType: 'number',
+      issues: [],
+    });
+    expect(validateAliasToken(doc, '/c').issues.map((i) => i.code)).toEqual([
+      'alias.type.mismatch',
+    ]);
+    expect(validateAliasToken(doc, '/a', 'color').issues.map((i) => i.code)).toEqual([
+      'alias.type.mismatch',
+    ]);
+    expect(validateAliasToken(doc, '/r').issues[0]?.path.pointer ?? 'none').toBe('none');
+    expect(validateAliasToken(doc, '/missing').issues.map((i) => i.code)).toEqual([
+      'alias.target.missing',
+    ]);
+    expect(validateAliasToken(JSON.stringify(doc), '/a').resolved).toBe(true);
+  });
+
+  it('resolver.dereference replaces nested $ref fragments and reports failures under $value', () => {
+    const resolver = createResolver(prepareDocument(doc));
+    const ok = resolver.dereference(doc.frag.$value, '/frag');
+    expect(ok).toMatchObject({ failed: false, issues: [], value: { value: 1, unit: 'px' } });
+    const bad = resolver.dereference(doc.bad.$value, '/bad');
+    expect(bad.failed).toBe(true);
+    expect(bad.issues.map((i) => `${i.code} ${i.path.pointer}`)).toEqual([
+      'ref.target.missing /bad/$value/value',
     ]);
   });
 });

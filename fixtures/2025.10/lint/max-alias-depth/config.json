@@ -1,6 +1,6 @@
 {
   "rules": {
-    "alias-max-depth": [
+    "max-alias-depth": [
       "error",
       {
         "max": 2

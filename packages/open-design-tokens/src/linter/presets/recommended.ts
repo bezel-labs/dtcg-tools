@@ -12,6 +12,6 @@ export const recommended: LintConfig = {
     'no-empty-groups': 'warning',
     'no-unused-tokens': 'warning',
     'no-deprecated-alias': 'warning',
-    'alias-max-depth': ['warning', { max: 5 }],
+    'max-alias-depth': ['warning', { max: 5 }],
   },
 };

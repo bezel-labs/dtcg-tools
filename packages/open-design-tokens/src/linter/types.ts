@@ -9,7 +9,7 @@ export interface LintIssue extends ValidationIssue {
 }
 
 /** What a rule passes to `report`; the engine fills in code prefix, severity, and message escaping. */
-export interface LintReport {
+export interface RuleReport {
   /** Optional suffix appended to the rule id: `token-name-length.too-short`. */
   code?: string;
   message: string;
@@ -47,7 +47,7 @@ export interface LintContext<Options = unknown> {
   options: Options;
   /** True when the validator reported an error at or below this pointer. */
   isInvalid(pointer: string): boolean;
-  report(issue: LintReport): void;
+  report(issue: RuleReport): void;
 }
 
 export interface RuleVisitor {
@@ -75,7 +75,7 @@ export interface LintRule<Options = unknown> {
   create(ctx: LintContext<Options>): RuleVisitor;
 }
 
-export interface Skipped {
+export interface SkippedCheck {
   ruleId: string;
   pointer: string;
   reason: string;
@@ -88,7 +88,7 @@ export interface LintResult {
   errors: LintIssue[];
   warnings: LintIssue[];
   /** Rule/node pairs skipped because the validator flagged the node. */
-  skipped: Skipped[];
+  skipped: SkippedCheck[];
   validation: ValidationResult;
 }
 
@@ -100,4 +100,11 @@ export interface ResolvedRule {
 
 export interface ResolvedConfig {
   rules: readonly ResolvedRule[];
+}
+
+export interface LintOptions {
+  /** Additional rules (custom or third-party) made available by id. */
+  rules?: readonly LintRule[];
+  /** A config already passed through `resolveConfig`; takes precedence over the config argument. */
+  resolved?: ResolvedConfig;
 }

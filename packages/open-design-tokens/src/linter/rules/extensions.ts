@@ -1,7 +1,7 @@
-import { fmt } from '../../core/issue.js';
+import { formatValue } from '../../core/issue.js';
 import { isPlainObject } from '../../core/predicates.js';
 import { defineRule } from '../define.js';
-import type { LintContext, LintReport } from '../types.js';
+import type { LintContext, RuleReport } from '../types.js';
 
 export interface AllowedVendorsOptions {
   /** Vendor keys that may appear in $extensions. */
@@ -28,7 +28,7 @@ export const extensionsAllowedVendors = defineRule<AllowedVendorsOptions>({
         if (!allowed.has(key)) {
           ctx.report({
             code: 'unknown-vendor',
-            message: `$extensions key ${fmt(key)} is not an allowed vendor.`,
+            message: `$extensions key ${formatValue(key)} is not an allowed vendor.`,
             path: [...node.path, '$extensions', key],
             meta: { key, allowed: [...allowed] },
           });
@@ -61,7 +61,7 @@ export interface FieldSpec {
 }
 
 /** A vendor check: a declarative schema, or a function returning reports. */
-export type VendorCheck = FieldSchema | ((value: unknown, path: readonly string[]) => LintReport[]);
+export type VendorCheck = FieldSchema | ((value: unknown, path: readonly string[]) => RuleReport[]);
 
 export interface ExtensionsSchemaOptions {
   vendors: Record<string, VendorCheck>;
@@ -94,13 +94,21 @@ function checkField(
     if (spec.pattern && !spec.pattern.test(value))
       report({
         code: 'pattern',
-        message: `${fmt(value)} does not match ${String(spec.pattern)}.`,
+        message: `${formatValue(value)} does not match ${String(spec.pattern)}.`,
         path,
       });
     if (spec.min !== undefined && value.length < spec.min)
-      report({ code: 'too-short', message: `${fmt(value)} is shorter than ${spec.min}.`, path });
+      report({
+        code: 'too-short',
+        message: `${formatValue(value)} is shorter than ${spec.min}.`,
+        path,
+      });
     if (spec.max !== undefined && value.length > spec.max)
-      report({ code: 'too-long', message: `${fmt(value)} is longer than ${spec.max}.`, path });
+      report({
+        code: 'too-long',
+        message: `${formatValue(value)} is longer than ${spec.max}.`,
+        path,
+      });
   } else if (typeof value === 'number') {
     if (spec.min !== undefined && value < spec.min)
       report({ code: 'too-small', message: `${value} is below ${spec.min}.`, path });
@@ -122,7 +130,7 @@ function checkField(
       } else if (typeof item === 'string' && spec.pattern && !spec.pattern.test(item)) {
         report({
           code: 'pattern',
-          message: `${fmt(item)} does not match ${String(spec.pattern)}.`,
+          message: `${formatValue(item)} does not match ${String(spec.pattern)}.`,
           path: ipath,
         });
       }
@@ -158,7 +166,7 @@ export const extensionsSchema = defineRule<ExtensionsSchemaOptions>({
         if (!isPlainObject(value)) {
           ctx.report({
             code: 'not-object',
-            message: `${fmt(vendor)} block must be an object.`,
+            message: `${formatValue(vendor)} block must be an object.`,
             path: base,
           });
           continue;
@@ -168,7 +176,7 @@ export const extensionsSchema = defineRule<ExtensionsSchemaOptions>({
             if (spec.required)
               ctx.report({
                 code: 'missing',
-                message: `Missing required field ${fmt(field)}.`,
+                message: `Missing required field ${formatValue(field)}.`,
                 path: base,
                 meta: { field },
               });
@@ -181,7 +189,7 @@ export const extensionsSchema = defineRule<ExtensionsSchemaOptions>({
             if (!(key in check.fields))
               ctx.report({
                 code: 'unknown-field',
-                message: `Unknown field ${fmt(key)}.`,
+                message: `Unknown field ${formatValue(key)}.`,
                 path: [...base, key],
                 meta: { field: key },
               });

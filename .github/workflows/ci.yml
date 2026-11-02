@@ -35,3 +35,22 @@ jobs:
       - run: npx biome ci .
       - name: Published package has zero runtime dependencies
         run: npm ls --omit=dev --workspace open-design-tokens
+      - name: Package types resolve for every entry
+        if: matrix.os == 'ubuntu-latest' && matrix.node == 22
+        run: npm run attw
+      - name: Bundle size budgets
+        if: matrix.os == 'ubuntu-latest' && matrix.node == 22
+        run: npm run size
+      - name: Benchmarks
+        if: matrix.os == 'ubuntu-latest' && matrix.node == 22
+        run: |
+          npm run bench | tee bench.txt
+          { echo '### Benchmarks'; echo; echo '```'; cat bench.txt; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+      - name: Coverage summary
+        if: matrix.os == 'ubuntu-latest' && matrix.node == 22
+        run: |
+          node -e '
+            const t = require("./packages/open-design-tokens/coverage/coverage-summary.json").total;
+            const row = (k) => `| ${k} | ${t[k].pct}% (${t[k].covered}/${t[k].total}) |`;
+            console.log("### Coverage\n\n| Metric | Covered |\n|---|---|\n" + ["lines","branches","functions","statements"].map(row).join("\n"));
+          ' >> "$GITHUB_STEP_SUMMARY"

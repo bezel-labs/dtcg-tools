@@ -1,0 +1,98 @@
+#!/usr/bin/env node
+/**
+ * Tests what users actually install: packs the package, installs the tarball
+ * into a scratch project, imports every subpath with ESM and require(), runs
+ * the dtcg-lint bin, and bundles the validator for the browser with esbuild
+ * and executes it inside jsdom. Exits non-zero on any failure.
+ */
+import { execFileSync, spawnSync } from 'node:child_process';
+import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join, resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
+const pkgDir = join(root, 'packages', 'open-design-tokens');
+const run = (cmd, args, cwd) =>
+  execFileSync(cmd, args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'] });
+const fail = (msg) => {
+  console.error(`✖ ${msg}`);
+  process.exit(1);
+};
+
+const packed = JSON.parse(run('npm', ['pack', '--json', '--pack-destination', tmpdir()], pkgDir));
+const tgz = join(tmpdir(), packed[0].filename);
+const files = packed[0].files.map((f) => f.path);
+const allowed = /^(dist\/.*|package\.json|README\.md|LICENSE)$/;
+for (const f of files) if (!allowed.test(f)) fail(`unexpected file in tarball: ${f}`);
+console.log(`✔ tarball contains ${files.length} allowed files`);
+
+const scratch = mkdtempSync(join(tmpdir(), 'odt-scratch-'));
+writeFileSync(
+  join(scratch, 'package.json'),
+  JSON.stringify({ name: 'scratch', private: true, type: 'module' }),
+);
+run('npm', ['install', '--ignore-scripts', '--no-audit', '--no-fund', tgz], scratch);
+console.log('✔ installed from tarball');
+
+const esm = `
+import { validateDtcg } from 'open-design-tokens/validator';
+import { lintDtcg } from 'open-design-tokens/linter';
+import * as all from 'open-design-tokens';
+const r = validateDtcg({ a: { $type: 'number', $value: 1 } });
+if (!r.valid) throw new Error('esm validate');
+if (!lintDtcg({ a: { $type: 'number', $value: 1 } }, { extends: ['recommended'] }).validation.valid) throw new Error('esm lint');
+if (typeof all.validateDtcg !== 'function' || typeof all.lint !== 'function') throw new Error('esm root');
+console.log('✔ esm imports');
+`;
+writeFileSync(join(scratch, 'esm.mjs'), esm);
+run(process.execPath, ['esm.mjs'], scratch);
+
+const cjs = `
+const { validateDtcg } = require('open-design-tokens/validator');
+const { lintDtcg } = require('open-design-tokens/linter');
+if (!validateDtcg({ a: { $type: 'number', $value: 1 } }).valid) throw new Error('cjs validate');
+if (typeof lintDtcg !== 'function') throw new Error('cjs lint');
+console.log('✔ require() of ESM entries');
+`;
+writeFileSync(join(scratch, 'cjs.cjs'), cjs);
+run(process.execPath, ['--no-warnings', 'cjs.cjs'], scratch);
+
+writeFileSync(
+  join(scratch, 'tokens.json'),
+  JSON.stringify({ a: { $type: 'number', $value: 'x' } }),
+);
+const bin = spawnSync(join(scratch, 'node_modules', '.bin', 'dtcg-lint'), ['tokens.json'], {
+  cwd: scratch,
+  encoding: 'utf8',
+});
+if (bin.status !== 1 || !bin.stdout.includes('number.value.not-number'))
+  fail(`dtcg-lint bin: status ${bin.status}\n${bin.stdout}${bin.stderr}`);
+console.log('✔ dtcg-lint bin runs and exits 1 on errors');
+
+// Browser bundle: esbuild resolves from the scratch project; jsdom executes it.
+const esbuild = await import(join(root, 'node_modules', 'esbuild', 'lib', 'main.js'));
+const bundle = await esbuild.build({
+  stdin: {
+    contents: `import { validateDtcg } from 'open-design-tokens/validator'; globalThis.__result = validateDtcg({ a: { $type: 'number', $value: 1 } }).valid;`,
+    resolveDir: scratch,
+  },
+  bundle: true,
+  platform: 'browser',
+  format: 'iife',
+  write: false,
+  logLevel: 'silent',
+});
+const code = bundle.outputFiles[0].text;
+if (/\brequire\(["']node:/.test(code) || /from ["']node:/.test(code))
+  fail('browser bundle references node builtins');
+const { JSDOM } = await import(join(root, 'node_modules', 'jsdom', 'lib', 'api.js'));
+const dom = new JSDOM('<!doctype html><html><body></body></html>', { runScripts: 'outside-only' });
+dom.window.eval(code);
+if (dom.window.__result !== true) fail('browser bundle did not validate in jsdom');
+console.log(`✔ browser bundle (${(code.length / 1024).toFixed(1)} kB) runs in jsdom`);
+console.log(
+  readFileSync(join(scratch, 'node_modules', 'open-design-tokens', 'package.json'), 'utf8').match(
+    /"version": "[^"]+"/,
+  )[0],
+);

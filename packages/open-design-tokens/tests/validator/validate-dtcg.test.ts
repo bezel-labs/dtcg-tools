@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { validate, validateDtcg } from '../../src/validator/index.js';
+import { validateDtcg } from '../../src/validator/index.js';
 
 describe('validateDtcg', () => {
   it('accepts an empty object', () => {
@@ -31,9 +31,5 @@ describe('validateDtcg', () => {
   it('throws only for an unknown spec id (programmer error)', () => {
     // @ts-expect-error deliberate bad option
     expect(() => validateDtcg({}, { spec: '1999.01' })).toThrow(RangeError);
-  });
-
-  it('exports validate as an alias', () => {
-    expect(validate).toBe(validateDtcg);
   });
 });

@@ -1,4 +1,4 @@
-import { fmt } from '../../core/issue.js';
+import { formatValue } from '../../core/issue.js';
 import { defineRule } from '../define.js';
 
 export type NamingStyle = 'kebab' | 'camel' | 'pascal' | 'snake' | (string & {});
@@ -68,7 +68,7 @@ export const namingConvention = defineRule<NamingOptions>({
       if (!rule.pattern.test(name)) {
         ctx.report({
           code: 'mismatch',
-          message: `${what} ${fmt(name)} does not match ${rule.label}.`,
+          message: `${what} ${formatValue(name)} does not match ${rule.label}.`,
           path: node.path,
           meta: { name, expected: rule.label },
         });

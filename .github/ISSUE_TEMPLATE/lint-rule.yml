@@ -1,0 +1,29 @@
+name: Lint rule proposal
+description: Propose a new configurable rule for the linter.
+labels: [linter]
+body:
+  - type: input
+    id: id
+    attributes:
+      label: Proposed rule id
+      placeholder: kebab-case, e.g. no-hardcoded-colors
+    validations:
+      required: true
+  - type: textarea
+    id: policy
+    attributes:
+      label: Policy it enforces
+      description: One or two sentences. Rules must not restate spec requirements; those belong in the validator.
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Options and defaults
+  - type: textarea
+    id: examples
+    attributes:
+      label: Passing and failing examples
+      render: json
+    validations:
+      required: true

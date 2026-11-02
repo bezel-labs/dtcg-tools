@@ -5,8 +5,9 @@
  *
  * @example
  * ```ts
- * import { examples, lint } from 'open-design-tokens/linter';
- * lint(tokens, { rules: { 'extensions-schema': ['error', { vendors: { 'com.example.app': examples.exampleAppSchema } }] } });
+ * import { lintDtcg } from 'open-design-tokens/linter';
+ * import { exampleAppSchema } from './path/to/your/vendor-schema.js';
+ * lintDtcg(tokens, { rules: { 'extensions-schema': ['error', { vendors: { 'com.example.app': exampleAppSchema } }] } });
  * ```
  */
 import type { FieldSchema } from '../rules/extensions.js';

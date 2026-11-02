@@ -1,4 +1,5 @@
-import { toJsonPointer } from '../../../../core/path.js';
+import type { ValidationIssue } from '../../../../core/issue.js';
+import { parseJsonPointer, toJsonPointer } from '../../../../core/path.js';
 import {
   hasOwn,
   isAlias,
@@ -9,6 +10,7 @@ import {
 import type { NodeInfo, PreparedDocument } from '../../../../core/prepare.js';
 import { TOKEN_TYPES } from '../constants.js';
 import type { TokenType } from '../types/token.js';
+import { dereference as dereferenceValue } from './dereference.js';
 import { parseAlias, parseRef } from './parse.js';
 
 export type Status =
@@ -100,6 +102,20 @@ export interface Resolver {
   owningToken(segments: readonly string[]): OwningToken | undefined;
   /** Resolves a `$ref` string to its raw value, following whole-token references. */
   resolveRef(ref: string, fromPointer: string): RefResolution;
+  /**
+   * Replaces every nested `{ $ref }` inside `value` with the referenced fragment
+   * (§7.3). `fromPointer` is the token the value belongs to; issues are reported
+   * under its `$value`. `failed` is true when at least one reference did not resolve.
+   */
+  dereference(value: unknown, fromPointer: string): Dereferenced;
+}
+
+export interface Dereferenced {
+  /** The value with every nested `{ $ref }` replaced by its target. */
+  value: unknown;
+  issues: ValidationIssue[];
+  /** True when at least one reference failed; the value should then not be validated further. */
+  failed: boolean;
 }
 
 function isKnownType(t: unknown): t is TokenType {
@@ -404,7 +420,7 @@ export function createResolver(doc: PreparedDocument): Resolver {
     return { status: 'ok', value, tokenNode: owner?.node, chain: [fromPointer] };
   };
 
-  return Object.freeze({
+  const self: Resolver = Object.freeze({
     node,
     rawAt: (segments: readonly string[]) => rawAt(doc.root, segments),
     lookupPath,
@@ -414,5 +430,15 @@ export function createResolver(doc: PreparedDocument): Resolver {
     resolveAlias,
     owningToken,
     resolveRef,
+    dereference: (value: unknown, fromPointer: string) => {
+      const path = parseJsonPointer(fromPointer) ?? [];
+      return dereferenceValue(
+        value,
+        { spec: doc.spec, path: [...path, '$value'] },
+        self,
+        fromPointer,
+      );
+    },
   });
+  return self;
 }

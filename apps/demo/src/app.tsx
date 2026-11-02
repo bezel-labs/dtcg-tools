@@ -1,4 +1,4 @@
-import { type LintResult, lint } from 'open-design-tokens/linter';
+import { type LintResult, lintDtcg } from 'open-design-tokens/linter';
 import { type ValidationResult, validateDtcg } from 'open-design-tokens/validator';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IssueList, type Row } from './components/issue-list.js';
@@ -30,7 +30,7 @@ export function App() {
       }
       setTooLarge(false);
       if (lintEnabled) {
-        const r = lint(source, LINT_CONFIG);
+        const r = lintDtcg(source, LINT_CONFIG);
         setLintResult(r);
         setResult(r.validation);
       } else {

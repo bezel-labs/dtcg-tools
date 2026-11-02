@@ -6,7 +6,7 @@ import { child, createIssue } from '../../../context.js';
 import { typeName } from '../../../primitives.js';
 import { dereference } from '../aliases/dereference.js';
 import type { Resolver } from '../aliases/resolver.js';
-import { validateAliasToken } from '../aliases/validate-alias.js';
+import { checkAliasToken } from '../aliases/validate-alias.js';
 import { validateValueOfType } from '../composites/sub-value.js';
 import { TOKEN_PROPS } from '../constants.js';
 import type { TokenType } from '../types/token.js';
@@ -68,7 +68,7 @@ export function validateDesignToken(
   }
 
   if (isAlias) {
-    const check = validateAliasToken(node, type, resolver, isRefNode ? child(ctx, '$ref') : vctx);
+    const check = checkAliasToken(node, type, resolver, isRefNode ? child(ctx, '$ref') : vctx);
     issues.push(...check.issues);
     if (!check.resolved) return { issues, isAlias };
     if (type === undefined) type = check.resolvedType;

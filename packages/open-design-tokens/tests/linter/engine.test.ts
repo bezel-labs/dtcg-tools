@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { defineRule, lint, resolveConfig } from '../../src/linter/index.js';
+import { defineRule, lintDtcg, resolveConfig } from '../../src/linter/index.js';
 import { ISSUE_CODES, validateDtcg } from '../../src/validator/index.js';
 
 describe('lint engine', () => {
   it('always validates first and gates rules on invalid nodes', () => {
     const doc = { bad: { $type: 'number', $value: 'x' }, ok: { $type: 'number', $value: 1 } };
-    const r = lint(doc, { rules: { 'require-description': 'error' } });
+    const r = lintDtcg(doc, { rules: { 'require-description': 'error' } });
     expect(r.valid).toBe(false);
     expect(r.validation.errors.map((i) => i.code)).toEqual(['number.value.not-number']);
     expect(r.issues.map((i) => i.path.pointer)).toEqual(['/ok']);
@@ -16,14 +16,14 @@ describe('lint engine', () => {
 
   it('valid means spec-valid and no lint errors; warnings do not fail', () => {
     const doc = { t: { $type: 'number', $value: 1 } };
-    expect(lint(doc, { rules: { 'require-description': 'warning' } }).valid).toBe(true);
-    expect(lint(doc, { rules: { 'require-description': 'error' } }).valid).toBe(false);
+    expect(lintDtcg(doc, { rules: { 'require-description': 'warning' } }).valid).toBe(true);
+    expect(lintDtcg(doc, { rules: { 'require-description': 'error' } }).valid).toBe(false);
   });
 
   it('validation output is identical with and without a lint config', () => {
     const doc = { a: { $type: 'number', $value: 'x' }, b: { $value: '{a}' }, c: {} };
     const plain = validateDtcg(doc);
-    const linted = lint(doc, {
+    const linted = lintDtcg(doc, {
       extends: ['recommended'],
       rules: { 'token-name-length': ['error', { min: 3 }] },
     }).validation;
@@ -32,7 +32,7 @@ describe('lint engine', () => {
 
   it('never emits a validator issue code from a rule', () => {
     const doc = { a: { $type: 'number', $value: 1 }, g: {} };
-    const r = lint(doc, {
+    const r = lintDtcg(doc, {
       extends: ['recommended'],
       rules: {
         'require-description': 'error',
@@ -45,19 +45,19 @@ describe('lint engine', () => {
   });
 
   it('does not run rules on unparsable or non-object input', () => {
-    expect(lint('{', { rules: { 'require-description': 'error' } }).issues).toEqual([]);
-    expect(lint([], { rules: { 'require-description': 'error' } }).issues).toEqual([]);
+    expect(lintDtcg('{', { rules: { 'require-description': 'error' } }).issues).toEqual([]);
+    expect(lintDtcg([], { rules: { 'require-description': 'error' } }).issues).toEqual([]);
   });
 
   it('presets apply first and explicit rules override', () => {
     const resolved = resolveConfig({
       extends: ['recommended'],
-      rules: { 'no-empty-groups': 'off', 'alias-max-depth': ['error', { max: 1 }] },
+      rules: { 'no-empty-groups': 'off', 'max-alias-depth': ['error', { max: 1 }] },
     });
     const byId = Object.fromEntries(resolved.rules.map((r) => [r.rule.id, r]));
     expect(byId['no-empty-groups']).toBeUndefined();
-    expect(byId['alias-max-depth']?.severity).toBe('error');
-    expect(byId['alias-max-depth']?.options).toEqual({ max: 1 });
+    expect(byId['max-alias-depth']?.severity).toBe('error');
+    expect(byId['max-alias-depth']?.options).toEqual({ max: 1 });
     expect(byId['no-unused-tokens']?.severity).toBe('warning');
   });
 
@@ -86,7 +86,7 @@ describe('lint engine', () => {
         };
       },
     });
-    const r = lint(
+    const r = lintDtcg(
       { foo: { $type: 'number', $value: 1 } },
       { rules: { 'no-foo': 'error' } },
       { rules: [rule] },

@@ -41,6 +41,18 @@ function isComposite(t: SubValueType): t is CompositeTokenType {
   return (COMPOSITE_TOKEN_TYPES as readonly string[]).includes(t);
 }
 
+/** One validator per token type. Primitive validators ignore the resolver argument. */
+export const VALUE_VALIDATORS: Record<TokenType, CompositeValidator> = {
+  color: (v, ctx) => PRIMITIVE_VALUE_VALIDATORS.color(v, ctx),
+  dimension: (v, ctx) => PRIMITIVE_VALUE_VALIDATORS.dimension(v, ctx),
+  fontFamily: (v, ctx) => PRIMITIVE_VALUE_VALIDATORS.fontFamily(v, ctx),
+  fontWeight: (v, ctx) => PRIMITIVE_VALUE_VALIDATORS.fontWeight(v, ctx),
+  duration: (v, ctx) => PRIMITIVE_VALUE_VALIDATORS.duration(v, ctx),
+  cubicBezier: (v, ctx) => PRIMITIVE_VALUE_VALIDATORS.cubicBezier(v, ctx),
+  number: (v, ctx) => PRIMITIVE_VALUE_VALIDATORS.number(v, ctx),
+  ...COMPOSITE_VALUE_VALIDATORS,
+};
+
 /** Validates a concrete (non-alias) value against a token type. */
 export function validateValueOfType(
   type: SubValueType,

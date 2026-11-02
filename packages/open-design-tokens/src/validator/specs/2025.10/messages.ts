@@ -1,5 +1,5 @@
 import type { Severity } from '../../../core/issue.js';
-import { fmt } from '../../../core/issue.js';
+import { formatValue } from '../../../core/issue.js';
 import { MAX_DEPTH } from '../../../core/limits.js';
 
 /**
@@ -120,193 +120,196 @@ function range(m: Meta): string {
 }
 
 function list(values: unknown): string {
-  return Array.isArray(values) ? values.map((v) => fmt(v)).join(', ') : fmt(values);
+  return Array.isArray(values) ? values.map((v) => formatValue(v)).join(', ') : formatValue(values);
 }
 
 function suggest(m: Meta): string {
   return m.suggestion === undefined
     ? ''
-    : ` Did you mean ${fmt(m.suggestion)}? Values are case-sensitive.`;
+    : ` Did you mean ${formatValue(m.suggestion)}? Values are case-sensitive.`;
 }
 
-/** Message catalog (English). Values come from `meta` and are always passed through `fmt`. */
+/** Message catalog (English). Values come from `meta` and are always passed through `formatValue`. */
 export const MESSAGES: Record<IssueCode, (meta: Meta) => string> = {
   'document.not-object': (m) =>
-    `The document root must be a JSON object, received ${fmt(m.actualType)}.`,
-  'document.invalid-json': (m) => `The input is not valid JSON: ${fmt(m.reason)}.`,
+    `The document root must be a JSON object, received ${formatValue(m.actualType)}.`,
+  'document.invalid-json': (m) => `The input is not valid JSON: ${formatValue(m.reason)}.`,
   'document.too-deep': () =>
     `The document nests groups deeper than the supported limit of ${MAX_DEPTH} levels.`,
   'document.circular': () =>
     'The input object contains a circular reference and cannot be validated.',
   'document.unreadable-node': (m) =>
-    `A property could not be read while validating: ${fmt(m.reason)}.`,
+    `A property could not be read while validating: ${formatValue(m.reason)}.`,
 
   'value.unknown-property': (m) =>
-    `Property ${fmt(m.property)} is not defined for this value type. Known properties: ${list(m.known)}.`,
+    `Property ${formatValue(m.property)} is not defined for this value type. Known properties: ${list(m.known)}.`,
 
   'name.forbidden-character': (m) =>
-    `Name ${fmt(m.name)} contains ${fmt(m.character)}, which is not allowed in token or group names (reserved for alias syntax).`,
+    `Name ${formatValue(m.name)} contains ${formatValue(m.character)}, which is not allowed in token or group names (reserved for alias syntax).`,
   'name.empty': () => 'Token and group names should not be empty.',
 
   'token.type.missing': () =>
     'The token has no $type and none can be inherited from a parent group, so its type cannot be determined.',
   'token.type.invalid': (m) =>
-    `Unknown $type ${fmt(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
-  'token.type.not-string': (m) => `$type must be a string, received ${fmt(m.actualType)}.`,
+    `Unknown $type ${formatValue(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
+  'token.type.not-string': (m) => `$type must be a string, received ${formatValue(m.actualType)}.`,
   'token.description.not-string': (m) =>
-    `$description must be a plain string, received ${fmt(m.actualType)}.`,
+    `$description must be a plain string, received ${formatValue(m.actualType)}.`,
   'token.deprecated.invalid': (m) =>
-    `$deprecated must be true, false, or a string explanation, received ${fmt(m.actualType)}.`,
+    `$deprecated must be true, false, or a string explanation, received ${formatValue(m.actualType)}.`,
   'token.extensions.not-object': (m) =>
-    `$extensions must be an object, received ${fmt(m.actualType)}.`,
+    `$extensions must be an object, received ${formatValue(m.actualType)}.`,
   'token.extensions.key-not-namespaced': (m) =>
-    `$extensions key ${fmt(m.key)} should use reverse domain name notation (for example "com.example.tool") to avoid clashes.`,
+    `$extensions key ${formatValue(m.key)} should use reverse domain name notation (for example "com.example.tool") to avoid clashes.`,
   'token.property.unknown': (m) =>
-    `Property ${fmt(m.property)} is not defined for tokens by this specification version and will be ignored.`,
+    `Property ${formatValue(m.property)} is not defined for tokens by this specification version and will be ignored.`,
   'token.property.not-allowed': (m) =>
-    `Property ${fmt(m.property)} is not allowed on a token: an object with $value cannot also contain child tokens or groups.`,
+    `Property ${formatValue(m.property)} is not allowed on a token: an object with $value cannot also contain child tokens or groups.`,
 
   'group.description.not-string': (m) =>
-    `$description must be a plain string, received ${fmt(m.actualType)}.`,
+    `$description must be a plain string, received ${formatValue(m.actualType)}.`,
   'group.type.invalid': (m) =>
-    `Unknown group $type ${fmt(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
-  'group.type.not-string': (m) => `$type must be a string, received ${fmt(m.actualType)}.`,
+    `Unknown group $type ${formatValue(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
+  'group.type.not-string': (m) => `$type must be a string, received ${formatValue(m.actualType)}.`,
   'group.deprecated.invalid': (m) =>
-    `$deprecated must be true, false, or a string explanation, received ${fmt(m.actualType)}.`,
+    `$deprecated must be true, false, or a string explanation, received ${formatValue(m.actualType)}.`,
   'group.extensions.not-object': (m) =>
-    `$extensions must be an object, received ${fmt(m.actualType)}.`,
+    `$extensions must be an object, received ${formatValue(m.actualType)}.`,
   'group.extensions.key-not-namespaced': (m) =>
-    `$extensions key ${fmt(m.key)} should use reverse domain name notation (for example "com.example.tool") to avoid clashes.`,
+    `$extensions key ${formatValue(m.key)} should use reverse domain name notation (for example "com.example.tool") to avoid clashes.`,
   'group.extends.invalid': (m) =>
-    `$extends must be a group reference such as "{group.name}", received ${fmt(m.actual)}.`,
+    `$extends must be a group reference such as "{group.name}", received ${formatValue(m.actual)}.`,
   'group.ref.invalid': (m) =>
-    `$ref on a group must be a local JSON pointer such as "#/group/name", received ${fmt(m.actual)}.`,
+    `$ref on a group must be a local JSON pointer such as "#/group/name", received ${formatValue(m.actual)}.`,
   'group.property.unknown': (m) =>
-    `Property ${fmt(m.property)} is not defined for groups by this specification version. Names must not start with "$".`,
+    `Property ${formatValue(m.property)} is not defined for groups by this specification version. Names must not start with "$".`,
   'group.member.invalid': (m) =>
-    `Member ${fmt(m.name)} must be a token or a group (an object), received ${fmt(m.actualType)}.`,
+    `Member ${formatValue(m.name)} must be a token or a group (an object), received ${formatValue(m.actualType)}.`,
   'group.root.not-token': () =>
     'The reserved "$root" member must be a token (an object with $value).',
   'group.name.case-collision': (m) =>
     `Names ${list(m.names)} differ only by case; tools that transform names may produce duplicates.`,
 
   'alias.syntax.invalid': (m) =>
-    `Alias ${fmt(m.actual)} is malformed. Use "{group.token}" with non-empty, dot-separated names.`,
+    `Alias ${formatValue(m.actual)} is malformed. Use "{group.token}" with non-empty, dot-separated names.`,
   'alias.target.missing': (m) =>
-    `Alias ${fmt(m.alias)} does not resolve: no token at ${fmt(m.path)}.`,
+    `Alias ${formatValue(m.alias)} does not resolve: no token at ${formatValue(m.path)}.`,
   'alias.target.not-token': (m) =>
-    `Alias ${fmt(m.alias)} points at a group, not a token. Curly-brace aliases can only target tokens (use "{${String(m.path ?? '')}.$root}" for a group's root token).`,
+    `Alias ${formatValue(m.alias)} points at a group, not a token. Curly-brace aliases can only target tokens (use "{${String(m.path ?? '')}.$root}" for a group's root token).`,
   'alias.cycle': (m) =>
     `Circular alias chain: ${list(m.chain)}. The value of every token in the chain is unknown.`,
   'alias.type.mismatch': (m) =>
-    `Alias ${fmt(m.alias)} resolves to a ${fmt(m.actual)} token but this token is declared as ${fmt(m.expected)}.`,
+    `Alias ${formatValue(m.alias)} resolves to a ${formatValue(m.actual)} token but this token is declared as ${formatValue(m.expected)}.`,
 
   'ref.not-local': (m) =>
-    `$ref ${fmt(m.actual)} must point inside this document and start with "#/". External and remote references are not supported.`,
-  'ref.syntax.invalid': (m) => `$ref ${fmt(m.actual)} is not a valid JSON pointer (RFC 6901).`,
+    `$ref ${formatValue(m.actual)} must point inside this document and start with "#/". External and remote references are not supported.`,
+  'ref.syntax.invalid': (m) =>
+    `$ref ${formatValue(m.actual)} is not a valid JSON pointer (RFC 6901).`,
   'ref.target.missing': (m) =>
-    `$ref ${fmt(m.actual)} does not resolve: nothing exists at that location.`,
+    `$ref ${formatValue(m.actual)} does not resolve: nothing exists at that location.`,
   'ref.cycle': (m) => `Circular reference chain: ${list(m.chain)}.`,
   'ref.type.mismatch': (m) =>
-    `$ref ${fmt(m.actual)} resolves to a ${fmt(m.actualType)} token but this token is declared as ${fmt(m.expected)}.`,
+    `$ref ${formatValue(m.actual)} resolves to a ${formatValue(m.actualType)} token but this token is declared as ${formatValue(m.expected)}.`,
 
   'extends.target.missing': (m) =>
-    `$extends ${fmt(m.actual)} does not resolve: no group at ${fmt(m.path)}.`,
+    `$extends ${formatValue(m.actual)} does not resolve: no group at ${formatValue(m.path)}.`,
   'extends.target.not-group': (m) =>
-    `$extends ${fmt(m.actual)} must reference a group, but ${fmt(m.path)} is a token.`,
+    `$extends ${formatValue(m.actual)} must reference a group, but ${formatValue(m.path)} is a token.`,
   'extends.cycle': (m) =>
     `Circular group extension: ${list(m.chain)}. A group cannot extend itself, an ancestor, or a group that extends it.`,
   'extends.inherited-token.invalid': (m) =>
-    `Token ${fmt(m.token)} inherited from ${fmt(m.inheritedFrom)} is invalid in this group: ${fmt(m.reason)}.`,
+    `Token ${formatValue(m.token)} inherited from ${formatValue(m.inheritedFrom)} is invalid in this group: ${formatValue(m.reason)}.`,
 
   'composite.property.missing': (m) =>
-    `A ${fmt(m.type)} value must have a ${fmt(m.property)} property (${fmt(m.expectedType)} value or reference).`,
+    `A ${formatValue(m.type)} value must have a ${formatValue(m.property)} property (${formatValue(m.expectedType)} value or reference).`,
   'composite.value.not-object': (m) =>
-    `A ${fmt(m.type)} value must be an object with ${list(m.properties)}, received ${fmt(m.actualType)}.`,
+    `A ${formatValue(m.type)} value must be an object with ${list(m.properties)}, received ${formatValue(m.actualType)}.`,
   'stroke-style.value.invalid': (m) =>
-    `A strokeStyle value must be a keyword string or an object with "dashArray" and "lineCap", received ${fmt(m.actualType)}.`,
+    `A strokeStyle value must be a keyword string or an object with "dashArray" and "lineCap", received ${formatValue(m.actualType)}.`,
   'stroke-style.keyword.invalid': (m) =>
-    `Unknown stroke style ${fmt(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
+    `Unknown stroke style ${formatValue(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
   'stroke-style.dash-array.not-array': (m) =>
-    `"dashArray" must be an array of dimension values or references, received ${fmt(m.actualType)}.`,
+    `"dashArray" must be an array of dimension values or references, received ${formatValue(m.actualType)}.`,
   'stroke-style.line-cap.invalid': (m) =>
-    `"lineCap" must be one of ${list(m.allowed)}, received ${fmt(m.actual)}.${suggest(m)}`,
+    `"lineCap" must be one of ${list(m.allowed)}, received ${formatValue(m.actual)}.${suggest(m)}`,
   'shadow.value.invalid': (m) =>
-    `A shadow value must be a shadow object or an array of shadow objects and references, received ${fmt(m.actualType)}.`,
+    `A shadow value must be a shadow object or an array of shadow objects and references, received ${formatValue(m.actualType)}.`,
   'shadow.item.invalid': (m) =>
-    `Shadow entry ${fmt(m.index)} must be a shadow object or a reference to a shadow token, received ${fmt(m.actualType)}.`,
+    `Shadow entry ${formatValue(m.index)} must be a shadow object or a reference to a shadow token, received ${formatValue(m.actualType)}.`,
   'shadow.inset.not-boolean': (m) =>
-    `"inset" must be true or false, received ${fmt(m.actualType)}.`,
+    `"inset" must be true or false, received ${formatValue(m.actualType)}.`,
   'gradient.value.not-array': (m) =>
-    `A gradient value must be an array of gradient stops and references, received ${fmt(m.actualType)}.`,
+    `A gradient value must be an array of gradient stops and references, received ${formatValue(m.actualType)}.`,
   'gradient.stop.invalid': (m) =>
-    `Gradient entry ${fmt(m.index)} must be a stop object with "color" and "position" or a reference to a gradient token, received ${fmt(m.actualType)}.`,
+    `Gradient entry ${formatValue(m.index)} must be a stop object with "color" and "position" or a reference to a gradient token, received ${formatValue(m.actualType)}.`,
   'gradient.position.out-of-range': (m) =>
-    `Gradient stop position ${fmt(m.actual)} is outside [0, 1] and will be clamped by consumers.`,
+    `Gradient stop position ${formatValue(m.actual)} is outside [0, 1] and will be clamped by consumers.`,
 
   'color.value.not-object': (m) =>
-    `A color value must be an object with "colorSpace" and "components", received ${fmt(m.actualType)}.`,
+    `A color value must be an object with "colorSpace" and "components", received ${formatValue(m.actualType)}.`,
   'color.color-space.missing': () => 'A color value must have a "colorSpace" property.',
   'color.color-space.invalid': (m) =>
-    `Unsupported color space ${fmt(m.actual)}. Supported: ${list(m.allowed)}.${suggest(m)}`,
+    `Unsupported color space ${formatValue(m.actual)}. Supported: ${list(m.allowed)}.${suggest(m)}`,
   'color.components.missing': () => 'A color value must have a "components" array.',
   'color.components.not-array': (m) =>
-    `"components" must be an array, received ${fmt(m.actualType)}.`,
+    `"components" must be an array, received ${formatValue(m.actualType)}.`,
   'color.components.wrong-length': (m) =>
-    `"components" must have exactly ${fmt(m.expected)} entries for ${fmt(m.colorSpace)}, received ${fmt(m.actual)}.`,
+    `"components" must have exactly ${formatValue(m.expected)} entries for ${formatValue(m.colorSpace)}, received ${formatValue(m.actual)}.`,
   'color.component.invalid': (m) =>
-    `Color component ${fmt(m.index)} must be a number or "none", received ${fmt(m.actual)}.`,
+    `Color component ${formatValue(m.index)} must be a number or "none", received ${formatValue(m.actual)}.`,
   'color.component.out-of-range': (m) =>
-    `Color component ${fmt(m.index)} (${fmt(m.name)}) of ${fmt(m.colorSpace)} must be in ${range(m)}, received ${fmt(m.actual)}.`,
-  'color.alpha.not-number': (m) => `"alpha" must be a number, received ${fmt(m.actualType)}.`,
-  'color.alpha.out-of-range': (m) => `"alpha" must be in [0, 1], received ${fmt(m.actual)}.`,
+    `Color component ${formatValue(m.index)} (${formatValue(m.name)}) of ${formatValue(m.colorSpace)} must be in ${range(m)}, received ${formatValue(m.actual)}.`,
+  'color.alpha.not-number': (m) =>
+    `"alpha" must be a number, received ${formatValue(m.actualType)}.`,
+  'color.alpha.out-of-range': (m) =>
+    `"alpha" must be in [0, 1], received ${formatValue(m.actual)}.`,
   'color.hex.invalid': (m) =>
-    `"hex" must be a 6-digit CSS hex color such as "#ff00ff", received ${fmt(m.actual)}.`,
+    `"hex" must be a 6-digit CSS hex color such as "#ff00ff", received ${formatValue(m.actual)}.`,
   'color.hex.mismatch': (m) =>
-    `"hex" ${fmt(m.hex)} does not match the sRGB components (expected ${fmt(m.expected)}).`,
+    `"hex" ${formatValue(m.hex)} does not match the sRGB components (expected ${formatValue(m.expected)}).`,
 
   'dimension.value.not-object': (m) =>
-    `A dimension value must be an object with "value" and "unit", received ${fmt(m.actualType)}.`,
+    `A dimension value must be an object with "value" and "unit", received ${formatValue(m.actualType)}.`,
   'dimension.value.missing': () => 'A dimension value must have a "value" property.',
   'dimension.value.not-number': (m) =>
-    `Dimension "value" must be a number, received ${fmt(m.actualType)}.`,
+    `Dimension "value" must be a number, received ${formatValue(m.actualType)}.`,
   'dimension.unit.missing': () =>
     'A dimension value must have a "unit" property, even when "value" is 0.',
   'dimension.unit.invalid': (m) =>
-    `Dimension "unit" must be one of ${list(m.allowed)}, received ${fmt(m.actual)}.${suggest(m)}`,
+    `Dimension "unit" must be one of ${list(m.allowed)}, received ${formatValue(m.actual)}.${suggest(m)}`,
 
   'font-family.value.invalid': (m) =>
-    `A font family value must be a string or an array of strings, received ${fmt(m.actualType)}.`,
+    `A font family value must be a string or an array of strings, received ${formatValue(m.actualType)}.`,
   'font-family.name.not-string': (m) =>
-    `Font family entry ${fmt(m.index)} must be a string, received ${fmt(m.actualType)}.`,
+    `Font family entry ${formatValue(m.index)} must be a string, received ${formatValue(m.actualType)}.`,
 
   'font-weight.value.invalid': (m) =>
-    `A font weight value must be a number in [1, 1000] or a keyword, received ${fmt(m.actualType)}.`,
+    `A font weight value must be a number in [1, 1000] or a keyword, received ${formatValue(m.actualType)}.`,
   'font-weight.number.out-of-range': (m) =>
-    `Font weight must be in [1, 1000], received ${fmt(m.actual)}.`,
+    `Font weight must be in [1, 1000], received ${formatValue(m.actual)}.`,
   'font-weight.keyword.invalid': (m) =>
-    `Unknown font weight keyword ${fmt(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
+    `Unknown font weight keyword ${formatValue(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
 
   'duration.value.not-object': (m) =>
-    `A duration value must be an object with "value" and "unit", received ${fmt(m.actualType)}.`,
+    `A duration value must be an object with "value" and "unit", received ${formatValue(m.actualType)}.`,
   'duration.value.missing': () => 'A duration value must have a "value" property.',
   'duration.value.not-number': (m) =>
-    `Duration "value" must be a number, received ${fmt(m.actualType)}.`,
+    `Duration "value" must be a number, received ${formatValue(m.actualType)}.`,
   'duration.unit.missing': () => 'A duration value must have a "unit" property.',
   'duration.unit.invalid': (m) =>
-    `Duration "unit" must be one of ${list(m.allowed)}, received ${fmt(m.actual)}.${suggest(m)}`,
+    `Duration "unit" must be one of ${list(m.allowed)}, received ${formatValue(m.actual)}.${suggest(m)}`,
 
   'cubic-bezier.value.not-array': (m) =>
-    `A cubic Bézier value must be an array of four numbers, received ${fmt(m.actualType)}.`,
+    `A cubic Bézier value must be an array of four numbers, received ${formatValue(m.actualType)}.`,
   'cubic-bezier.value.wrong-length': (m) =>
-    `A cubic Bézier value must have exactly 4 numbers [P1x, P1y, P2x, P2y], received ${fmt(m.actual)}.`,
+    `A cubic Bézier value must have exactly 4 numbers [P1x, P1y, P2x, P2y], received ${formatValue(m.actual)}.`,
   'cubic-bezier.point.not-number': (m) =>
-    `Cubic Bézier coordinate ${fmt(m.index)} must be a number, received ${fmt(m.actualType)}.`,
+    `Cubic Bézier coordinate ${formatValue(m.index)} must be a number, received ${formatValue(m.actualType)}.`,
   'cubic-bezier.x.out-of-range': (m) =>
-    `Cubic Bézier x coordinate ${fmt(m.index)} must be in [0, 1], received ${fmt(m.actual)}.`,
+    `Cubic Bézier x coordinate ${formatValue(m.index)} must be in [0, 1], received ${formatValue(m.actual)}.`,
 
   'number.value.not-number': (m) =>
-    `A number value must be a JSON number, received ${fmt(m.actualType)}.`,
+    `A number value must be a JSON number, received ${formatValue(m.actualType)}.`,
 };
 
 export const DEFAULT_SEVERITY: Record<IssueCode, Severity> = {

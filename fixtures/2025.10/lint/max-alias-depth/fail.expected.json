@@ -1,7 +1,7 @@
 {
   "issues": [
     {
-      "code": "alias-max-depth.exceeded",
+      "code": "max-alias-depth.exceeded",
       "pointer": "/d"
     }
   ]

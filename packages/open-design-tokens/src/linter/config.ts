@@ -4,17 +4,13 @@ import { PRESETS } from './presets/index.js';
 import { BUILTIN_RULES } from './rules/index.js';
 import type {
   LintConfig,
+  LintOptions,
   LintRule,
   ResolvedConfig,
   ResolvedRule,
   RuleSetting,
   RuleSeverity,
 } from './types.js';
-
-export interface ResolveOptions {
-  /** Additional rules (custom or third-party) made available by id. */
-  rules?: readonly LintRule[];
-}
 
 function parseSetting(setting: RuleSetting): { severity: RuleSeverity; options: unknown } {
   if (Array.isArray(setting)) {
@@ -33,7 +29,10 @@ function isSeverity(s: unknown): s is RuleSeverity {
  * reads the file system. Unknown rule ids, bad severities, and malformed rule
  * options are programmer errors and throw.
  */
-export function resolveConfig(config: LintConfig = {}, opts: ResolveOptions = {}): ResolvedConfig {
+export function resolveConfig(
+  config: LintConfig = {},
+  opts: Pick<LintOptions, 'rules'> = {},
+): ResolvedConfig {
   const registry = new Map<string, LintRule>();
   for (const r of BUILTIN_RULES) registry.set(r.id, r);
   for (const r of opts.rules ?? []) registry.set(r.id, r);

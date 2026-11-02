@@ -31,13 +31,13 @@ export async function loadConfig(cwd: string, explicitPath?: string): Promise<Lo
   if (!existsSync(file)) throw new Error(`Config file not found: ${file}`);
   if (file.endsWith('.json')) {
     const parsed: unknown = JSON.parse(readFileSync(file, 'utf8'));
-    if (typeof parsed !== 'object' || parsed === null)
+    if (typeof parsed !== 'object' || parsed === null || Array.isArray(parsed))
       throw new Error(`Config file must contain an object: ${file}`);
     return { config: parsed as LintConfig, path: file };
   }
   const mod = (await import(pathToFileURL(file).href)) as { default?: LintConfig } & LintConfig;
   const config = mod.default ?? mod;
-  if (typeof config !== 'object' || config === null)
+  if (typeof config !== 'object' || config === null || Array.isArray(config))
     throw new Error(`Config file must export an object: ${file}`);
   return { config, path: file };
 }

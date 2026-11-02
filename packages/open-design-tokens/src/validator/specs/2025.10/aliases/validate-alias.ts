@@ -1,11 +1,12 @@
 import type { ValidationIssue } from '../../../../core/issue.js';
 import { isAlias, isReference } from '../../../../core/predicates.js';
 import type { NodeInfo } from '../../../../core/prepare.js';
+import { prepareDocument } from '../../../../core/prepare.js';
 import type { ValidationContext } from '../../../context.js';
 import { createIssue } from '../../../context.js';
 import type { TokenType } from '../types/token.js';
 import { parseAlias } from './parse.js';
-import type { Resolver } from './resolver.js';
+import { createResolver, type Resolver } from './resolver.js';
 
 export interface AliasCheck {
   issues: ValidationIssue[];
@@ -15,12 +16,46 @@ export interface AliasCheck {
 }
 
 /**
- * Validates a token whose `$value` is a `{curly}` alias or a whole-value
- * `$ref`, or a `reference` node: syntax, target existence, target kind,
- * cycles, and type compatibility with `expectedType` (the alias token's own or
- * inherited type, if any).
+ * Validates the alias token at `pointer` in a document: alias syntax, target
+ * existence and kind, cycles, and type compatibility with `expectedType` (or
+ * the token's own or inherited type when omitted).
+ *
+ * @example
+ * ```ts
+ * const check = validateAliasToken(tokens, '/semantic/primary');
+ * check.resolved; // true when the chain ends at a concrete token
+ * ```
  */
 export function validateAliasToken(
+  input: unknown,
+  pointer: string,
+  expectedType?: TokenType,
+): AliasCheck {
+  const doc = prepareDocument(input);
+  const node = doc.index.get(pointer);
+  const segments = pointer === '' ? [] : pointer.slice(1).split('/');
+  if (!node || node.kind === 'group') {
+    const ctx: ValidationContext = { spec: doc.spec, path: segments };
+    return {
+      issues: [createIssue(ctx, 'alias.target.missing', { alias: pointer, path: pointer })],
+      resolvedType: undefined,
+      resolved: false,
+    };
+  }
+  const resolver = createResolver(doc);
+  const type = expectedType ?? resolver.effectiveType(node);
+  const ctx: ValidationContext = {
+    spec: doc.spec,
+    path: [...node.path, node.kind === 'reference' ? '$ref' : '$value'],
+  };
+  return checkAliasToken(node, type, resolver, ctx);
+}
+
+/**
+ * Internal form used by the token validator: the alias token's `$value` (or a
+ * reference node's `$ref`) is checked with a resolver and context already in hand.
+ */
+export function checkAliasToken(
   node: NodeInfo,
   expectedType: TokenType | undefined,
   resolver: Resolver,

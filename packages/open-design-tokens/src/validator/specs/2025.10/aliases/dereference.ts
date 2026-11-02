@@ -3,15 +3,9 @@ import { isPlainObject, isReference } from '../../../../core/predicates.js';
 import type { ValidationContext } from '../../../context.js';
 import { child, createIssue } from '../../../context.js';
 import type { IssueCode } from '../messages.js';
-import type { Resolver, Status } from './resolver.js';
+import type { Dereferenced, Resolver, Status } from './resolver.js';
 
-export interface Dereferenced {
-  /** The value with every nested `{ $ref }` replaced by its target. */
-  value: unknown;
-  issues: ValidationIssue[];
-  /** True when at least one reference failed; the value should then not be validated further. */
-  failed: boolean;
-}
+export type { Dereferenced } from './resolver.js';
 
 /** Guards against pathological nesting inside a single value. */
 const MAX_VALUE_DEPTH = 64;

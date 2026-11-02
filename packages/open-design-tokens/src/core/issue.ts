@@ -28,7 +28,7 @@ const CONTROL_CHARS = /[\u0000-\u001f\u007f\u2028\u2029]/g;
  * control characters escaped, so a hostile token name cannot inject terminal
  * sequences or line breaks into diagnostics.
  */
-export function fmt(value: unknown): string {
+export function formatValue(value: unknown): string {
   let text: string;
   if (typeof value === 'string') {
     text = JSON.stringify(value);

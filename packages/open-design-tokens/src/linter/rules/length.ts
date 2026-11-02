@@ -1,4 +1,4 @@
-import { fmt } from '../../core/issue.js';
+import { formatValue } from '../../core/issue.js';
 import { defineRule } from '../define.js';
 
 export interface LengthOptions {
@@ -30,16 +30,24 @@ function check(
 ): void {
   const length = [...value].length; // code points, so emoji count once
   if (o.min !== undefined && o.min >= 0 && length < o.min) {
-    report('too-short', `${what} ${fmt(value)} is ${length} characters; minimum is ${o.min}.`, {
-      length,
-      min: o.min,
-    });
+    report(
+      'too-short',
+      `${what} ${formatValue(value)} is ${length} characters; minimum is ${o.min}.`,
+      {
+        length,
+        min: o.min,
+      },
+    );
   }
   if (o.max !== undefined && o.max >= 0 && length > o.max) {
-    report('too-long', `${what} ${fmt(value)} is ${length} characters; maximum is ${o.max}.`, {
-      length,
-      max: o.max,
-    });
+    report(
+      'too-long',
+      `${what} ${formatValue(value)} is ${length} characters; maximum is ${o.max}.`,
+      {
+        length,
+        max: o.max,
+      },
+    );
   }
 }
 

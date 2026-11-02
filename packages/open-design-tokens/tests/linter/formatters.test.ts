@@ -6,12 +6,12 @@ import {
   formatPretty,
   stripControl,
 } from '../../src/linter/formatters/index.js';
-import { lint } from '../../src/linter/index.js';
+import { lintDtcg } from '../../src/linter/index.js';
 
 const HOSTILE = '\u001b[31mevil\u001b[0m\n::set-output name=x::y%0A';
 
 describe('formatters', () => {
-  const result = lint(
+  const result = lintDtcg(
     { [HOSTILE]: { $type: 'number', $value: 'x' }, ok: { $type: 'number', $value: 1 } },
     { rules: { 'require-description': 'warning' } },
   );

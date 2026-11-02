@@ -1,7 +1,8 @@
 import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
-import { examples, type LintConfig, lint } from '../../src/linter/index.js';
+import * as examples from '../../src/linter/examples/com.example.app.js';
+import { type LintConfig, lintDtcg } from '../../src/linter/index.js';
 
 const ROOT = fileURLToPath(new URL('../../../../fixtures/2025.10/lint/', import.meta.url));
 
@@ -22,12 +23,12 @@ describe('lint rules (fixtures)', () => {
           }
         : rawConfig;
     it(`${dir}: pass fixture is clean`, () => {
-      const r = lint(read('pass.json'), config);
+      const r = lintDtcg(read('pass.json'), config);
       expect(r.validation.valid).toBe(true);
       expect(r.issues.map((i) => `${i.code} ${i.path.pointer}`)).toEqual([]);
     });
     it(`${dir}: fail fixture reports exactly the expected codes`, () => {
-      const r = lint(read('fail.json'), config);
+      const r = lintDtcg(read('fail.json'), config);
       const expected = (
         JSON.parse(read('fail.expected.json')) as { issues: { code: string; pointer: string }[] }
       ).issues;

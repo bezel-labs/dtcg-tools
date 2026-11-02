@@ -9,39 +9,6 @@ import { createResolver } from './aliases/resolver.js';
 import { validateGroup } from './groups/validate-group.js';
 import { validateDesignToken } from './tokens/validate-design-token.js';
 
-export type { Dereferenced } from './aliases/dereference.js';
-export { dereference } from './aliases/dereference.js';
-export { parseAlias, parseRef } from './aliases/parse.js';
-export type {
-  AliasResolution,
-  ExtendsTarget,
-  MergedGroup,
-  MergedMember,
-  OwningToken,
-  PathLookup,
-  RefResolution,
-  Resolver,
-  Status,
-} from './aliases/resolver.js';
-export { createResolver, rawAt } from './aliases/resolver.js';
-export { validateAliasToken } from './aliases/validate-alias.js';
-export * from './composites/index.js';
-export * from './constants.js';
-export { validateExtends } from './groups/validate-extends.js';
-export { validateExtendsSyntax, validateGroup } from './groups/validate-group.js';
-export { validateNameCollisions } from './groups/validate-name-collisions.js';
-export * from './messages.js';
-export {
-  validateDeprecated,
-  validateDescription,
-  validateExtensions,
-  validateType,
-} from './tokens/validate-common-props.js';
-export { validateDesignToken } from './tokens/validate-design-token.js';
-export { validateName } from './tokens/validate-name.js';
-export * from './types/index.js';
-export * from './values/index.js';
-
 export interface DocumentValidation {
   issues: ValidationIssue[];
   stats: ValidationStats;
