@@ -1,0 +1,16 @@
+{
+  "ab": {
+    "$type": "number",
+    "$value": 1
+  },
+  "abcdefgh": {
+    "$type": "number",
+    "$value": 2
+  },
+  "g": {
+    "$root": {
+      "$type": "number",
+      "$value": 3
+    }
+  }
+}

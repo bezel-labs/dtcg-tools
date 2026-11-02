@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "group-name-length": [
+      "warning",
+      {
+        "max": 5
+      }
+    ]
+  }
+}

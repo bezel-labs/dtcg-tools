@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "description-length": [
+      "warning",
+      {
+        "min": 10,
+        "max": 40
+      }
+    ]
+  }
+}

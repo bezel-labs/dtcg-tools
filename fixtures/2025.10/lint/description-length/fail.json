@@ -1,0 +1,10 @@
+{
+  "t": {
+    "$type": "number",
+    "$value": 1,
+    "$description": "short"
+  },
+  "g": {
+    "$description": "This description is far too long for the configured maximum."
+  }
+}

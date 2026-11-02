@@ -1,0 +1,14 @@
+{
+  "g": {
+    "t": {
+      "$type": "number",
+      "$value": 1
+    }
+  },
+  "h": {
+    "$root": {
+      "$type": "number",
+      "$value": 2
+    }
+  }
+}

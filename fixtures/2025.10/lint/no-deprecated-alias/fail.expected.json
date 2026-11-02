@@ -1,0 +1,12 @@
+{
+  "issues": [
+    {
+      "code": "no-deprecated-alias.target",
+      "pointer": "/a"
+    },
+    {
+      "code": "no-deprecated-alias.target",
+      "pointer": "/b"
+    }
+  ]
+}

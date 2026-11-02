@@ -2,7 +2,19 @@
 
 exports[`public exports > linter entry 1`] = `
 [
-  "LINTER_STATUS",
+  "BUILTIN_RULES",
+  "PRESETS",
+  "buildReferenceGraph",
+  "defineConfig",
+  "defineRule",
+  "examples",
+  "formatGithub",
+  "formatJson",
+  "formatPretty",
+  "lint",
+  "recommended",
+  "resolveConfig",
+  "rules",
 ]
 `;
 

@@ -1,0 +1,8 @@
+{
+  "color-group": {
+    "brandPrimary": {
+      "$type": "number",
+      "$value": 1
+    }
+  }
+}

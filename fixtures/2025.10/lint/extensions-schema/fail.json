@@ -1,0 +1,20 @@
+{
+  "t": {
+    "$type": "number",
+    "$value": 1,
+    "$extensions": {
+      "com.example.app": {
+        "exportName": ["Bad Name"],
+        "variantName": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "extra": true
+      }
+    }
+  },
+  "u": {
+    "$type": "number",
+    "$value": 2,
+    "$extensions": {
+      "com.example.app": "nope"
+    }
+  }
+}

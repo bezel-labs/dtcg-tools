@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "extensions-allowed-vendors": [
+      "error",
+      {
+        "vendors": ["com.example.app"]
+      }
+    ]
+  }
+}

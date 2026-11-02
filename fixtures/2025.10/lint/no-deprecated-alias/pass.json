@@ -1,0 +1,20 @@
+{
+  "old": {
+    "$type": "number",
+    "$value": 1,
+    "$deprecated": true
+  },
+  "legacy": {
+    "$deprecated": "gone",
+    "x": {
+      "$value": "{old}"
+    }
+  },
+  "fresh": {
+    "$type": "number",
+    "$value": 2
+  },
+  "use": {
+    "$value": "{fresh}"
+  }
+}

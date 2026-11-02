@@ -1,0 +1,12 @@
+{
+  "issues": [
+    {
+      "code": "no-empty-groups.empty",
+      "pointer": "/g"
+    },
+    {
+      "code": "no-empty-groups.empty",
+      "pointer": "/h"
+    }
+  ]
+}

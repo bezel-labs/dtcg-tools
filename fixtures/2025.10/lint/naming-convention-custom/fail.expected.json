@@ -1,0 +1,8 @@
+{
+  "issues": [
+    {
+      "code": "naming-convention.mismatch",
+      "pointer": "/x1"
+    }
+  ]
+}

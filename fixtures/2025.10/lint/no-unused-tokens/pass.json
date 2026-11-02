@@ -1,0 +1,46 @@
+{
+  "a": {
+    "$type": "number",
+    "$value": 1
+  },
+  "b": {
+    "$value": "{a}"
+  },
+  "c": {
+    "$value": {
+      "$ref": "#/b/$value"
+    }
+  },
+  "semantic": {
+    "text": {
+      "$value": "{c}"
+    }
+  },
+  "e": {
+    "$type": "shadow",
+    "$value": {
+      "color": "{col}",
+      "offsetX": "{dim}",
+      "offsetY": "{dim}",
+      "blur": "{dim}",
+      "spread": "{dim}"
+    }
+  },
+  "col": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0, 0]
+    }
+  },
+  "dim": {
+    "$type": "dimension",
+    "$value": {
+      "value": 1,
+      "unit": "px"
+    }
+  },
+  "f": {
+    "$value": "{e}"
+  }
+}

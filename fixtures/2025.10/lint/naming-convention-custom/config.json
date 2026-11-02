@@ -1,0 +1,10 @@
+{
+  "rules": {
+    "naming-convention": [
+      "error",
+      {
+        "tokens": "^t[0-9]+$"
+      }
+    ]
+  }
+}

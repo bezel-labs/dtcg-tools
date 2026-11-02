@@ -1,0 +1,8 @@
+{
+  "issues": [
+    {
+      "code": "require-explicit-type.inherited",
+      "pointer": "/g/t"
+    }
+  ]
+}

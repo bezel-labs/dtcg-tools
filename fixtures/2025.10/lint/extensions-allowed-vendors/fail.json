@@ -1,0 +1,14 @@
+{
+  "t": {
+    "$type": "number",
+    "$value": 1,
+    "$extensions": {
+      "com.other.tool": 1
+    }
+  },
+  "g": {
+    "$extensions": {
+      "org.x": 2
+    }
+  }
+}

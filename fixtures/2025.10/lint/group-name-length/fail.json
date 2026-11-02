@@ -1,0 +1,8 @@
+{
+  "toolong": {
+    "t": {
+      "$type": "number",
+      "$value": 1
+    }
+  }
+}

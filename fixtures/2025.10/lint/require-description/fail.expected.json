@@ -1,0 +1,12 @@
+{
+  "issues": [
+    {
+      "code": "require-description.missing",
+      "pointer": "/t"
+    },
+    {
+      "code": "require-description.missing",
+      "pointer": "/u"
+    }
+  ]
+}

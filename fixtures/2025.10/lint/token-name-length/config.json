@@ -1,0 +1,11 @@
+{
+  "rules": {
+    "token-name-length": [
+      "error",
+      {
+        "min": 2,
+        "max": 8
+      }
+    ]
+  }
+}

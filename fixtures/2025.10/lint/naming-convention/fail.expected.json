@@ -1,0 +1,12 @@
+{
+  "issues": [
+    {
+      "code": "naming-convention.mismatch",
+      "pointer": "/color-group"
+    },
+    {
+      "code": "naming-convention.mismatch",
+      "pointer": "/color-group/brandPrimary"
+    }
+  ]
+}

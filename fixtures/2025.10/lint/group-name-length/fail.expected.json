@@ -1,0 +1,8 @@
+{
+  "issues": [
+    {
+      "code": "group-name-length.too-long",
+      "pointer": "/toolong"
+    }
+  ]
+}

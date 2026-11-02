@@ -1,0 +1,10 @@
+{
+  "x": {
+    "$type": "number",
+    "$value": 1
+  },
+  "abcdefghi": {
+    "$type": "number",
+    "$value": 2
+  }
+}

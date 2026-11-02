@@ -1,20 +1,103 @@
 #!/usr/bin/env node
 /**
- * `dtcg-lint` command-line interface. Implemented in Milestone 7.
+ * `dtcg-lint`: validate and lint DTCG token files.
+ *
+ *   dtcg-lint <files or globs...> [--config <path>] [--format pretty|json|github] [--no-color]
+ *
+ * Exit codes: 0 no errors, 1 errors found, 2 usage or configuration problem.
  */
+import { readFileSync } from 'node:fs';
+import { relative } from 'node:path';
 import { parseArgs } from 'node:util';
+import { resolveConfig } from './linter/config.js';
+import { lint } from './linter/engine.js';
+import { FORMATTERS, type FormatName } from './linter/formatters/index.js';
+import { expandFiles } from './linter/node/files.js';
+import { loadConfig } from './linter/node/load-config.js';
 
-const { values } = parseArgs({
-  options: { help: { type: 'boolean', short: 'h' } },
-  strict: false,
-});
+const USAGE = `Usage: dtcg-lint <files...> [options]
 
-if (values.help) {
+Options:
+  --config <path>     Lint config (dtcg-lint.config.{json,mjs,js,ts}); defaults to one in the current directory
+  --format <name>     pretty (default), json, or github
+  --no-color          Disable ANSI colors in pretty output
+  -h, --help          Show this help
+`;
+
+async function main(argv: readonly string[]): Promise<number> {
+  const { values, positionals } = parseArgs({
+    args: [...argv],
+    allowPositionals: true,
+    options: {
+      config: { type: 'string' },
+      format: { type: 'string', default: 'pretty' },
+      color: { type: 'boolean', default: true },
+      help: { type: 'boolean', short: 'h', default: false },
+    },
+  });
+  if (values.help) {
+    process.stdout.write(USAGE);
+    return 0;
+  }
+  if (positionals.length === 0) {
+    process.stderr.write(USAGE);
+    return 2;
+  }
+  const format = values.format as FormatName;
+  const formatter = FORMATTERS[format];
+  if (!formatter) {
+    process.stderr.write(`Unknown format: ${values.format}. Use pretty, json, or github.\n`);
+    return 2;
+  }
+  const cwd = process.cwd();
+  const color = values.color && !process.env.NO_COLOR && (process.stdout.isTTY ?? false);
+
+  let resolved: ReturnType<typeof resolveConfig>;
+  try {
+    const loaded = await loadConfig(cwd, values.config);
+    resolved = resolveConfig(loaded.config);
+  } catch (err) {
+    process.stderr.write(
+      `Configuration error: ${err instanceof Error ? err.message : String(err)}\n`,
+    );
+    return 2;
+  }
+
+  const files = expandFiles(positionals, cwd);
+  if (files.length === 0) {
+    process.stderr.write('No files matched.\n');
+    return 2;
+  }
+
+  let failed = false;
+  const outputs: string[] = [];
+  for (const file of files) {
+    let source: string;
+    try {
+      source = readFileSync(file, 'utf8');
+    } catch (err) {
+      process.stderr.write(
+        `Cannot read ${file}: ${err instanceof Error ? err.message : String(err)}\n`,
+      );
+      failed = true;
+      continue;
+    }
+    const result = lint(source, {}, { resolved });
+    if (!result.valid) failed = true;
+    outputs.push(formatter(result, { file: relative(cwd, file) || file, color }));
+  }
   process.stdout.write(
-    'Usage: dtcg-lint <files...> [--config <path>] [--format pretty|json|github]\n',
+    format === 'json' && files.length > 1
+      ? `[${outputs.map((o) => o.trim()).join(',\n')}]\n`
+      : outputs.join(''),
   );
-  process.exit(0);
+  return failed ? 1 : 0;
 }
 
-process.stderr.write('dtcg-lint is not implemented yet.\n');
-process.exit(2);
+main(process.argv.slice(2)).then(
+  (code) => process.exit(code),
+  (err) => {
+    process.stderr.write(`${err instanceof Error ? (err.stack ?? err.message) : String(err)}\n`);
+    process.exit(2);
+  },
+);

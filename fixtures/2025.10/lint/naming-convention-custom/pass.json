@@ -1,0 +1,10 @@
+{
+  "t1": {
+    "$type": "number",
+    "$value": 1
+  },
+  "t22": {
+    "$type": "number",
+    "$value": 2
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "t": {
+    "$type": "number",
+    "$value": 1,
+    "$extensions": {
+      "com.example.app": {
+        "exportName": ["pool-100", "pool-200"],
+        "variantName": "dark"
+      }
+    }
+  }
+}

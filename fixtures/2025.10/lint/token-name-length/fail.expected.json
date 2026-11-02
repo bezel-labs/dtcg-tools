@@ -1,0 +1,12 @@
+{
+  "issues": [
+    {
+      "code": "token-name-length.too-short",
+      "pointer": "/x"
+    },
+    {
+      "code": "token-name-length.too-long",
+      "pointer": "/abcdefghi"
+    }
+  ]
+}

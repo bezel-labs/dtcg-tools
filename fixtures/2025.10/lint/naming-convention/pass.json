@@ -1,0 +1,12 @@
+{
+  "colorGroup": {
+    "brand-primary": {
+      "$type": "number",
+      "$value": 1
+    },
+    "$root": {
+      "$type": "number",
+      "$value": 2
+    }
+  }
+}

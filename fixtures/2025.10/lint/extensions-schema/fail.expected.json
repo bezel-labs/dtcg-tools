@@ -1,0 +1,24 @@
+{
+  "issues": [
+    {
+      "code": "extensions-schema.pattern",
+      "pointer": "/t/$extensions/com.example.app/exportName/0"
+    },
+    {
+      "code": "extensions-schema.invalid",
+      "pointer": "/t/$extensions/com.example.app/exportName"
+    },
+    {
+      "code": "extensions-schema.too-long",
+      "pointer": "/t/$extensions/com.example.app/variantName"
+    },
+    {
+      "code": "extensions-schema.unknown-field",
+      "pointer": "/t/$extensions/com.example.app/extra"
+    },
+    {
+      "code": "extensions-schema.not-object",
+      "pointer": "/u/$extensions/com.example.app"
+    }
+  ]
+}

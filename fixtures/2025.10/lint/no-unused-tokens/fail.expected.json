@@ -1,0 +1,12 @@
+{
+  "issues": [
+    {
+      "code": "no-unused-tokens.unreferenced",
+      "pointer": "/a"
+    },
+    {
+      "code": "no-unused-tokens.unreferenced",
+      "pointer": "/b"
+    }
+  ]
+}

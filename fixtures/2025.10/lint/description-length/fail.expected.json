@@ -1,0 +1,12 @@
+{
+  "issues": [
+    {
+      "code": "description-length.too-short",
+      "pointer": "/t/$description"
+    },
+    {
+      "code": "description-length.too-long",
+      "pointer": "/g/$description"
+    }
+  ]
+}

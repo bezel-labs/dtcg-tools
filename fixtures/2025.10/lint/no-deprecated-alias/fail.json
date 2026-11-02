@@ -1,0 +1,23 @@
+{
+  "old": {
+    "$type": "number",
+    "$value": 1,
+    "$deprecated": "Use new."
+  },
+  "g": {
+    "$deprecated": true,
+    "inner": {
+      "$type": "number",
+      "$value": 3
+    }
+  },
+  "a": {
+    "$value": "{old}"
+  },
+  "b": {
+    "$type": "number",
+    "$value": {
+      "$ref": "#/g/inner/$value"
+    }
+  }
+}

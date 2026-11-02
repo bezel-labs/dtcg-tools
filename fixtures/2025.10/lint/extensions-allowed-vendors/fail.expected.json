@@ -1,0 +1,12 @@
+{
+  "issues": [
+    {
+      "code": "extensions-allowed-vendors.unknown-vendor",
+      "pointer": "/t/$extensions/com.other.tool"
+    },
+    {
+      "code": "extensions-allowed-vendors.unknown-vendor",
+      "pointer": "/g/$extensions/org.x"
+    }
+  ]
+}
