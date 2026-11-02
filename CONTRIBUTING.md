@@ -58,7 +58,7 @@ The validator reports only what the specification says. It has no options beyond
 1. Create `src/linter/rules/<rule-id>.ts` with `defineRule`, give it `meta.description`, a default severity, and `validateOptions` if it takes options.
 2. Register it in `src/linter/rules/index.ts` and, if it suits every project, in `presets/recommended.ts` as a warning.
 3. Add `fixtures/2025.10/lint/<rule-id>/` with `config.json`, `pass.json`, `fail.json`, and `fail.expected.json`.
-4. Document it in the README rule table.
+4. Document it in the README rule table; the docs site's rule reference is generated from the rule metadata.
 
 ### A message or wording change
 

@@ -77,7 +77,11 @@ export function App() {
     <main className="app">
       <header className="header">
         <h1>Open Design Tokens Playground</h1>
-        <p>TypeScript toolkit for validating and linting DTCG design tokens.</p>
+        <p>
+          TypeScript toolkit for validating and linting DTCG design tokens. <a href="docs/">Docs</a>{' '}
+          · <a href="api/">API reference</a> ·{' '}
+          <a href="https://github.com/bezel-labs/open-design-tokens">GitHub</a>
+        </p>
       </header>
       <div className="layout">
         <aside className="examples">

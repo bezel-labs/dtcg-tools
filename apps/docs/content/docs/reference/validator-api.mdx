@@ -1,0 +1,37 @@
+---
+title: Validator API
+description: Exports of open-design-tokens/validator.
+---
+
+The complete, generated reference with every signature is at [/api/](https://opendesigntokens.com/api/). This page groups the exports by purpose.
+
+## Entry point
+
+- `validateDtcg(input, options?)` validates a JSON string, an object, or a prepared document. Returns `ValidationResult`. Never throws on a document; throws only for an unknown `spec`.
+
+## Document preparation
+
+- `prepareDocument(input, options?)` parses and indexes once; pass the result to `validateDtcg` or `lintDtcg` to share the work.
+- `walkDocument(doc, visitor)`, `getNodeAtPointer(doc, pointer)`, `isPreparedDocument(value)`.
+
+## Composable validators
+
+Each returns `ValidationIssue[]` and can be used on its own, for example in an editor that validates a single value as the user types.
+
+- Values: `validateColorValue`, `validateDimensionValue`, `validateFontFamilyValue`, `validateFontWeightValue`, `validateDurationValue`, `validateCubicBezierValue`, `validateNumberValue`.
+- Composites: `validateStrokeStyleValue`, `validateBorderValue`, `validateTransitionValue`, `validateShadowValue`, `validateGradientValue`, `validateTypographyValue`; `validateSubValue` for a sub-value that may be an alias; `validateValueOfType` and the `VALUE_VALIDATORS` table to dispatch by type.
+- Tokens and groups: `validateDesignToken`, `validateGroup`, `validateExtends`, `validateName`, `validateNameCollisions`, `validateDescription`, `validateType`, `validateDeprecated`, `validateExtensions`.
+- Aliases: `validateAliasToken(doc, pointer, expectedType?)`, `parseAlias`, `parseRef`.
+- Whole document: `validateDocument`.
+
+## Resolver
+
+`createResolver(preparedDocument)` returns a memoised resolver with `resolveAlias`, `resolveRef`, `lookupPath`, `mergedGroup`, `effectiveType`, `owningToken`, and `dereference` for property-level references.
+
+## Spec tables and messages
+
+`TOKEN_TYPES`, `PRIMITIVE_TOKEN_TYPES`, `COMPOSITE_TOKEN_TYPES`, `COLOR_SPACES`, `COLOR_COMPONENT_RANGES`, `DIMENSION_UNITS`, `DURATION_UNITS`, `FONT_WEIGHT_ALIASES`, `FONT_WEIGHT_RANGE`, `ALPHA_RANGE`, `CUBIC_BEZIER_X_RANGE`, `STROKE_STYLES`, `LINE_CAPS`, `SUB_FIELD_TYPES`, `TOKEN_PROPS`, `GROUP_PROPS`, `RESERVED_PROPS`, `ROOT_TOKEN_NAME`, `MAX_DEPTH`, `SPEC_IDS`, `LATEST_SPEC`; `MESSAGES`, `DEFAULT_SEVERITY`, `ISSUE_CODES`.
+
+## Helpers
+
+Predicates `isToken`, `isGroup`, `isAlias`, `isReference`, `isAliasOrReference`, `isTokenOfType`; pointer helpers `parseJsonPointer`, `toJsonPointer`, `toDotPath`, `escapePointerSegment`, `unescapePointerSegment`; `formatValue` for safe message interpolation; `createIssue` and `createRootContext` for validator authors.

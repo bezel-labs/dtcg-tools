@@ -1,0 +1,42 @@
+---
+title: CLI
+description: dtcg-lint validates DTCG token files against the specification, then lints them with your config.
+---
+
+```sh
+dtcg-lint <files or globs...> [options]
+```
+
+| Option | Meaning |
+|---|---|
+| `--config <path>` | Lint config to use. Without it, `dtcg-lint.config.{json,mjs,js,ts}` in the current directory is loaded; parent directories are never searched. |
+| `--format <name>` | `pretty` (default), `json`, or `github`. |
+| `--no-color` | Disable ANSI colors in pretty output. `NO_COLOR=1` does the same. |
+| `-h`, `--help` | Print usage. |
+
+Exit codes: `0` no errors, `1` validation or lint errors, `2` usage or configuration problem.
+
+## Globs
+
+Patterns use `*`, `**`, and `?`. Matching never follows symbolic links and skips `node_modules` and dot-folders, so a glob cannot reach outside the working directory.
+
+## Formats
+
+`pretty` prints one line per issue with path, severity, message, and code, then a summary. Names and paths from the document are stripped of control characters, so a hostile token name cannot inject terminal sequences.
+
+`json` prints the full `LintResult` (plus the file name) for one file, or an array for several.
+
+`github` prints one workflow command per issue: `::error file=tokens.json,title=dimension.unit.missing::spacing.small.$value: …`. Percent signs, newlines, and command delimiters are encoded.
+
+## Configuration file
+
+```json
+{
+  "extends": ["recommended"],
+  "rules": {
+    "token-name-length": ["error", { "min": 2, "max": 40 }]
+  }
+}
+```
+
+A `.mjs`, `.js`, or `.ts` config may `export default defineConfig({...})`. Loading one executes code, the same trust model as an ESLint config; prefer `.json` when linting files from untrusted contributors.

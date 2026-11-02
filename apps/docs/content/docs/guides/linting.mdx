@@ -1,0 +1,62 @@
+---
+title: Linting
+description: Configure rules, presets, and severities.
+---
+
+## Configuration
+
+A config is a plain object. `defineConfig` adds types and completion:
+
+```ts
+import { defineConfig } from 'open-design-tokens/linter';
+
+export default defineConfig({
+  extends: ['recommended'],
+  rules: {
+    'token-name-length': ['error', { min: 2, max: 40 }],
+    'naming-convention': ['warning', { tokens: 'kebab', groups: 'camel' }],
+    'no-unused-tokens': ['warning', { ignore: ['component.**'] }],
+    'require-description': 'off',
+  },
+});
+```
+
+Each rule takes `"error"`, `"warning"`, `"off"`, or `[severity, options]`. Presets apply first, in order; explicit rules override them. Unknown rule ids, bad severities, and malformed options throw when the config is resolved, since those are mistakes in your setup rather than in a document.
+
+## The recommended preset
+
+`recommended` enables rules that fit any project, all as warnings so adopting it never breaks a build: `no-empty-groups`, `no-unused-tokens`, `no-deprecated-alias`, and `max-alias-depth` with a maximum of five hops.
+
+## Results
+
+```ts
+const result = lintDtcg(tokens, config);
+result.valid;       // validation.valid && no lint errors
+result.validation;  // the full ValidationResult
+result.issues;      // LintIssue[], each with ruleId
+result.errors;      // lint issues with severity "error"
+result.warnings;
+result.skipped;     // { ruleId, pointer, reason } for checks skipped on invalid nodes
+```
+
+## Vendor extensions
+
+Two rules cover `$extensions`. `extensions-allowed-vendors` restricts which vendor keys may appear. `extensions-schema` checks the shape of a vendor's block with a small declarative schema:
+
+```ts
+'extensions-schema': ['error', {
+  vendors: {
+    'com.example.app': {
+      fields: {
+        exportName: { type: 'array', items: 'string', pattern: /^[a-z0-9-]+$/, min: 1 },
+        variantName: { type: 'string', min: 1, max: 64 },
+      },
+      additionalFields: false,
+    },
+  },
+}]
+```
+
+A vendor entry may also be a function `(value, path) => RuleReport[]` for checks a schema cannot express.
+
+All rules, with options and defaults, are listed in the [rule reference](/reference/lint-rules).

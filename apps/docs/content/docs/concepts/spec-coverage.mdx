@@ -1,0 +1,16 @@
+---
+title: Spec coverage and known issues
+description: How the validator is tested against the specification text, and where the spec contradicts itself.
+---
+
+Every normative section of the Format Module and the Color Module is covered by fixtures: verbatim spec examples, examples built from the prose, and deliberately invalid documents whose exact expected output is pinned. A test fails if any section lacks valid and invalid coverage, and another fails if any issue code is never exercised.
+
+The generated [coverage table](/reference/spec-coverage) lists every section with its fixture counts.
+
+## Known spec issues
+
+The 2025.10 specifications include a few examples that contradict their own normative rules, or that are incomplete snippets. This toolkit follows the rules. Those examples are kept as expected-failure test cases, each recorded with the codes it produces. They include a `$type` of `"string"` that no section defines, a `%` dimension unit, typography values missing the required `letterSpacing`, a shadow example with a missing comma and closing brace, and several snippets whose aliases point at tokens that only exist elsewhere in the document.
+
+## Decisions on ambiguities
+
+Where the spec is silent or phrased as prose rather than requirements, the choices made are listed with their issue codes in [spec decisions](/reference/spec-decisions), so each one can be traced and revisited if the specification is clarified.

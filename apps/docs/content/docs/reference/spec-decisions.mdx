@@ -1,0 +1,28 @@
+---
+title: Spec decisions
+description: Choices made where the 2025.10 specifications are silent, contradictory, or phrased as prose.
+---
+
+Each decision is tied to the issue codes it affects so behaviour can be traced and, if the specification is clarified, revisited.
+
+| Topic | Decision | Codes |
+|---|---|---|
+| Unknown properties in value objects | Reported as a warning, not an error; the spec is silent. | `value.unknown-property` |
+| Unknown `$`-properties | Warnings, for forward compatibility. Names starting with `$` are never token or group names. | `token.property.unknown`, `group.property.unknown` |
+| Non-`$` properties on a token | An object cannot be both a token and a group (§6.1). Error. | `token.property.not-allowed` |
+| `$ref` on a group | Treated exactly like `$extends` (§6.4.1). | `extends.*` |
+| Reference nodes | An object with `$ref`, no `$value`, and no members is a token whose value is the referenced fragment (§7.1.2). | `ref.*` |
+| `$extends` merge | Deep merge: nested groups merge, same-path tokens are replaced wholesale, local `$type` wins, the extending group's type falls back to the base's. | `extends.inherited-token.invalid` |
+| Inherited tokens under a different type | Reported at the extending group when the token is invalid for its effective type there (§6.7.3). Top-level inherited members only. | `extends.inherited-token.invalid` |
+| Alias resolution and `$extends` | Curly aliases resolve through the merged view; `$ref` pointers over the raw document (RFC 6901). | `alias.target.missing`, `ref.target.missing` |
+| Type of an untyped alias | The resolved type of its target; if the target has none, both are reported. | `token.type.missing` |
+| Cycles | Every member of a cycle is reported; a token aliasing into a cycle is reported too. | `alias.cycle`, `ref.cycle`, `extends.cycle` |
+| Hex versus components | For `srgb` with numeric components, a `hex` more than one 8-bit step away is a warning. | `color.hex.mismatch` |
+| Unbounded color axes | Lab/OKLab a and b, LCH/OKLCH chroma: only finiteness is checked. Hue is `[0, 360)`. | `color.component.out-of-range` |
+| Cubic Bézier x range, typography fields | Prose in the spec, treated as errors because the value is otherwise meaningless. | `cubic-bezier.x.out-of-range`, `composite.property.missing` |
+| Gradient stop positions | Outside `[0, 1]` is a warning; the spec says consumers clamp. | `gradient.position.out-of-range` |
+| Empty names | Warning: a valid JSON string that no alias can target. | `name.empty` |
+| Case-only name collisions | Warned once per colliding set, at the parent group (spec: MAY warn). | `group.name.case-collision` |
+| `$schema` | Tolerated at the document root only. | `group.property.unknown` elsewhere |
+| Failed property-level references | The rest of that value is not validated, to avoid a cascade. | `ref.*` |
+| Depth limit | Documents nested deeper than 256 groups are rejected. | `document.too-deep` |

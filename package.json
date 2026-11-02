@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/bezel-labs/open-design-tokens/issues"
   },
-  "homepage": "https://github.com/bezel-labs/open-design-tokens#readme",
+  "homepage": "https://opendesigntokens.com",
   "keywords": [
     "dtcg",
     "design-tokens",
@@ -44,11 +44,19 @@
     "size": "size-limit",
     "attw": "attw --pack packages/open-design-tokens --profile esm-only",
     "bench": "node scripts/bench.mjs",
-    "tarball-test": "node scripts/tarball-test.mjs"
+    "tarball-test": "node scripts/tarball-test.mjs",
+    "docs:api": "typedoc",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run build && changeset publish",
+    "docs:dev": "npm run dev --workspace docs",
+    "site": "npx turbo run build --filter=demo --filter=docs && npm run docs:api && rm -rf apps/demo/dist/docs && cp -R apps/docs/out apps/demo/dist/docs && npx serve apps/demo/dist"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.5",
     "@biomejs/biome": "2.6.4",
+    "@changesets/changelog-github": "1.0.1",
+    "@changesets/cli": "3.0.3",
     "@commitlint/cli": "21.2.4",
     "@commitlint/config-conventional": "21.2.4",
     "@size-limit/preset-small-lib": "14.3.0",
@@ -56,6 +64,7 @@
     "lint-staged": "17.6.0",
     "size-limit": "14.3.0",
     "turbo": "2.11.10",
+    "typedoc": "0.28.20",
     "typescript": "6.0.3"
   },
   "packageManager": "npm@10.9.4",

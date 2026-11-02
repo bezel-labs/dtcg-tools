@@ -1,0 +1,13 @@
+{
+  "title": "Reference",
+  "pages": [
+    "validator-api",
+    "linter-api",
+    "cli",
+    "issue-codes",
+    "lint-rules",
+    "spec-decisions",
+    "spec-coverage",
+    "versioning"
+  ]
+}

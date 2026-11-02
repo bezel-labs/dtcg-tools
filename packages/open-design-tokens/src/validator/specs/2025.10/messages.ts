@@ -111,9 +111,10 @@ export type IssueCode =
   // §8.7 number
   | 'number.value.not-number';
 
-type Meta = Record<string, unknown>;
+/** Structured details attached to an issue and interpolated into its message. */
+export type MessageMeta = Record<string, unknown>;
 
-function range(m: Meta): string {
+function range(m: MessageMeta): string {
   const min = m.min === undefined ? '-∞' : String(m.min);
   const max = m.max === undefined ? '∞' : String(m.max);
   return `[${min}, ${max}${m.maxExclusive ? ')' : ']'}`;
@@ -123,14 +124,14 @@ function list(values: unknown): string {
   return Array.isArray(values) ? values.map((v) => formatValue(v)).join(', ') : formatValue(values);
 }
 
-function suggest(m: Meta): string {
+function suggest(m: MessageMeta): string {
   return m.suggestion === undefined
     ? ''
     : ` Did you mean ${formatValue(m.suggestion)}? Values are case-sensitive.`;
 }
 
 /** Message catalog (English). Values come from `meta` and are always passed through `formatValue`. */
-export const MESSAGES: Record<IssueCode, (meta: Meta) => string> = {
+export const MESSAGES: Record<IssueCode, (meta: MessageMeta) => string> = {
   'document.not-object': (m) =>
     `The document root must be a JSON object, received ${formatValue(m.actualType)}.`,
   'document.invalid-json': (m) => `The input is not valid JSON: ${formatValue(m.reason)}.`,

@@ -1,0 +1,30 @@
+---
+title: Validator vs. linter
+description: Two operations with different questions, and why they are kept apart.
+---
+
+The validator answers "is this valid DTCG?". The linter answers "does this follow our policies?". Keeping them apart is the core design decision of this toolkit.
+
+|                             | Validator                                                    | Linter                                               |
+|-----------------------------|--------------------------------------------------------------|------------------------------------------------------|
+| Question                    | Is this valid DTCG?                                          | Does this follow our policies?                       |
+| Rules                       | Defined by the supported specification version               | Configured by you                                    |
+| Examples                    | Invalid value type, missing alias target, circular reference | Name length, naming style, required descriptions     |
+| Can the rules be changed?   | Not while claiming the same DTCG conformance                 | Yes: enable, disable, configure, or change severity  |
+
+## Why not one tool with options?
+
+A validator with options stops being a validator: two projects with different settings would disagree about whether the same file is valid DTCG. So the validator has exactly one option, the spec version, and everything configurable lives in lint rules.
+
+A concrete case: a token named `x` is valid DTCG. A project that requires names of 2 to 20 characters configures `token-name-length` as an error, and its CI rejects the file. The rejection means "not accepted by this project", not "invalid DTCG". The distinction matters when a file moves between tools.
+
+## How they fit together
+
+```
+Input → prepareDocument() → validateDtcg()   spec checks
+                          → lintDtcg()       policy checks (validates first)
+```
+
+`prepareDocument` parses and indexes the document once. `lintDtcg` calls `validateDtcg` on that prepared document, then runs the configured rules. Rules are skipped on nodes the validator flagged with an error, so one spec mistake does not cascade into misleading policy findings; the skipped checks are listed in `result.skipped`.
+
+The separation is enforced by tests: the validator never imports the linter, no lint rule can emit a validator issue code, and the validation result is byte-for-byte identical with and without a lint config.

@@ -1,0 +1,26 @@
+---
+title: Versioning
+description: Semantic versioning and what counts as public API.
+---
+
+Open Design Tokens follows semantic versioning. Releases are produced with changesets; every pull request that changes behaviour adds a changeset describing the bump.
+
+## Public API
+
+Covered by the SemVer guarantee: the package entry points and every runtime export and exported type of them; issue codes, their severities, and issue paths; lint rule ids, option shapes, and the `recommended` preset's membership; the `dtcg-lint` command, flags, output formats, and exit codes; the `ValidationResult` and `LintResult` shapes.
+
+Not covered: message wording (match on `code`), issue order beyond "document order, stable across runs", anything prefixed `unstable_` or tagged `@experimental`, and file paths inside `dist/`.
+
+## Bumps
+
+- **Patch**: bug fixes, new fixtures, message wording, performance.
+- **Minor**: new exports, issue codes, lint rules, rule options, CLI flags, and support for a new spec version. Adding an issue code can turn a previously valid document invalid; that is still a minor bump, because the validator reports what the spec says and a new code means a spec rule was previously unchecked.
+- **Major**: removing or renaming public API, changing an issue's code, path, or severity, changing a rule's default options, or dropping a Node major.
+
+## Deprecation
+
+A public export is deprecated for at least one minor release before removal, carries an `@deprecated` tag naming the replacement, and is listed in the changelog. Majors ship migration notes with before and after examples.
+
+## Spec versions
+
+Each supported spec version is its own module selected with the `spec` option. Adding one is a minor bump; the default stays on the previous version until the next major.

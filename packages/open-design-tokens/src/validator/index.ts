@@ -14,7 +14,12 @@ export {
   unescapePointerSegment,
 } from '../core/path.js';
 export { isAlias, isAliasOrReference, isGroup, isReference, isToken } from '../core/predicates.js';
-export type { NodeInfo, PreparedDocument, PrepareOptions } from '../core/prepare.js';
+export type {
+  NodeInfo,
+  PreparedDocument,
+  PrepareOptions,
+  StructuralIssue,
+} from '../core/prepare.js';
 export { isPreparedDocument, prepareDocument } from '../core/prepare.js';
 export type { Visitor } from '../core/walk.js';
 export { getNodeAtPointer, walkDocument } from '../core/walk.js';
@@ -23,6 +28,7 @@ export { createIssue, createRootContext } from './context.js';
 export type { SpecId } from './registry.js';
 export { LATEST_SPEC, SPEC_IDS } from './registry.js';
 export type { ValidationResult, ValidationStats } from './result.js';
+export type { RefParse } from './specs/2025.10/aliases/parse.js';
 export { parseAlias, parseRef } from './specs/2025.10/aliases/parse.js';
 export type {
   AliasResolution,
@@ -76,9 +82,11 @@ export {
 export { validateExtends } from './specs/2025.10/groups/validate-extends.js';
 export { validateGroup } from './specs/2025.10/groups/validate-group.js';
 export { validateNameCollisions } from './specs/2025.10/groups/validate-name-collisions.js';
+export type { DocumentValidation } from './specs/2025.10/index.js';
 export { validateDocument } from './specs/2025.10/index.js';
-export type { IssueCode } from './specs/2025.10/messages.js';
+export type { IssueCode, MessageMeta } from './specs/2025.10/messages.js';
 export { DEFAULT_SEVERITY, ISSUE_CODES, MESSAGES } from './specs/2025.10/messages.js';
+export type { PropertyOwner } from './specs/2025.10/tokens/validate-common-props.js';
 export {
   validateDeprecated,
   validateDescription,

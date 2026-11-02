@@ -1,0 +1,17 @@
+---
+title: Using it in the browser
+description: The validator and linter run anywhere ES2022 does.
+---
+
+Both the `validator` and `linter` entries are browser-safe: no Node built-ins, no file access, no network. Import them through any bundler:
+
+```ts
+import { validateDtcg } from 'open-design-tokens/validator';
+import { lintDtcg } from 'open-design-tokens/linter';
+```
+
+Sizes, minified and compressed: about 10 kB for the validator and 14 kB for the linter. The root entry includes both. Tree-shaking works per entry, and the validator never pulls in linter code.
+
+File-based configuration (`dtcg-lint.config.*`) and the CLI are Node-only; in the browser pass a config object to `lintDtcg` directly.
+
+The [playground](https://opendesigntokens.com/) is a plain static page that does exactly this, under a strict Content Security Policy with no inline scripts and no network access.

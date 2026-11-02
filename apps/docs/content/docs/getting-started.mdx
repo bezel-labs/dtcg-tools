@@ -1,0 +1,84 @@
+---
+title: Getting started
+description: Install the package and validate your first token file in a few minutes.
+icon: Rocket
+---
+
+## Install
+
+```sh
+npm install open-design-tokens
+```
+
+Requirements: Node 20.19 or newer, or any evergreen browser through a bundler. The package is ESM; Node 20.19+ and 22.12+ can also `require()` it.
+
+## Validate a file
+
+```ts
+import { readFileSync } from 'node:fs';
+import { validateDtcg } from 'open-design-tokens/validator';
+
+const result = validateDtcg(readFileSync('tokens.json', 'utf8'));
+
+if (!result.valid) {
+  for (const issue of result.errors) {
+    console.log(`${issue.path.dot}: ${issue.message} [${issue.code}]`);
+  }
+  process.exit(1);
+}
+```
+
+`validateDtcg` accepts a JSON string or an already-parsed object. It never throws on a document: a parse failure or a non-object root comes back as an issue like any other.
+
+A result looks like this:
+
+```ts
+{
+  valid: false,
+  spec: '2025.10',
+  stats: { tokens: 12, groups: 4, aliases: 3 },
+  issues: [ /* every issue, in document order */ ],
+  errors: [ /* severity "error" */ ],
+  warnings: [ /* severity "warning" */ ],
+}
+```
+
+Each issue has a stable `code`, a plain-text `message`, a `severity`, and a `path` as both a JSON pointer and a dotted path:
+
+```ts
+{
+  code: 'dimension.unit.missing',
+  message: 'A dimension value must have a "unit" property, even when "value" is 0.',
+  severity: 'error',
+  path: { pointer: '/spacing/small/$value', dot: 'spacing.small.$value' },
+}
+```
+
+## Lint with your own policies
+
+```ts
+import { defineConfig, lintDtcg } from 'open-design-tokens/linter';
+
+const config = defineConfig({
+  extends: ['recommended'],
+  rules: {
+    'token-name-length': ['error', { min: 2, max: 40 }],
+    'naming-convention': ['error', { tokens: 'kebab' }],
+  },
+});
+
+const result = lintDtcg(tokens, config);
+result.valid;      // spec-valid and no lint errors
+result.validation; // the validation result from above
+result.issues;     // lint findings, each with a ruleId
+```
+
+Linting always validates first; policy rules are skipped on nodes that already have spec errors. Read [Validator vs. linter](/concepts/validator-vs-linter) for why.
+
+## Run it in CI
+
+```sh
+npx dtcg-lint 'tokens/**/*.json' --format github
+```
+
+`dtcg-lint` exits 1 when there are errors, so the job fails, and the `github` format turns each issue into an inline annotation on the pull request. See the [CLI reference](/reference/cli) and the [CI guide](/guides/ci).

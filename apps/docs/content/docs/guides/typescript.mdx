@@ -1,0 +1,19 @@
+---
+title: TypeScript types
+description: Typed token documents, values, and results.
+---
+
+```ts
+import type { DesignTokens, DesignToken, TypedToken, ValueForType, ColorValue } from 'open-design-tokens/types';
+import { isTokenOfType } from 'open-design-tokens/validator';
+```
+
+- `DesignTokens` is a document: a `Group` whose members are tokens or groups.
+- `DesignToken` is a discriminated union over `$type`. `TypedToken<'color'>` narrows it; `isTokenOfType(token, 'color')` is the runtime guard.
+- `ValueForType<T>` maps a `$type` to its `$value` shape, for example `ValueForType<'shadow'>` is `ShadowValue`.
+- `AliasOr<T>` is `T | '{alias}' | { $ref: string }`, the type of every sub-value position.
+- Every enumeration (`TokenType`, `ColorSpace`, `DimensionUnit`, …) is derived from the runtime constant of the same meaning, so lists exist once.
+
+The `types` entry ships declarations only; importing it adds no runtime code. Editors show JSDoc for every export, so JavaScript users get the same hints without a TypeScript setup.
+
+The complete reference is generated with TypeDoc at [/api/](https://opendesigntokens.com/api/).

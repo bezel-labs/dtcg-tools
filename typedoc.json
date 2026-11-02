@@ -1,0 +1,18 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "Open Design Tokens",
+  "entryPoints": [
+    "packages/open-design-tokens/src/validator/index.ts",
+    "packages/open-design-tokens/src/linter/index.ts",
+    "packages/open-design-tokens/src/types.ts"
+  ],
+  "tsconfig": "packages/open-design-tokens/tsconfig.json",
+  "out": "apps/demo/dist/api",
+  "readme": "README.md",
+  "excludeInternal": true,
+  "excludePrivate": true,
+  "treatWarningsAsErrors": false,
+  "navigation": { "includeCategories": true },
+  "githubPages": true,
+  "hideGenerator": true
+}

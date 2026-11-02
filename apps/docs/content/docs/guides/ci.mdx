@@ -1,0 +1,37 @@
+---
+title: Validate in CI
+description: Fail pull requests that break the spec or your policies, with inline annotations.
+---
+
+## GitHub Actions
+
+```yaml
+name: Tokens
+on: [pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npx --yes open-design-tokens dtcg-lint 'tokens/**/*.json' --format github
+```
+
+The `github` format writes one `::error` or `::warning` command per issue, which GitHub renders as an annotation on the changed lines of the pull request. The job fails when `dtcg-lint` exits 1, which happens on any error; warnings alone pass.
+
+Put a `dtcg-lint.config.json` in the repository root to apply lint rules as well. Prefer JSON configs in CI: a `.js` or `.ts` config executes code, which is fine for your own repository but not for linting files from untrusted contributors.
+
+## Other CI systems
+
+Use `--format json` and parse the output, or rely on the exit code:
+
+| Exit code | Meaning |
+|---|---|
+| 0 | No errors (warnings may be present) |
+| 1 | Validation or lint errors |
+| 2 | Usage or configuration problem |
+
+## Programmatic checks
+
+For a custom gate, call `lintDtcg` directly and inspect `result.validation.errors` and `result.errors` separately: the first is "not valid DTCG", the second is "not accepted by this project".

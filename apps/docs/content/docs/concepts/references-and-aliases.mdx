@@ -1,0 +1,30 @@
+---
+title: References and aliases
+description: Curly-brace aliases, JSON pointer references, property-level references, and group extension.
+---
+
+The 2025.10 format has three ways for one part of a document to point at another. The validator resolves all of them, detects cycles, and checks types.
+
+## Curly-brace aliases
+
+`"{color.brand.primary}"` as a token's `$value` makes that token an alias of another token. The target must exist and be a token, not a group; to point at a group's own token use `{group.$root}`. Aliases may chain. An alias without its own `$type` takes the resolved type of the chain's end; a declared or inherited `$type` must match it.
+
+Aliases are also allowed in composite sub-values (`"color": "{brand.primary}"` inside a shadow) and in array entries of shadows, gradients, and dash arrays. There the target's type must match the sub-value's expected type.
+
+## JSON pointer references
+
+`{ "$ref": "#/color/brand/primary/$value" }` points at any location in the document with an RFC 6901 pointer. Used as a whole `$value` it behaves like an alias. Used in place of `$value` on an object with no children it makes a *reference node*, as in spec Example 32.
+
+Property-level references put a `$ref` deep inside a value, for example a single color component or a dimension's numeric part. The validator replaces every nested reference with its target before checking the value, so the result is validated as if it had been written out.
+
+Only pointers starting with `#` are followed. Anything else, a URL or a path to another file, is rejected as `ref.not-local` and never fetched.
+
+## Group extension
+
+A group with `"$extends": "{button}"` (or its JSON Schema spelling `"$ref": "#/button"`) inherits the tokens, sub-groups, and `$type` of the target group. Local members override inherited ones at the same path: tokens are replaced wholesale, nested groups merge. The target must be a group, must exist, and must not create a cycle, including extending an ancestor of itself.
+
+Curly aliases resolve through this merged view, so `{button-primary.text}` finds a token inherited from `button`. JSON pointers resolve over the raw document only, as the pointer standard requires.
+
+## Cycles
+
+Alias chains and extension chains are each checked for cycles once per document. Every member of a cycle is reported, and a token that aliases into a cycle is reported too, since its value is also unknown. Resolution is memoised, so a chain of ten thousand aliases costs the same per token as a chain of two.

@@ -12,7 +12,11 @@
       "!**/coverage",
       "!**/.turbo",
       "!**/node_modules",
-      "!**/__snapshots__"
+      "!**/__snapshots__",
+      "!**/.next",
+      "!**/out",
+      "!**/.source",
+      "!**/next-env.d.ts"
     ]
   },
   "formatter": {
@@ -111,12 +115,36 @@
         "packages/open-design-tokens/src/cli.ts",
         "**/tests/**",
         "**/*.config.ts",
-        "scripts/**"
+        "scripts/**",
+        "apps/docs/scripts/**"
       ],
       "linter": {
         "rules": {
           "suspicious": {
             "noConsole": "off"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["apps/docs/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "off"
+          },
+          "correctness": {
+            "noUnusedVariables": "error"
+          }
+        }
+      }
+    },
+    {
+      "includes": ["apps/docs/app/global.css"],
+      "linter": {
+        "rules": {
+          "complexity": {
+            "noImportantStyles": "off"
           }
         }
       }

@@ -1,0 +1,29 @@
+---
+title: Introduction
+description: TypeScript toolkit for validating and linting DTCG design tokens.
+icon: BookOpen
+---
+
+Open Design Tokens checks design token files against the [Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/) and the [Color Module 2025.10](https://www.designtokens.org/tr/2025.10/color/), then lets you layer your own policies on top with a configurable linter.
+
+It is built for the places where token files move between people and tools: CI on a pull request, a build step in a design-system repo, an editor integration, or a service that accepts uploads.
+
+## What you get
+
+<Cards>
+  <Card title="Validator" href="/concepts/validator-vs-linter" description="Every rule the specification defines, with stable issue codes and precise paths. Nothing configurable, nothing vendor-specific." />
+  <Card title="Linter" href="/guides/linting" description="Twelve configurable rules, a recommended preset, and a small API for writing your own." />
+  <Card title="CLI" href="/reference/cli" description="dtcg-lint validates then lints, with pretty, JSON, and GitHub-annotation output." />
+  <Card title="Types" href="/guides/typescript" description="Every token and value type, generic over $type, with narrowing helpers." />
+</Cards>
+
+## Design principles
+
+- **The spec is the spec.** The validator reports what the normative text says, with errors for MUST violations and warnings where the spec says MAY or SHOULD. Where spec examples contradict the spec's own rules, the rules win and the examples are documented as [known spec issues](/concepts/spec-coverage).
+- **Policy is separate.** Name lengths, naming styles, required descriptions: those are lint rules you configure, never validator behaviour.
+- **Hostile input is normal input.** Token files are untrusted. There is no code evaluation, nesting is bounded, references never leave the document, and diagnostics are escaped. See [security](/concepts/security).
+- **No runtime dependencies.** The published package depends on nothing.
+
+## Try it
+
+The [playground](https://opendesigntokens.com/) runs the same code in your browser, with a loadable example for every rule.

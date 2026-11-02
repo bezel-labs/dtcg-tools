@@ -7,12 +7,13 @@ import { TOKEN_TYPES } from '../constants.js';
 import type { IssueCode } from '../messages.js';
 import type { TokenType } from '../types/token.js';
 
-type Owner = 'token' | 'group';
+/** Which kind of node a shared `$`-property check is running on. */
+export type PropertyOwner = 'token' | 'group';
 
 /** `$description` MUST be a plain JSON string (§5.2.1, §6.3). */
 export function validateDescription(
   node: Record<string, unknown>,
-  owner: Owner,
+  owner: PropertyOwner,
   ctx: ValidationContext,
   issues: ValidationIssue[],
 ): void {
@@ -29,7 +30,7 @@ export function validateDescription(
 /** `$type` MUST be a case-sensitive string from the type list (§5.2.2). Returns the type when valid. */
 export function validateType(
   node: Record<string, unknown>,
-  owner: Owner,
+  owner: PropertyOwner,
   ctx: ValidationContext,
   issues: ValidationIssue[],
 ): TokenType | undefined {
@@ -51,7 +52,7 @@ export function validateType(
 /** `$deprecated` MUST be `true`, `false`, or a string (§5.2.4, §6.3.1). */
 export function validateDeprecated(
   node: Record<string, unknown>,
-  owner: Owner,
+  owner: PropertyOwner,
   ctx: ValidationContext,
   issues: ValidationIssue[],
 ): void {
@@ -73,7 +74,7 @@ export function validateDeprecated(
  */
 export function validateExtensions(
   node: Record<string, unknown>,
-  owner: Owner,
+  owner: PropertyOwner,
   ctx: ValidationContext,
   issues: ValidationIssue[],
 ): void {

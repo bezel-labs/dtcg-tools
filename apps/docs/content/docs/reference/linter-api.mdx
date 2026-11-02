@@ -1,0 +1,15 @@
+---
+title: Linter API
+description: Exports of open-design-tokens/linter.
+---
+
+- `lintDtcg(input, config?, options?)` validates, then lints. `options.rules` registers custom rules; `options.resolved` reuses a resolved config across many files.
+- `defineConfig(config)` and `defineRule(rule)` are typed identity helpers.
+- `resolveConfig(config, { rules? })` turns a config into the list of rules to run. Throws on unknown rules, bad severities, or malformed options.
+- `rules` is the object of built-in rule definitions, by camelCase name, for reuse in custom presets.
+- `recommended` and `PRESETS`.
+- `formatPretty(result, { file?, color? })`, `formatJson(result, { file? })`, `formatGithub(result, { file? })`.
+
+Types: `LintConfig`, `LintOptions`, `LintResult`, `LintIssue`, `LintRule`, `RuleMeta`, `RuleVisitor`, `LintContext`, `RuleReport`, `RuleSetting`, `RuleSeverity`, `SkippedCheck`, `ReferenceGraph`, `ResolvedConfig`, `ResolvedRule`, `PresetName`, and the option types of each built-in rule.
+
+The generated reference with every signature is at [/api/](https://opendesigntokens.com/api/).

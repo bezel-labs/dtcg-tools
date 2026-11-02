@@ -1,0 +1,29 @@
+---
+title: Security model
+description: Token files are untrusted input. What the toolkit does about it.
+---
+
+The validator and linter run on files from contributors, uploads, and the public playground, so a token file is treated as hostile by default.
+
+| Input | Trust |
+|---|---|
+| Token documents | Untrusted |
+| Lint configuration | Trusted (a `.js` or `.ts` config executes code, like an ESLint config) |
+| CLI arguments | Trusted |
+
+## Controls
+
+- **No code evaluation.** Documents are parsed with `JSON.parse` only. No `eval`, `Function`, dynamic import, or regular expressions built from document content.
+- **Bounded traversal.** An explicit-stack walk with a depth cap turns pathological nesting into a `document.too-deep` diagnostic instead of a stack overflow. Circular object graphs and throwing getters, possible only with non-JSON input, produce diagnostics rather than exceptions.
+- **Prototype safety.** Indexes are `Map`s, property reads check own properties, and merged groups use null-prototype objects, so `__proto__` and `constructor` are plain names.
+- **Local references only.** `$ref` must start with `#`; nothing is fetched. Alias and extension resolution are memoised with cycle detection.
+- **Safe regular expressions.** Every pattern is anchored with no nested quantifiers. The one `RegExp` built at runtime comes from trusted lint config and is bounded in length.
+- **Escaped output.** User values pass through `formatValue`, which truncates and escapes control characters. The CLI strips terminal escape sequences from names and percent-encodes GitHub workflow-command characters so a token name cannot forge an annotation.
+- **Minimal CLI surface.** Only files named on the command line are read, globs never follow symbolic links, and configuration is loaded from an explicit path or the current directory only.
+- **Supply chain.** Zero runtime dependencies, a committed lockfile installed with `npm ci --ignore-scripts`, actions pinned to commit SHAs, CodeQL on every push, and releases published through npm trusted publishing with provenance.
+
+## Error contract
+
+Invalid input of any shape produces diagnostics, never an exception. Exceptions are reserved for programmer errors: an unknown spec version or a malformed lint configuration. A property-based test feeds arbitrary values to `validateDtcg` and `lintDtcg` to hold this line.
+
+Report vulnerabilities privately through GitHub's advisory form on the repository; see `SECURITY.md`.

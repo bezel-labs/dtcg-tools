@@ -1,0 +1,40 @@
+---
+title: Issues, codes, and paths
+description: How diagnostics are structured so tools can rely on them.
+---
+
+Every diagnostic, from the validator or the linter, has the same shape:
+
+```ts
+interface ValidationIssue {
+  code: string;                              // stable, machine-readable
+  message: string;                           // plain text for humans
+  severity: 'error' | 'warning';
+  path: { pointer: string; dot: string };    // '/a/b/$value' and 'a.b.$value'
+  meta?: Record<string, unknown>;            // structured details
+}
+```
+
+Lint issues add `ruleId`.
+
+## Codes
+
+Validator codes follow `section.field.problem`, for example `color.component.out-of-range` or `alias.target.missing`. Shared checks use a shared prefix: `name.*` applies to both token and group names, `composite.*` to every composite type. Lint codes are `rule-id.problem`, for example `token-name-length.too-long`.
+
+Codes are public API. Match on them in tooling; message wording may change between releases.
+
+The full list, with messages and default severities, is in the [issue code reference](/reference/issue-codes).
+
+## Severity
+
+Severity is set by the specification, not by configuration: a MUST violation is an error, a MAY or SHOULD case is a warning. A document is `valid` when it has no errors. Warnings never fail validation; they exist so a project can decide what to do with them, typically through a lint rule or a CI policy.
+
+## Paths
+
+`path.pointer` is an RFC 6901 JSON pointer into the document you passed in, including `~0` and `~1` escaping. `path.dot` is the same path joined with dots, the way the DTCG spec writes token paths. Paths point at the most specific location: a bad hue is reported at `/color/$value/components/0`, a missing property at the object that should contain it.
+
+Issues are returned in document order, then in the order they were found, so output is stable across runs and across object, string, and prepared inputs.
+
+## Meta
+
+`meta` carries whatever the message was built from: `expected` and `actual`, allowed values, a `suggestion` when a value differs only by case, the `chain` of a cycle, or the `target` of an alias. It is the right place to look when building richer UI than a message string.

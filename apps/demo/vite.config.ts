@@ -2,8 +2,8 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  // Served from the root of a custom domain (see plan: Demo hosting).
-  base: '/',
+  // '/' on the custom domain; the Pages workflow sets VITE_BASE to the repo path otherwise.
+  base: process.env.VITE_BASE ?? '/',
   plugins: [react()],
   server: {
     fs: { allow: ['..', '../../fixtures'] },

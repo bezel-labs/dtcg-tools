@@ -1,0 +1,9 @@
+.source
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+# generated reference pages
+content/docs/reference/issue-codes.mdx
+content/docs/reference/lint-rules.mdx
+content/docs/reference/spec-coverage.mdx
