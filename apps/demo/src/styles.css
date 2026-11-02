@@ -294,3 +294,9 @@ body {
 .issue-button:focus-visible .message {
   text-decoration: underline;
 }
+
+.badge-beta {
+  font-size: 0.65rem;
+  vertical-align: middle;
+  background: var(--warning);
+}

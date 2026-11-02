@@ -8,7 +8,7 @@ TypeScript toolkit for validating and linting DTCG design tokens.
 
 Supports the [Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/) and the [Color Module 2025.10](https://www.designtokens.org/tr/2025.10/color/). Zero runtime dependencies. Runs in Node 20.19+, evergreen browsers, and any modern bundler.
 
-Try it in the [playground](https://opendesigntokens.com/), and read the [documentation](https://opendesigntokens.com/docs/).
+**Status: beta.** Feature-complete for the 2025.10 specifications and tested against the spec text; the API will stay on 0.x until it has seen real-world use. Try it in the [playground](https://opendesigntokens.com/), and read the [documentation](https://opendesigntokens.com/docs/).
 
 ## Install
 
