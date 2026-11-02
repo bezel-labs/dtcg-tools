@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "document.not-object",
+      "pointer": "",
+      "severity": "error"
+    }
+  ]
+}

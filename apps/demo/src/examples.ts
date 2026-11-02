@@ -3,6 +3,8 @@
  * into the editor so every rule can be exercised by hand. `expect` lists the
  * issue codes the validator should report (empty means valid).
  */
+import fullProject from '../../../fixtures/2025.10/samples/valid-full.json?raw';
+
 export interface Example {
   title: string;
   description: string;
@@ -22,7 +24,23 @@ const color = (components: unknown[], extra: Record<string, unknown> = {}) => ({
   $value: { colorSpace: 'srgb', components, ...extra },
 });
 
+/** The realistic, feature-complete sample loaded when the playground opens. */
+export const FULL_PROJECT_JSON: string = fullProject;
+
 export const EXAMPLE_GROUPS: ExampleGroup[] = [
+  {
+    area: 'Full project',
+    spec: 'Every feature in one file',
+    examples: [
+      {
+        title: 'Lumen Design System tokens',
+        description:
+          'A complete design tokens file for a fictional design system: all 13 types, nested groups, $root tokens, $extends and $ref group extension, chained aliases, reference nodes, property-level $ref, layered shadows, gradients, deprecations, descriptions, and extensions. It validates clean; edit any part to see the matching rule fire.',
+        expect: [],
+        json: FULL_PROJECT_JSON,
+      },
+    ],
+  },
   {
     area: 'Document',
     spec: '§4 File format',

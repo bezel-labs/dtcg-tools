@@ -1,0 +1,951 @@
+{
+  "$description": "Lumen Design System — core design tokens. A single-file example covering every feature of the DTCG 2025.10 format.",
+  "$extensions": {
+    "com.example.lumen": {
+      "version": "3.2.0",
+      "generatedBy": "tokens-cli"
+    }
+  },
+  "color": {
+    "$type": "color",
+    "$description": "Color primitives and semantic roles.",
+    "palette": {
+      "$description": "Raw palette. Reference these only from the semantic layer.",
+      "neutral": {
+        "0": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [1, 1, 1],
+            "hex": "#ffffff"
+          }
+        },
+        "50": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.965, 0.969, 0.976],
+            "hex": "#f6f7f9"
+          }
+        },
+        "100": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.914, 0.925, 0.945],
+            "hex": "#e9ecf1"
+          }
+        },
+        "200": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.827, 0.847, 0.878],
+            "hex": "#d3d8e0"
+          }
+        },
+        "300": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.694, 0.725, 0.776],
+            "hex": "#b1b9c6"
+          }
+        },
+        "400": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.541, 0.584, 0.659],
+            "hex": "#8a95a8"
+          }
+        },
+        "500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.4, 0.447, 0.541],
+            "hex": "#66728a"
+          }
+        },
+        "600": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.31, 0.353, 0.439],
+            "hex": "#4f5a70"
+          }
+        },
+        "700": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.235, 0.271, 0.341],
+            "hex": "#3c4557"
+          }
+        },
+        "800": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.165, 0.192, 0.247],
+            "hex": "#2a313f"
+          }
+        },
+        "900": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.09, 0.11, 0.153],
+            "hex": "#171c27"
+          }
+        },
+        "1000": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "hex": "#000000"
+          }
+        }
+      },
+      "blue": {
+        "500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.184, 0.427, 0.965],
+            "hex": "#2f6df6"
+          }
+        },
+        "600": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.114, 0.333, 0.82],
+            "hex": "#1d55d1"
+          }
+        },
+        "700": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.09, 0.263, 0.624],
+            "hex": "#17439f"
+          }
+        }
+      },
+      "green": {
+        "500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.122, 0.616, 0.333],
+            "hex": "#1f9d55"
+          }
+        },
+        "700": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.078, 0.42, 0.227],
+            "hex": "#146b3a"
+          }
+        }
+      },
+      "red": {
+        "500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.851, 0.176, 0.125],
+            "hex": "#d92d20"
+          }
+        },
+        "700": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.631, 0.11, 0.075],
+            "hex": "#a11c13"
+          }
+        }
+      },
+      "amber": {
+        "500": {
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [0.961, 0.62, 0.043],
+            "hex": "#f59e0b"
+          }
+        }
+      },
+      "accent": {
+        "$description": "Wide-gamut and cylindrical spaces for display tuning.",
+        "violet": {
+          "$value": {
+            "colorSpace": "oklch",
+            "components": [0.62, 0.21, 295]
+          }
+        },
+        "teal": {
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.1, 0.78, 0.74]
+          }
+        },
+        "pink": {
+          "$value": {
+            "colorSpace": "hsl",
+            "components": [330, 100, 50],
+            "hex": "#ff0080"
+          }
+        },
+        "white": {
+          "$value": {
+            "colorSpace": "hwb",
+            "components": ["none", 100, 0]
+          },
+          "$description": "Hue is not applicable, so it is \"none\"."
+        },
+        "lab": {
+          "$value": {
+            "colorSpace": "lab",
+            "components": [60.17, 93.54, -60.5]
+          }
+        }
+      }
+    },
+    "brand": {
+      "$root": {
+        "$value": "{color.palette.blue.500}",
+        "$description": "The brand color itself; variants live alongside."
+      },
+      "strong": {
+        "$value": "{color.palette.blue.700}"
+      },
+      "subdued": {
+        "$value": "{color.palette.blue.600}"
+      },
+      "onBrand": {
+        "$value": "{color.palette.neutral.0}"
+      }
+    },
+    "text": {
+      "primary": {
+        "$value": "{color.palette.neutral.900}"
+      },
+      "secondary": {
+        "$value": "{color.palette.neutral.600}"
+      },
+      "inverse": {
+        "$value": "{color.palette.neutral.0}"
+      },
+      "link": {
+        "$value": "{color.brand.$root}"
+      },
+      "linkHover": {
+        "$value": "{color.brand.strong}"
+      },
+      "disabled": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0.09, 0.11, 0.153],
+          "alpha": 0.38
+        },
+        "$description": "Text primary at 38% opacity."
+      }
+    },
+    "background": {
+      "canvas": {
+        "$value": "{color.palette.neutral.0}"
+      },
+      "surface": {
+        "$value": "{color.palette.neutral.50}"
+      },
+      "overlay": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [0, 0, 0],
+          "alpha": 0.5,
+          "hex": "#000000"
+        }
+      }
+    },
+    "status": {
+      "success": {
+        "$root": {
+          "$value": "{color.palette.green.500}"
+        },
+        "strong": {
+          "$value": "{color.palette.green.700}"
+        }
+      },
+      "danger": {
+        "$root": {
+          "$value": "{color.palette.red.500}"
+        },
+        "strong": {
+          "$value": "{color.palette.red.700}"
+        }
+      },
+      "warning": {
+        "$root": {
+          "$value": "{color.palette.amber.500}"
+        }
+      }
+    },
+    "legacy": {
+      "$deprecated": "Use color.status instead; removed in v4.",
+      "error": {
+        "$value": "{color.status.danger.$root}",
+        "$deprecated": true
+      },
+      "ok": {
+        "$value": "{color.status.success.$root}",
+        "$deprecated": "Use {color.status.success.$root}."
+      }
+    },
+    "derived": {
+      "$description": "Property-level references: reuse components of another color.",
+      "brandTint": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [
+            {
+              "$ref": "#/color/palette/blue/500/$value/components/0"
+            },
+            {
+              "$ref": "#/color/palette/blue/500/$value/components/1"
+            },
+            1
+          ]
+        }
+      },
+      "brandRef": {
+        "$ref": "#/color/brand/$root/$value",
+        "$description": "A reference node: $ref in place of $value."
+      }
+    }
+  },
+  "dimension": {
+    "$type": "dimension",
+    "space": {
+      "0": {
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        }
+      },
+      "1": {
+        "$value": {
+          "value": 0.25,
+          "unit": "rem"
+        }
+      },
+      "2": {
+        "$value": {
+          "value": 0.5,
+          "unit": "rem"
+        }
+      },
+      "3": {
+        "$value": {
+          "value": 0.75,
+          "unit": "rem"
+        }
+      },
+      "4": {
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        }
+      },
+      "6": {
+        "$value": {
+          "value": 1.5,
+          "unit": "rem"
+        }
+      },
+      "8": {
+        "$value": {
+          "value": 2,
+          "unit": "rem"
+        }
+      },
+      "12": {
+        "$value": {
+          "value": 3,
+          "unit": "rem"
+        }
+      },
+      "$root": {
+        "$value": {
+          "value": 1,
+          "unit": "rem"
+        },
+        "$description": "Base spacing unit (16px)."
+      },
+      "negative": {
+        "$value": {
+          "value": -0.25,
+          "unit": "rem"
+        },
+        "$description": "Negative margins are allowed."
+      }
+    },
+    "radius": {
+      "sm": {
+        "$value": {
+          "value": 4,
+          "unit": "px"
+        }
+      },
+      "md": {
+        "$value": {
+          "value": 8,
+          "unit": "px"
+        }
+      },
+      "lg": {
+        "$value": {
+          "value": 16,
+          "unit": "px"
+        }
+      },
+      "pill": {
+        "$value": {
+          "value": 9999,
+          "unit": "px"
+        }
+      }
+    },
+    "border": {
+      "thin": {
+        "$value": {
+          "value": 1,
+          "unit": "px"
+        }
+      },
+      "thick": {
+        "$value": {
+          "value": 2,
+          "unit": "px"
+        }
+      },
+      "focus": {
+        "$value": "{dimension.border.thick}"
+      }
+    },
+    "font": {
+      "size": {
+        "xs": {
+          "$value": {
+            "value": 0.75,
+            "unit": "rem"
+          }
+        },
+        "sm": {
+          "$value": {
+            "value": 0.875,
+            "unit": "rem"
+          }
+        },
+        "md": {
+          "$value": {
+            "value": 1,
+            "unit": "rem"
+          }
+        },
+        "lg": {
+          "$value": {
+            "value": 1.25,
+            "unit": "rem"
+          }
+        },
+        "xl": {
+          "$value": {
+            "value": 1.5,
+            "unit": "rem"
+          }
+        },
+        "2xl": {
+          "$value": {
+            "value": 2.25,
+            "unit": "rem"
+          }
+        }
+      },
+      "tracking": {
+        "tight": {
+          "$value": {
+            "value": -0.2,
+            "unit": "px"
+          }
+        },
+        "normal": {
+          "$value": {
+            "value": 0,
+            "unit": "px"
+          }
+        },
+        "wide": {
+          "$value": {
+            "value": 0.5,
+            "unit": "px"
+          }
+        }
+      }
+    },
+    "layout": {
+      "gutter": {
+        "$value": "{dimension.space.4}"
+      },
+      "gutterHalf": {
+        "$value": {
+          "value": {
+            "$ref": "#/dimension/space/2/$value/value"
+          },
+          "unit": "rem"
+        },
+        "$description": "Reuses only the numeric part via $ref."
+      }
+    }
+  },
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": {
+        "$value": ["Inter", "Helvetica Neue", "Arial", "sans-serif"]
+      },
+      "mono": {
+        "$value": ["JetBrains Mono", "Menlo", "monospace"]
+      },
+      "display": {
+        "$value": "Fraunces"
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": {
+        "$value": "regular"
+      },
+      "medium": {
+        "$value": 500
+      },
+      "semibold": {
+        "$value": "semi-bold"
+      },
+      "bold": {
+        "$value": 700
+      },
+      "black": {
+        "$value": "black"
+      }
+    },
+    "lineHeight": {
+      "$type": "number",
+      "tight": {
+        "$value": 1.2
+      },
+      "normal": {
+        "$value": 1.5
+      },
+      "loose": {
+        "$value": 1.75
+      }
+    }
+  },
+  "number": {
+    "$type": "number",
+    "opacity": {
+      "disabled": {
+        "$value": 0.38
+      },
+      "hover": {
+        "$value": 0.92
+      }
+    },
+    "zIndex": {
+      "dropdown": {
+        "$value": 1000
+      },
+      "modal": {
+        "$value": 1300
+      },
+      "toast": {
+        "$value": 1500
+      }
+    },
+    "gradientEnd": {
+      "$value": 1
+    }
+  },
+  "motion": {
+    "duration": {
+      "$type": "duration",
+      "instant": {
+        "$value": {
+          "value": 0,
+          "unit": "ms"
+        }
+      },
+      "fast": {
+        "$value": {
+          "value": 120,
+          "unit": "ms"
+        }
+      },
+      "normal": {
+        "$value": {
+          "value": 200,
+          "unit": "ms"
+        }
+      },
+      "slow": {
+        "$value": {
+          "value": 0.4,
+          "unit": "s"
+        }
+      }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "standard": {
+        "$value": [0.2, 0, 0, 1]
+      },
+      "emphasized": {
+        "$value": [0.05, 0.7, 0.1, 1]
+      },
+      "overshoot": {
+        "$value": [0.34, 1.56, 0.64, 1],
+        "$description": "y may exceed [0, 1]."
+      },
+      "linear": {
+        "$value": [0, 0, 1, 1]
+      }
+    },
+    "transition": {
+      "$type": "transition",
+      "fade": {
+        "$value": {
+          "duration": "{motion.duration.normal}",
+          "delay": "{motion.duration.instant}",
+          "timingFunction": "{motion.easing.standard}"
+        }
+      },
+      "pop": {
+        "$value": {
+          "duration": {
+            "value": 160,
+            "unit": "ms"
+          },
+          "delay": {
+            "value": 0,
+            "unit": "ms"
+          },
+          "timingFunction": [0.34, 1.56, 0.64, 1]
+        }
+      }
+    }
+  },
+  "typography": {
+    "$type": "typography",
+    "body": {
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "{dimension.font.size.md}",
+        "fontWeight": "{font.weight.regular}",
+        "letterSpacing": "{dimension.font.tracking.normal}",
+        "lineHeight": "{font.lineHeight.normal}"
+      }
+    },
+    "bodyStrong": {
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "{dimension.font.size.md}",
+        "fontWeight": "{font.weight.semibold}",
+        "letterSpacing": "{dimension.font.tracking.normal}",
+        "lineHeight": "{font.lineHeight.normal}"
+      }
+    },
+    "heading": {
+      "1": {
+        "$value": {
+          "fontFamily": "{font.family.display}",
+          "fontSize": "{dimension.font.size.2xl}",
+          "fontWeight": 700,
+          "letterSpacing": "{dimension.font.tracking.tight}",
+          "lineHeight": 1.2
+        }
+      },
+      "2": {
+        "$value": {
+          "fontFamily": "{font.family.display}",
+          "fontSize": "{dimension.font.size.xl}",
+          "fontWeight": "{font.weight.bold}",
+          "letterSpacing": "{dimension.font.tracking.tight}",
+          "lineHeight": {
+            "$ref": "#/typography/heading/1/$value/lineHeight"
+          }
+        }
+      }
+    },
+    "code": {
+      "$value": {
+        "fontFamily": "{font.family.mono}",
+        "fontSize": "{dimension.font.size.sm}",
+        "fontWeight": "regular",
+        "letterSpacing": {
+          "value": 0,
+          "unit": "px"
+        },
+        "lineHeight": 1.6
+      }
+    }
+  },
+  "stroke": {
+    "$type": "strokeStyle",
+    "solid": {
+      "$value": "solid"
+    },
+    "dashed": {
+      "$value": "dashed"
+    },
+    "focus": {
+      "$value": {
+        "dashArray": [
+          "{dimension.space.1}",
+          {
+            "value": 2,
+            "unit": "px"
+          }
+        ],
+        "lineCap": "round"
+      }
+    }
+  },
+  "border": {
+    "$type": "border",
+    "default": {
+      "$value": {
+        "color": "{color.palette.neutral.200}",
+        "width": "{dimension.border.thin}",
+        "style": "{stroke.solid}"
+      }
+    },
+    "focus": {
+      "$value": {
+        "color": "{color.brand.$root}",
+        "width": "{dimension.border.focus}",
+        "style": {
+          "dashArray": [
+            {
+              "value": 4,
+              "unit": "px"
+            },
+            {
+              "value": 2,
+              "unit": "px"
+            }
+          ],
+          "lineCap": "butt"
+        }
+      }
+    },
+    "danger": {
+      "$value": {
+        "color": {
+          "colorSpace": "srgb",
+          "components": [0.851, 0.176, 0.125],
+          "hex": "#d92d20"
+        },
+        "width": {
+          "value": 1,
+          "unit": "px"
+        },
+        "style": "solid"
+      }
+    }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "elevation": {
+      "1": {
+        "$value": {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [0, 0, 0],
+            "alpha": 0.08
+          },
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 1,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 2,
+            "unit": "px"
+          },
+          "spread": {
+            "value": 0,
+            "unit": "px"
+          }
+        }
+      },
+      "2": {
+        "$value": {
+          "color": "{color.background.overlay}",
+          "offsetX": {
+            "value": 0,
+            "unit": "px"
+          },
+          "offsetY": {
+            "value": 4,
+            "unit": "px"
+          },
+          "blur": {
+            "value": 12,
+            "unit": "px"
+          },
+          "spread": {
+            "value": -2,
+            "unit": "px"
+          }
+        }
+      },
+      "3": {
+        "$value": [
+          "{shadow.elevation.2}",
+          {
+            "color": {
+              "colorSpace": "srgb",
+              "components": [0, 0, 0],
+              "alpha": 0.12
+            },
+            "offsetX": {
+              "value": 0,
+              "unit": "px"
+            },
+            "offsetY": {
+              "value": 16,
+              "unit": "px"
+            },
+            "blur": {
+              "value": 32,
+              "unit": "px"
+            },
+            "spread": {
+              "value": 0,
+              "unit": "px"
+            }
+          }
+        ],
+        "$description": "Layered: a reference plus an explicit layer."
+      }
+    },
+    "inset": {
+      "$value": {
+        "color": "{color.text.disabled}",
+        "offsetX": {
+          "value": 0,
+          "unit": "px"
+        },
+        "offsetY": {
+          "value": 2,
+          "unit": "px"
+        },
+        "blur": {
+          "value": 4,
+          "unit": "px"
+        },
+        "spread": {
+          "value": 0,
+          "unit": "px"
+        },
+        "inset": true
+      }
+    }
+  },
+  "gradient": {
+    "$type": "gradient",
+    "brand": {
+      "$value": [
+        {
+          "color": "{color.brand.$root}",
+          "position": 0
+        },
+        {
+          "color": "{color.palette.accent.violet}",
+          "position": "{number.gradientEnd}"
+        }
+      ]
+    },
+    "fade": {
+      "$value": [
+        {
+          "color": {
+            "colorSpace": "srgb",
+            "components": [1, 1, 1],
+            "alpha": 0
+          },
+          "position": 0.333
+        },
+        {
+          "color": "{color.background.canvas}",
+          "position": 1
+        }
+      ],
+      "$description": "Omitted start stop: the first color extends to 0."
+    }
+  },
+  "component": {
+    "$description": "Component tokens built from the semantic layer, using group extension.",
+    "button": {
+      "$type": "color",
+      "background": {
+        "$value": "{color.brand.$root}"
+      },
+      "text": {
+        "$value": "{color.brand.onBrand}"
+      },
+      "border": {
+        "$value": "{color.brand.strong}"
+      },
+      "radius": {
+        "$type": "dimension",
+        "$value": "{dimension.radius.md}"
+      }
+    },
+    "buttonSecondary": {
+      "$extends": "{component.button}",
+      "$description": "Inherits text and radius; overrides background and border.",
+      "background": {
+        "$value": "{color.background.surface}"
+      },
+      "border": {
+        "$value": "{color.palette.neutral.300}"
+      }
+    },
+    "buttonDanger": {
+      "$ref": "#/component/button",
+      "background": {
+        "$value": "{color.status.danger.$root}"
+      },
+      "border": {
+        "$value": "{color.status.danger.strong}"
+      }
+    },
+    "card": {
+      "padding": {
+        "$type": "dimension",
+        "$value": "{dimension.space.6}"
+      },
+      "shadow": {
+        "$type": "shadow",
+        "$value": "{shadow.elevation.1}"
+      },
+      "border": {
+        "$type": "border",
+        "$value": "{border.default}"
+      },
+      "title": {
+        "$type": "typography",
+        "$value": "{typography.heading.2}"
+      },
+      "chain": {
+        "$type": "color",
+        "$value": "{component.card.ref}"
+      },
+      "ref": {
+        "$type": "color",
+        "$value": "{component.button.text}",
+        "$description": "Chained: card.chain → card.ref → button.text → brand.onBrand → neutral.0."
+      }
+    }
+  }
+}

@@ -57,6 +57,7 @@ exports[`public exports > validator entry 1`] = `
   "isReference",
   "isToken",
   "isTokenOfType",
+  "orderIssues",
   "parseAlias",
   "parseJsonPointer",
   "parseRef",

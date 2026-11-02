@@ -322,7 +322,7 @@
   },
   {
     "file": "types/color/advanced-none-components.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "advanced",
@@ -331,7 +331,7 @@
   },
   {
     "file": "types/color/advanced-hue-bounds.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "advanced",
@@ -340,7 +340,7 @@
   },
   {
     "file": "types/color/advanced-unbounded-axes.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "advanced",
@@ -349,7 +349,7 @@
   },
   {
     "file": "types/color/advanced-optional-fields-omitted.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "advanced",
@@ -357,7 +357,7 @@
   },
   {
     "file": "types/color/advanced-hex-fallback-non-srgb.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "advanced",
@@ -366,7 +366,7 @@
   },
   {
     "file": "types/color/advanced-inherited-type.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "advanced",
@@ -375,7 +375,7 @@
   },
   {
     "file": "types/color/invalid-unknown-color-space.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -385,7 +385,7 @@
   },
   {
     "file": "types/color/invalid-missing-color-space.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -394,7 +394,7 @@
   },
   {
     "file": "types/color/invalid-missing-components.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -403,7 +403,7 @@
   },
   {
     "file": "types/color/invalid-components-not-array.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -412,7 +412,7 @@
   },
   {
     "file": "types/color/invalid-components-wrong-length.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -421,7 +421,7 @@
   },
   {
     "file": "types/color/invalid-component-not-number.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -430,7 +430,7 @@
   },
   {
     "file": "types/color/invalid-hue-360.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -439,7 +439,7 @@
   },
   {
     "file": "types/color/invalid-component-out-of-range.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -448,7 +448,7 @@
   },
   {
     "file": "types/color/invalid-alpha.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -457,7 +457,7 @@
   },
   {
     "file": "types/color/invalid-hex-format.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -466,7 +466,7 @@
   },
   {
     "file": "types/color/invalid-hex-mismatch.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -476,7 +476,7 @@
   },
   {
     "file": "types/color/invalid-value-not-object.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -486,7 +486,7 @@
   },
   {
     "file": "types/color/invalid-unknown-property.json",
-    "spec": "color",
+    "spec": "format",
     "section": "8.1 Color / Color Module 4",
     "anchor": "x8-1-color",
     "kind": "invalid",
@@ -1722,5 +1722,89 @@
     "kind": "invalid",
     "verbatim": false,
     "expected": "composites/invalid-alias-of-composite-type-mismatch.expected.json"
+  },
+  {
+    "file": "document/invalid-root-not-object.json",
+    "spec": "format",
+    "section": "4. File format",
+    "anchor": "x4-file-format",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "The root must be a JSON object.",
+    "expected": "document/invalid-root-not-object.expected.json"
+  },
+  {
+    "file": "document/invalid-not-json.txt",
+    "spec": "format",
+    "section": "4. File format",
+    "anchor": "x4-file-format",
+    "kind": "invalid",
+    "verbatim": false,
+    "raw": true,
+    "notes": "Not JSON at all; parse failures are diagnostics, never exceptions.",
+    "expected": "document/invalid-not-json.expected.json"
+  },
+  {
+    "file": "document/invalid-too-deep.json",
+    "spec": "format",
+    "section": "6.1 Group Structure",
+    "anchor": "x6-1-group-structure",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "300 nested groups exceed MAX_DEPTH (256); the walk stops with one diagnostic instead of overflowing the stack.",
+    "expected": "document/invalid-too-deep.expected.json"
+  },
+  {
+    "file": "groups/invalid-group-type-not-string.json",
+    "spec": "format",
+    "section": "6.3 Group Properties",
+    "anchor": "x6-3-group-properties",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "groups/invalid-group-type-not-string.expected.json"
+  },
+  {
+    "file": "groups/invalid-group-extensions-not-namespaced.json",
+    "spec": "format",
+    "section": "6.3.2 $extensions",
+    "anchor": "x6-3-2-extensions",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "groups/invalid-group-extensions-not-namespaced.expected.json"
+  },
+  {
+    "file": "groups/advanced-references-both-syntaxes.json",
+    "spec": "format",
+    "section": "6.6 References and JSON Pointer Integration",
+    "anchor": "x6-6-references-and-json-pointer-integration",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Examples 20 and 21 with a typed base: curly alias, reference node, and whole-value $ref all resolve."
+  },
+  {
+    "file": "composites/shadow/advanced-single-and-inset.json",
+    "spec": "format",
+    "section": "9.6 Shadow",
+    "anchor": "x9-6-shadow",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "composites/typography/advanced-complete-and-aliased.json",
+    "spec": "format",
+    "section": "9.8 Typography",
+    "anchor": "x9-8-typography",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Example 58 with all five required sub-values and resolvable aliases."
+  },
+  {
+    "file": "samples/valid-full.json",
+    "spec": "format",
+    "section": "Full project sample",
+    "anchor": "x4-file-format",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "A complete, realistic design tokens file for a fictional design system exercising every feature: all 13 types, nested groups, $root, $extends and $ref extension, chained aliases, reference nodes, property-level $ref, layered shadows, gradients, deprecations, descriptions, and extensions. Loaded by default in the playground."
   }
 ]

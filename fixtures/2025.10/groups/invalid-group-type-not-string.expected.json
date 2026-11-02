@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "group.type.not-string",
+      "pointer": "/g/$type",
+      "severity": "error"
+    }
+  ]
+}

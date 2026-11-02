@@ -38,7 +38,8 @@
     "dev": "turbo run dev",
     "check": "biome check .",
     "format": "biome format --write .",
-    "ci": "biome ci ."
+    "ci": "biome ci .",
+    "spec-coverage": "node scripts/spec-coverage.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.4",

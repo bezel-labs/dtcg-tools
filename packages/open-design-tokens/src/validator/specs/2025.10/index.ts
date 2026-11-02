@@ -47,6 +47,31 @@ export interface DocumentValidation {
   stats: ValidationStats;
 }
 
+/**
+ * Orders issues deterministically: by the document position of the token or
+ * group they belong to (pre-order), then by the order they were produced.
+ * Issues on sub-paths (`/a/$value/x`) sort with their nearest indexed node.
+ */
+export function orderIssues(doc: PreparedDocument, issues: ValidationIssue[]): ValidationIssue[] {
+  const position = new Map<string, number>();
+  let i = 0;
+  for (const pointer of doc.index.keys()) position.set(pointer, i++);
+  const rank = (pointer: string): number => {
+    let p = pointer;
+    for (;;) {
+      const r = position.get(p);
+      if (r !== undefined) return r;
+      const cut = p.lastIndexOf('/');
+      if (cut < 0) return -1;
+      p = p.slice(0, cut);
+    }
+  };
+  return issues
+    .map((issue, order) => ({ issue, order, rank: rank(issue.path.pointer) }))
+    .sort((a, b) => a.rank - b.rank || a.order - b.order)
+    .map((x) => x.issue);
+}
+
 function ctxAt(ctx: ValidationContext, path: readonly string[]): ValidationContext {
   return { spec: ctx.spec, path };
 }
@@ -100,5 +125,5 @@ export function validateDocument(
     }
   }
 
-  return { issues, stats };
+  return { issues: orderIssues(doc, issues), stats };
 }

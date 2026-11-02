@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "document.invalid-json",
+      "pointer": "",
+      "severity": "error"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "base": {
+    "$type": "color",
+    "$value": {
+      "colorSpace": "srgb",
+      "components": [0, 0, 0]
+    }
+  },
+  "alias": {
+    "$value": "{base}"
+  },
+  "pointer": {
+    "$ref": "#/base"
+  },
+  "pointerValue": {
+    "$value": {
+      "$ref": "#/base/$value"
+    }
+  }
+}

@@ -16,8 +16,8 @@ interface ManifestEntry {
   cleaned?: string[];
   notes?: string;
   expected?: string;
-  /** Spec snippet aliases tokens that are not part of the snippet. */
-  incomplete?: boolean;
+  /** The file is deliberately not JSON (parse-error fixture). */
+  raw?: boolean;
 }
 
 interface Expected {
@@ -31,7 +31,7 @@ describe('fixture manifest', () => {
   it('every fixture file exists and parses', () => {
     for (const entry of manifest) {
       expect(existsSync(`${FIXTURES}${entry.file}`), entry.file).toBe(true);
-      JSON.parse(readFileSync(`${FIXTURES}${entry.file}`, 'utf8'));
+      if (!entry.raw) JSON.parse(readFileSync(`${FIXTURES}${entry.file}`, 'utf8'));
       if (entry.expected)
         expect(existsSync(`${FIXTURES}${entry.expected}`), entry.expected).toBe(true);
     }

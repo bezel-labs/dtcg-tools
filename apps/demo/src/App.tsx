@@ -1,25 +1,17 @@
 import { type ValidationResult, validateDtcg } from 'open-design-tokens/validator';
 import { useEffect, useState } from 'react';
-import { EXAMPLE_GROUPS } from './examples.js';
+import { EXAMPLE_GROUPS, FULL_PROJECT_JSON } from './examples.js';
 
 /** Inputs above this size are refused before parsing. */
 const MAX_INPUT_BYTES = 2 * 1024 * 1024;
 
-const SAMPLE = `{
-  "color": {
-    "$type": "color",
-    "primary": {
-      "$value": { "colorSpace": "srgb", "components": [0.2, 0.4, 1] }
-    }
-  }
-}
-`;
+const SAMPLE = FULL_PROJECT_JSON;
 
 export function App() {
   const [source, setSource] = useState(SAMPLE);
   const [result, setResult] = useState<ValidationResult | null>(null);
   const [tooLarge, setTooLarge] = useState(false);
-  const [openArea, setOpenArea] = useState<string | null>(null);
+  const [openArea, setOpenArea] = useState<string | null>('Full project');
 
   useEffect(() => {
     const handle = setTimeout(() => {
