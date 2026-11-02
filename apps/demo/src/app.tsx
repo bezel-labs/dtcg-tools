@@ -1,8 +1,8 @@
 import { type LintResult, lint } from 'open-design-tokens/linter';
 import { type ValidationResult, validateDtcg } from 'open-design-tokens/validator';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { IssueList, type Row } from './components/IssueList.js';
-import { Toolbar } from './components/Toolbar.js';
+import { IssueList, type Row } from './components/issue-list.js';
+import { Toolbar } from './components/toolbar.js';
 import { EXAMPLE_GROUPS, FULL_PROJECT_JSON } from './examples.js';
 import { createPositionIndex } from './lib/positions.js';
 

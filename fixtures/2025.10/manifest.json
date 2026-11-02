@@ -9,7 +9,7 @@
     "verbatim": true
   },
   {
-    "file": "types/fontFamily/basic-example-40-font-family.json",
+    "file": "types/font-family/basic-example-40-font-family.json",
     "spec": "format",
     "section": "8.3 Font family",
     "anchor": "x8-3-font-family",
@@ -18,7 +18,7 @@
     "verbatim": true
   },
   {
-    "file": "types/fontWeight/basic-example-41-font-weight.json",
+    "file": "types/font-weight/basic-example-41-font-weight.json",
     "spec": "format",
     "section": "8.4 Font weight",
     "anchor": "x8-4-font-weight",
@@ -36,7 +36,7 @@
     "verbatim": true
   },
   {
-    "file": "types/cubicBezier/basic-example-43-cubic-bezier.json",
+    "file": "types/cubic-bezier/basic-example-43-cubic-bezier.json",
     "spec": "format",
     "section": "8.6 Cubic Bézier",
     "anchor": "x8-6-cubic-bezier",
@@ -550,7 +550,7 @@
     "expected": "types/dimension/invalid-string-shorthand.expected.json"
   },
   {
-    "file": "types/fontFamily/advanced-single-and-list.json",
+    "file": "types/font-family/advanced-single-and-list.json",
     "spec": "format",
     "section": "8.3 Font family",
     "anchor": "x8-3-font-family",
@@ -559,25 +559,25 @@
     "notes": "An empty array is syntactically allowed by the spec."
   },
   {
-    "file": "types/fontFamily/invalid-not-string-or-array.json",
+    "file": "types/font-family/invalid-not-string-or-array.json",
     "spec": "format",
     "section": "8.3 Font family",
     "anchor": "x8-3-font-family",
     "kind": "invalid",
     "verbatim": false,
-    "expected": "types/fontFamily/invalid-not-string-or-array.expected.json"
+    "expected": "types/font-family/invalid-not-string-or-array.expected.json"
   },
   {
-    "file": "types/fontFamily/invalid-array-entry-not-string.json",
+    "file": "types/font-family/invalid-array-entry-not-string.json",
     "spec": "format",
     "section": "8.3 Font family",
     "anchor": "x8-3-font-family",
     "kind": "invalid",
     "verbatim": false,
-    "expected": "types/fontFamily/invalid-array-entry-not-string.expected.json"
+    "expected": "types/font-family/invalid-array-entry-not-string.expected.json"
   },
   {
-    "file": "types/fontWeight/advanced-all-keywords.json",
+    "file": "types/font-weight/advanced-all-keywords.json",
     "spec": "format",
     "section": "8.4 Font weight",
     "anchor": "x8-4-font-weight",
@@ -585,7 +585,7 @@
     "verbatim": false
   },
   {
-    "file": "types/fontWeight/advanced-numeric-bounds.json",
+    "file": "types/font-weight/advanced-numeric-bounds.json",
     "spec": "format",
     "section": "8.4 Font weight",
     "anchor": "x8-4-font-weight",
@@ -593,32 +593,32 @@
     "verbatim": false
   },
   {
-    "file": "types/fontWeight/invalid-number-out-of-range.json",
+    "file": "types/font-weight/invalid-number-out-of-range.json",
     "spec": "format",
     "section": "8.4 Font weight",
     "anchor": "x8-4-font-weight",
     "kind": "invalid",
     "verbatim": false,
-    "expected": "types/fontWeight/invalid-number-out-of-range.expected.json"
+    "expected": "types/font-weight/invalid-number-out-of-range.expected.json"
   },
   {
-    "file": "types/fontWeight/invalid-keyword.json",
+    "file": "types/font-weight/invalid-keyword.json",
     "spec": "format",
     "section": "8.4 Font weight",
     "anchor": "x8-4-font-weight",
     "kind": "invalid",
     "verbatim": false,
     "notes": "Keywords are case-sensitive; \"Bold\" carries meta.suggestion \"bold\".",
-    "expected": "types/fontWeight/invalid-keyword.expected.json"
+    "expected": "types/font-weight/invalid-keyword.expected.json"
   },
   {
-    "file": "types/fontWeight/invalid-wrong-type.json",
+    "file": "types/font-weight/invalid-wrong-type.json",
     "spec": "format",
     "section": "8.4 Font weight",
     "anchor": "x8-4-font-weight",
     "kind": "invalid",
     "verbatim": false,
-    "expected": "types/fontWeight/invalid-wrong-type.expected.json"
+    "expected": "types/font-weight/invalid-wrong-type.expected.json"
   },
   {
     "file": "types/duration/advanced-fractional-and-zero.json",
@@ -665,7 +665,7 @@
     "expected": "types/duration/invalid-string-shorthand.expected.json"
   },
   {
-    "file": "types/cubicBezier/advanced-y-unbounded.json",
+    "file": "types/cubic-bezier/advanced-y-unbounded.json",
     "spec": "format",
     "section": "8.6 Cubic Bézier",
     "anchor": "x8-6-cubic-bezier",
@@ -674,40 +674,40 @@
     "notes": "y coordinates may be any real number; only x is restricted to [0, 1]."
   },
   {
-    "file": "types/cubicBezier/invalid-x-out-of-range.json",
+    "file": "types/cubic-bezier/invalid-x-out-of-range.json",
     "spec": "format",
     "section": "8.6 Cubic Bézier",
     "anchor": "x8-6-cubic-bezier",
     "kind": "invalid",
     "verbatim": false,
-    "expected": "types/cubicBezier/invalid-x-out-of-range.expected.json"
+    "expected": "types/cubic-bezier/invalid-x-out-of-range.expected.json"
   },
   {
-    "file": "types/cubicBezier/invalid-wrong-length.json",
+    "file": "types/cubic-bezier/invalid-wrong-length.json",
     "spec": "format",
     "section": "8.6 Cubic Bézier",
     "anchor": "x8-6-cubic-bezier",
     "kind": "invalid",
     "verbatim": false,
-    "expected": "types/cubicBezier/invalid-wrong-length.expected.json"
+    "expected": "types/cubic-bezier/invalid-wrong-length.expected.json"
   },
   {
-    "file": "types/cubicBezier/invalid-point-not-number.json",
+    "file": "types/cubic-bezier/invalid-point-not-number.json",
     "spec": "format",
     "section": "8.6 Cubic Bézier",
     "anchor": "x8-6-cubic-bezier",
     "kind": "invalid",
     "verbatim": false,
-    "expected": "types/cubicBezier/invalid-point-not-number.expected.json"
+    "expected": "types/cubic-bezier/invalid-point-not-number.expected.json"
   },
   {
-    "file": "types/cubicBezier/invalid-not-array.json",
+    "file": "types/cubic-bezier/invalid-not-array.json",
     "spec": "format",
     "section": "8.6 Cubic Bézier",
     "anchor": "x8-6-cubic-bezier",
     "kind": "invalid",
     "verbatim": false,
-    "expected": "types/cubicBezier/invalid-not-array.expected.json"
+    "expected": "types/cubic-bezier/invalid-not-array.expected.json"
   },
   {
     "file": "types/number/advanced-sign-and-fraction.json",
@@ -1484,7 +1484,7 @@
     "notes": "Sub-values aliased to typed tokens; an untyped alias of the composite token takes its type."
   },
   {
-    "file": "composites/strokeStyle/basic-example-47-string-stroke-style.json",
+    "file": "composites/stroke-style/basic-example-47-string-stroke-style.json",
     "spec": "format",
     "section": "9.3.1 String value",
     "anchor": "x9-3-1-string-value",
@@ -1493,7 +1493,7 @@
     "verbatim": true
   },
   {
-    "file": "composites/strokeStyle/basic-example-48-object-stroke-style.json",
+    "file": "composites/stroke-style/basic-example-48-object-stroke-style.json",
     "spec": "format",
     "section": "9.3.2 Object value",
     "anchor": "x9-3-2-object-value",
@@ -1502,7 +1502,7 @@
     "verbatim": true
   },
   {
-    "file": "composites/strokeStyle/basic-example-49-object-stroke-style-using-references.json",
+    "file": "composites/stroke-style/basic-example-49-object-stroke-style-using-references.json",
     "spec": "format",
     "section": "9.3.2 Object value",
     "anchor": "x9-3-2-object-value",
@@ -1587,7 +1587,7 @@
     "expected": "composites/typography/invalid-spec-example-58-typography.expected.json"
   },
   {
-    "file": "composites/strokeStyle/advanced-all-keywords-and-caps.json",
+    "file": "composites/stroke-style/advanced-all-keywords-and-caps.json",
     "spec": "format",
     "section": "9.3 Stroke style",
     "anchor": "x9-3-stroke-style",
@@ -1596,23 +1596,23 @@
     "notes": "Odd-length dash arrays are allowed (repeated by consumers)."
   },
   {
-    "file": "composites/strokeStyle/invalid-keyword-and-shape.json",
+    "file": "composites/stroke-style/invalid-keyword-and-shape.json",
     "spec": "format",
     "section": "9.3 Stroke style",
     "anchor": "x9-3-stroke-style",
     "kind": "invalid",
     "verbatim": false,
-    "expected": "composites/strokeStyle/invalid-keyword-and-shape.expected.json"
+    "expected": "composites/stroke-style/invalid-keyword-and-shape.expected.json"
   },
   {
-    "file": "composites/strokeStyle/invalid-dash-array-entries.json",
+    "file": "composites/stroke-style/invalid-dash-array-entries.json",
     "spec": "format",
     "section": "9.3 Stroke style",
     "anchor": "x9-3-stroke-style",
     "kind": "invalid",
     "verbatim": false,
     "notes": "Each dash entry must be a dimension value or a reference to a dimension token.",
-    "expected": "composites/strokeStyle/invalid-dash-array-entries.expected.json"
+    "expected": "composites/stroke-style/invalid-dash-array-entries.expected.json"
   },
   {
     "file": "composites/border/advanced-aliases-and-object-style.json",

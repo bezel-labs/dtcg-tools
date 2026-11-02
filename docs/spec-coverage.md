@@ -2,7 +2,7 @@
 
 Generated from `fixtures/2025.10/manifest.json` by `scripts/spec-coverage.mjs`. Do not edit by hand.
 
-Fixtures: 190 (57 basic, 39 advanced, 94 invalid). Verbatim spec examples: 64; cleaned (comments or trailing commas removed): 15.
+Fixtures: 191 (57 basic, 39 advanced, 95 invalid). Verbatim spec examples: 64; cleaned (comments or trailing commas removed): 15.
 
 ## Sections
 
@@ -33,7 +33,7 @@ Fixtures: 190 (57 basic, 39 advanced, 94 invalid). Verbatim spec examples: 64; c
 | color  | [7.2.1.2.3 Computer generated scales](https://www.designtokens.org/tr/2025.10/color/#x7-2-1-2-3-computer-generated-scales)                  |     1 |        0 |       0 |
 | color  | [7.2.2 Alias Tokens](https://www.designtokens.org/tr/2025.10/color/#x7-2-2-alias-tokens)                                                    |     0 |        0 |       2 |
 | color  | [7.2.3 Component Tokens](https://www.designtokens.org/tr/2025.10/color/#x7-2-3-component-tokens)                                            |     0 |        0 |       1 |
-| format | [4. File format](https://www.designtokens.org/tr/2025.10/format/#x4-file-format)                                                            |     0 |        1 |       2 |
+| format | [4. File format](https://www.designtokens.org/tr/2025.10/format/#x4-file-format)                                                            |     0 |        1 |       3 |
 | format | [5.1 Name and value](https://www.designtokens.org/tr/2025.10/format/#x5-1-name-and-value)                                                   |     1 |        2 |       2 |
 | format | [5.1.1 Character restrictions](https://www.designtokens.org/tr/2025.10/format/#x5-1-1-character-restrictions)                               |     0 |        1 |       2 |
 | format | [5.2 Additional properties](https://www.designtokens.org/tr/2025.10/format/#x5-2-additional-properties)                                     |     0 |        1 |       6 |
