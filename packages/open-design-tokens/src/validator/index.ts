@@ -18,6 +18,15 @@ export {
   isReference,
   isToken,
 } from '../core/predicates.js';
+export type {
+  NodeInfo,
+  PreparedDocument,
+  PrepareOptions,
+  StructuralIssue,
+} from '../core/prepare.js';
+export { isPreparedDocument, prepareDocument } from '../core/prepare.js';
+export type { Visitor } from '../core/walk.js';
+export { getNodeAtPointer, walkDocument } from '../core/walk.js';
 export type { ValidationContext } from './context.js';
 export { child, createIssue, createRootContext } from './context.js';
 export type { SpecId } from './registry.js';

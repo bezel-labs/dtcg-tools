@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "token.property.not-allowed",
+      "pointer": "/t/child",
+      "severity": "error"
+    }
+  ]
+}

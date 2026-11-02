@@ -1,0 +1,25 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "group.member.invalid",
+      "pointer": "/g/a",
+      "severity": "error"
+    },
+    {
+      "code": "group.member.invalid",
+      "pointer": "/g/b",
+      "severity": "error"
+    },
+    {
+      "code": "group.member.invalid",
+      "pointer": "/g/c",
+      "severity": "error"
+    },
+    {
+      "code": "group.member.invalid",
+      "pointer": "/g/d",
+      "severity": "error"
+    }
+  ]
+}

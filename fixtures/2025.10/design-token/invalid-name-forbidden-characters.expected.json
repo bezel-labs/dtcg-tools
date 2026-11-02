@@ -1,0 +1,20 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "name.forbidden-character",
+      "pointer": "/a.b",
+      "severity": "error"
+    },
+    {
+      "code": "name.forbidden-character",
+      "pointer": "/c{d",
+      "severity": "error"
+    },
+    {
+      "code": "name.forbidden-character",
+      "pointer": "/e}f",
+      "severity": "error"
+    }
+  ]
+}

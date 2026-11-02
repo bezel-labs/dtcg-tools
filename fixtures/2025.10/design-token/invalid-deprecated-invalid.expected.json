@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "token.deprecated.invalid",
+      "pointer": "/a/$deprecated",
+      "severity": "error"
+    },
+    {
+      "code": "token.deprecated.invalid",
+      "pointer": "/b/$deprecated",
+      "severity": "error"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "dimension.unit.invalid",
+      "pointer": "/input/field/width/$value/unit",
+      "severity": "error"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { MAX_DEPTH, validateDtcg } from '../../src/validator/index.js';
 
-describe('document walk (interim, Milestone 2)', () => {
+describe('document walk', () => {
   it('counts tokens, groups, and aliases', () => {
     const r = validateDtcg({
       a: { $type: 'number', $value: 1 },

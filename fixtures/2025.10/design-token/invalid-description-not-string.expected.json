@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "token.description.not-string",
+      "pointer": "/t/$description",
+      "severity": "error"
+    }
+  ]
+}

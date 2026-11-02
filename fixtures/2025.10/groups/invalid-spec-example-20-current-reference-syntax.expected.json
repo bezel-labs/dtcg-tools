@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "token.type.missing",
+      "pointer": "/base",
+      "severity": "error"
+    }
+  ]
+}

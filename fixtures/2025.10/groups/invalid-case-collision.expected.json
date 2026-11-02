@@ -1,0 +1,15 @@
+{
+  "valid": true,
+  "issues": [
+    {
+      "code": "group.name.case-collision",
+      "pointer": "",
+      "severity": "warning"
+    },
+    {
+      "code": "group.name.case-collision",
+      "pointer": "/Color",
+      "severity": "warning"
+    }
+  ]
+}

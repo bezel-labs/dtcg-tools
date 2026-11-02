@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "token.type.missing",
+      "pointer": "/t",
+      "severity": "error"
+    },
+    {
+      "code": "token.type.missing",
+      "pointer": "/g/u",
+      "severity": "error"
+    }
+  ]
+}

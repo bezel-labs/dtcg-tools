@@ -1,0 +1,7 @@
+{
+  "spacing": {
+    "$description": "All spacing-related design tokens organized by usage context",
+    "margin": {},
+    "padding": {}
+  }
+}

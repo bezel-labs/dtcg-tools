@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "token.type.invalid",
+      "pointer": "/color/semantic/warning/$type",
+      "severity": "error"
+    }
+  ]
+}

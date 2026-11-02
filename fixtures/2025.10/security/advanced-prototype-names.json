@@ -1,0 +1,24 @@
+{
+  "__proto__": {
+    "$type": "number",
+    "polluted": {
+      "$value": 1
+    }
+  },
+  "constructor": {
+    "$type": "number",
+    "prototype": {
+      "$value": 2
+    }
+  },
+  "hasOwnProperty": {
+    "$type": "number",
+    "$value": 3
+  },
+  "toString": {
+    "$type": "number",
+    "$root": {
+      "$value": 4
+    }
+  }
+}

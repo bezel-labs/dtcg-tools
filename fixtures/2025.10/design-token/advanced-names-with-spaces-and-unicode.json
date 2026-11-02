@@ -1,0 +1,26 @@
+{
+  "123": {
+    "$type": "number",
+    "$value": 5
+  },
+  "token name": {
+    "$type": "number",
+    "$value": 1
+  },
+  "größe": {
+    "$type": "number",
+    "$value": 2
+  },
+  "日本語": {
+    "$type": "number",
+    "$value": 3
+  },
+  "emoji 🎨": {
+    "$type": "number",
+    "$value": 4
+  },
+  "a-b_c": {
+    "$type": "number",
+    "$value": 6
+  }
+}

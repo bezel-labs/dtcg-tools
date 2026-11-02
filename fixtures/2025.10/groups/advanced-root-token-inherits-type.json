@@ -1,0 +1,11 @@
+{
+  "g": {
+    "$type": "number",
+    "$root": {
+      "$value": 1
+    },
+    "child": {
+      "$value": 2
+    }
+  }
+}

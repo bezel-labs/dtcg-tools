@@ -1,0 +1,7 @@
+{
+  "$schema": "https://example.com/schema.json",
+  "t": {
+    "$type": "number",
+    "$value": 1
+  }
+}

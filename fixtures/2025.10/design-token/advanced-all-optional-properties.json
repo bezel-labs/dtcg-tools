@@ -1,0 +1,18 @@
+{
+  "t": {
+    "$type": "number",
+    "$value": 1,
+    "$description": "desc",
+    "$deprecated": "Use u instead.",
+    "$extensions": {
+      "com.example.tool": {
+        "any": [1, 2]
+      }
+    }
+  },
+  "u": {
+    "$type": "number",
+    "$value": 2,
+    "$deprecated": false
+  }
+}

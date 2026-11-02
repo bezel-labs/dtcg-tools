@@ -1,0 +1,15 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "token.extensions.not-object",
+      "pointer": "/a/$extensions",
+      "severity": "error"
+    },
+    {
+      "code": "token.extensions.key-not-namespaced",
+      "pointer": "/b/$extensions/tool",
+      "severity": "warning"
+    }
+  ]
+}

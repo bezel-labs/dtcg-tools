@@ -1,0 +1,10 @@
+{
+  "g": {
+    "$root": {
+      "child": {
+        "$type": "number",
+        "$value": 1
+      }
+    }
+  }
+}

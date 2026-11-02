@@ -1,0 +1,14 @@
+{
+  "a": {
+    "$type": "Color",
+    "$value": 1
+  },
+  "b": {
+    "$type": "string",
+    "$value": "x"
+  },
+  "c": {
+    "$type": 7,
+    "$value": 1
+  }
+}

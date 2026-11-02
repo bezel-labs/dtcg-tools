@@ -1,0 +1,10 @@
+{
+  "valid": true,
+  "issues": [
+    {
+      "code": "group.name.case-collision",
+      "pointer": "",
+      "severity": "warning"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "valid": true,
+  "issues": [
+    {
+      "code": "name.empty",
+      "pointer": "/",
+      "severity": "warning"
+    }
+  ]
+}

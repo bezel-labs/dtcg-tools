@@ -1,0 +1,45 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "group.description.not-string",
+      "pointer": "/g/$description",
+      "severity": "error"
+    },
+    {
+      "code": "group.type.invalid",
+      "pointer": "/g/$type",
+      "severity": "error"
+    },
+    {
+      "code": "group.deprecated.invalid",
+      "pointer": "/g/$deprecated",
+      "severity": "error"
+    },
+    {
+      "code": "group.extensions.not-object",
+      "pointer": "/g/$extensions",
+      "severity": "error"
+    },
+    {
+      "code": "group.extends.invalid",
+      "pointer": "/g/$extends",
+      "severity": "error"
+    },
+    {
+      "code": "group.ref.invalid",
+      "pointer": "/g/$ref",
+      "severity": "error"
+    },
+    {
+      "code": "group.property.unknown",
+      "pointer": "/g/$schema",
+      "severity": "warning"
+    },
+    {
+      "code": "group.property.unknown",
+      "pointer": "/g/$unknown",
+      "severity": "warning"
+    }
+  ]
+}

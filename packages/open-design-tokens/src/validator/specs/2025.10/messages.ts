@@ -15,6 +15,32 @@ export type IssueCode =
   | 'document.unreadable-node'
   // generic value objects
   | 'value.unknown-property'
+  // §5.1 / §6 names
+  | 'name.forbidden-character'
+  | 'name.empty'
+  // §5 tokens
+  | 'token.type.missing'
+  | 'token.type.invalid'
+  | 'token.type.not-string'
+  | 'token.description.not-string'
+  | 'token.deprecated.invalid'
+  | 'token.extensions.not-object'
+  | 'token.extensions.key-not-namespaced'
+  | 'token.property.unknown'
+  | 'token.property.not-allowed'
+  // §6 groups
+  | 'group.description.not-string'
+  | 'group.type.invalid'
+  | 'group.type.not-string'
+  | 'group.deprecated.invalid'
+  | 'group.extensions.not-object'
+  | 'group.extensions.key-not-namespaced'
+  | 'group.extends.invalid'
+  | 'group.ref.invalid'
+  | 'group.property.unknown'
+  | 'group.member.invalid'
+  | 'group.root.not-token'
+  | 'group.name.case-collision'
   // §8.1 color (Color Module 2025.10)
   | 'color.value.not-object'
   | 'color.color-space.missing'
@@ -88,6 +114,52 @@ export const MESSAGES: Record<IssueCode, (meta: Meta) => string> = {
   'value.unknown-property': (m) =>
     `Property ${fmt(m.property)} is not defined for this value type. Known properties: ${list(m.known)}.`,
 
+  'name.forbidden-character': (m) =>
+    `Name ${fmt(m.name)} contains ${fmt(m.character)}, which is not allowed in token or group names (reserved for alias syntax).`,
+  'name.empty': () => 'Token and group names should not be empty.',
+
+  'token.type.missing': () =>
+    'The token has no $type and none can be inherited from a parent group, so its type cannot be determined.',
+  'token.type.invalid': (m) =>
+    `Unknown $type ${fmt(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
+  'token.type.not-string': (m) => `$type must be a string, received ${fmt(m.actualType)}.`,
+  'token.description.not-string': (m) =>
+    `$description must be a plain string, received ${fmt(m.actualType)}.`,
+  'token.deprecated.invalid': (m) =>
+    `$deprecated must be true, false, or a string explanation, received ${fmt(m.actualType)}.`,
+  'token.extensions.not-object': (m) =>
+    `$extensions must be an object, received ${fmt(m.actualType)}.`,
+  'token.extensions.key-not-namespaced': (m) =>
+    `$extensions key ${fmt(m.key)} should use reverse domain name notation (for example "com.example.tool") to avoid clashes.`,
+  'token.property.unknown': (m) =>
+    `Property ${fmt(m.property)} is not defined for tokens by this specification version and will be ignored.`,
+  'token.property.not-allowed': (m) =>
+    `Property ${fmt(m.property)} is not allowed on a token: an object with $value cannot also contain child tokens or groups.`,
+
+  'group.description.not-string': (m) =>
+    `$description must be a plain string, received ${fmt(m.actualType)}.`,
+  'group.type.invalid': (m) =>
+    `Unknown group $type ${fmt(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
+  'group.type.not-string': (m) => `$type must be a string, received ${fmt(m.actualType)}.`,
+  'group.deprecated.invalid': (m) =>
+    `$deprecated must be true, false, or a string explanation, received ${fmt(m.actualType)}.`,
+  'group.extensions.not-object': (m) =>
+    `$extensions must be an object, received ${fmt(m.actualType)}.`,
+  'group.extensions.key-not-namespaced': (m) =>
+    `$extensions key ${fmt(m.key)} should use reverse domain name notation (for example "com.example.tool") to avoid clashes.`,
+  'group.extends.invalid': (m) =>
+    `$extends must be a group reference such as "{group.name}", received ${fmt(m.actual)}.`,
+  'group.ref.invalid': (m) =>
+    `$ref on a group must be a local JSON pointer such as "#/group/name", received ${fmt(m.actual)}.`,
+  'group.property.unknown': (m) =>
+    `Property ${fmt(m.property)} is not defined for groups by this specification version. Names must not start with "$".`,
+  'group.member.invalid': (m) =>
+    `Member ${fmt(m.name)} must be a token or a group (an object), received ${fmt(m.actualType)}.`,
+  'group.root.not-token': () =>
+    'The reserved "$root" member must be a token (an object with $value).',
+  'group.name.case-collision': (m) =>
+    `Names ${list(m.names)} differ only by case; tools that transform names may produce duplicates.`,
+
   'color.value.not-object': (m) =>
     `A color value must be an object with "colorSpace" and "components", received ${fmt(m.actualType)}.`,
   'color.color-space.missing': () => 'A color value must have a "colorSpace" property.',
@@ -160,6 +232,29 @@ export const DEFAULT_SEVERITY: Record<IssueCode, Severity> = {
   'document.circular': 'error',
   'document.unreadable-node': 'error',
   'value.unknown-property': 'warning',
+  'name.forbidden-character': 'error',
+  'name.empty': 'warning',
+  'token.type.missing': 'error',
+  'token.type.invalid': 'error',
+  'token.type.not-string': 'error',
+  'token.description.not-string': 'error',
+  'token.deprecated.invalid': 'error',
+  'token.extensions.not-object': 'error',
+  'token.extensions.key-not-namespaced': 'warning',
+  'token.property.unknown': 'warning',
+  'token.property.not-allowed': 'error',
+  'group.description.not-string': 'error',
+  'group.type.invalid': 'error',
+  'group.type.not-string': 'error',
+  'group.deprecated.invalid': 'error',
+  'group.extensions.not-object': 'error',
+  'group.extensions.key-not-namespaced': 'warning',
+  'group.extends.invalid': 'error',
+  'group.ref.invalid': 'error',
+  'group.property.unknown': 'warning',
+  'group.member.invalid': 'error',
+  'group.root.not-token': 'error',
+  'group.name.case-collision': 'warning',
   'color.value.not-object': 'error',
   'color.color-space.missing': 'error',
   'color.color-space.invalid': 'error',

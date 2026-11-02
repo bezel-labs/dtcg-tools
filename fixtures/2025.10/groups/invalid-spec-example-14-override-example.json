@@ -1,0 +1,28 @@
+{
+  "input": {
+    "field": {
+      "width": {
+        "$type": "dimension",
+        "$value": {
+          "value": 12,
+          "unit": "rem"
+        }
+      },
+      "background": {
+        "$value": {
+          "colorSpace": "srgb",
+          "components": [1, 1, 1],
+          "hex": "#ffffff"
+        }
+      }
+    }
+  },
+  "input-amount": {
+    "$extends": "{input}",
+    "field": {
+      "width": {
+        "$value": "100px"
+      }
+    }
+  }
+}

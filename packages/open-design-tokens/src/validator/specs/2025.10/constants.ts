@@ -27,16 +27,35 @@ export const COMPOSITE_TOKEN_TYPES = [
 
 export const TOKEN_TYPES = [...PRIMITIVE_TOKEN_TYPES, ...COMPOSITE_TOKEN_TYPES] as const;
 
-/** Reserved `$`-prefixed properties the format defines. */
-export const RESERVED_PROPS = [
+/** Properties a token may carry (§5). */
+export const TOKEN_PROPS = [
   '$value',
   '$type',
   '$description',
   '$extensions',
   '$deprecated',
-  '$extends',
-  '$schema',
 ] as const;
+
+/** Properties a group may carry (§6.3), plus `$ref` as the JSON Schema spelling of `$extends` (§6.4.1). */
+export const GROUP_PROPS = [
+  '$description',
+  '$type',
+  '$extends',
+  '$ref',
+  '$deprecated',
+  '$extensions',
+] as const;
+
+/** Properties allowed only on the document root. */
+export const ROOT_ONLY_PROPS = ['$schema'] as const;
+
+/** The reserved member name for a group's own token (§6.2). */
+export const ROOT_TOKEN_NAME = '$root';
+
+/** Every `$`-prefixed name the format reserves. */
+export const RESERVED_PROPS = [
+  ...new Set<string>([...TOKEN_PROPS, ...GROUP_PROPS, ...ROOT_ONLY_PROPS, ROOT_TOKEN_NAME]),
+] as readonly string[];
 
 /** Characters that MUST NOT appear in token or group names. */
 export const FORBIDDEN_NAME_CHARS = ['{', '}', '.'] as const;

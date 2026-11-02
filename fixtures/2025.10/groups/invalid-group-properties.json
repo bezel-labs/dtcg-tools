@@ -1,0 +1,16 @@
+{
+  "g": {
+    "$description": 1,
+    "$type": "Dimension",
+    "$deprecated": 2,
+    "$extensions": [],
+    "$extends": "button",
+    "$ref": "http://x",
+    "$schema": "x",
+    "$unknown": 1,
+    "t": {
+      "$type": "number",
+      "$value": 1
+    }
+  }
+}

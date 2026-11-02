@@ -3,6 +3,7 @@
  */
 
 export type { IssuePath, Severity, ValidationIssue } from './core/issue.js';
+export type { NodeInfo, PreparedDocument, PrepareOptions } from './core/prepare.js';
 export type { SpecId } from './validator/registry.js';
 export type { ValidationResult, ValidationStats } from './validator/result.js';
 export type { IssueCode } from './validator/specs/2025.10/messages.js';

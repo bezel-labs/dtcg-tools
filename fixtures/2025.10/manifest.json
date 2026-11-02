@@ -721,5 +721,408 @@
     "kind": "invalid",
     "verbatim": false,
     "expected": "types/number/invalid-not-number.expected.json"
+  },
+  {
+    "file": "design-token/basic-example-01-minimal-file.json",
+    "spec": "format",
+    "section": "5.1 Name and value",
+    "anchor": "x5-1-name-and-value",
+    "example": 1,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "design-token/advanced-example-02-case-sensitive-names.json",
+    "spec": "format",
+    "section": "5.1 Name and value",
+    "anchor": "x5-1-name-and-value",
+    "example": 2,
+    "kind": "advanced",
+    "verbatim": true,
+    "notes": "Valid per spec; emits the MAY case-collision warning, so it carries an .expected.json with valid: true.",
+    "expected": "design-token/advanced-example-02-case-sensitive-names.expected.json"
+  },
+  {
+    "file": "design-token/basic-example-04-description.json",
+    "spec": "format",
+    "section": "5.2.1 Description",
+    "anchor": "x5-2-1-description",
+    "example": 4,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "design-token/basic-example-05-type.json",
+    "spec": "format",
+    "section": "5.2.2 Type",
+    "anchor": "x5-2-2-type",
+    "example": 5,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "design-token/basic-example-06-extensions.json",
+    "spec": "format",
+    "section": "5.2.3 Extensions",
+    "anchor": "x5-2-3-extensions",
+    "example": 6,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "design-token/basic-example-07-deprecated.json",
+    "spec": "format",
+    "section": "5.2.4 Deprecated",
+    "anchor": "x5-2-4-deprecated",
+    "example": 7,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "groups/basic-example-10-root-tokens.json",
+    "spec": "format",
+    "section": "6.2 Root Tokens in Groups",
+    "anchor": "x6-2-root-tokens-in-groups",
+    "example": 10,
+    "kind": "basic",
+    "verbatim": false,
+    "cleaned": ["removed // comments", "removed trailing commas"]
+  },
+  {
+    "file": "groups/basic-example-11-group-description.json",
+    "spec": "format",
+    "section": "6.3 Group Properties",
+    "anchor": "x6-3-group-properties",
+    "example": 11,
+    "kind": "basic",
+    "verbatim": false,
+    "cleaned": ["removed /* */ comments", "removed trailing commas"],
+    "notes": "The /* tokens */ placeholders become empty groups."
+  },
+  {
+    "file": "groups/invalid-spec-example-12-group-type-inheritance.json",
+    "spec": "format",
+    "section": "6.3 Group Properties",
+    "anchor": "x6-3-group-properties",
+    "example": 12,
+    "kind": "invalid",
+    "verbatim": true,
+    "source": "spec-example",
+    "notes": "Uses $type \"string\", which this spec version does not define (§8 lists no string type).",
+    "expected": "groups/invalid-spec-example-12-group-type-inheritance.expected.json"
+  },
+  {
+    "file": "groups/basic-example-13-group-extension.json",
+    "spec": "format",
+    "section": "6.4 Extending Groups",
+    "anchor": "x6-4-extending-groups",
+    "example": 13,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "groups/invalid-spec-example-14-override-example.json",
+    "spec": "format",
+    "section": "6.4.3 Inheritance Semantics",
+    "anchor": "x6-4-3-inheritance-semantics",
+    "example": 14,
+    "kind": "invalid",
+    "verbatim": false,
+    "cleaned": ["removed // comments", "removed trailing commas"],
+    "source": "spec-example",
+    "notes": "input.field.background has no determinable $type (§5.2.2). The override input-amount.field.width (\"100px\") sits under $extends and is judged once group extension is resolved (Milestone 4).",
+    "expected": "groups/invalid-spec-example-14-override-example.expected.json"
+  },
+  {
+    "file": "groups/advanced-example-15-multi-level-override.json",
+    "spec": "format",
+    "section": "6.4.3 Inheritance Semantics",
+    "anchor": "x6-4-3-inheritance-semantics",
+    "example": 15,
+    "kind": "advanced",
+    "verbatim": false,
+    "cleaned": ["removed // comments"],
+    "notes": "Contains a border composite and an alias; both validated in later milestones."
+  },
+  {
+    "file": "groups/basic-example-19-empty-group.json",
+    "spec": "format",
+    "section": "6.5 Empty Groups",
+    "anchor": "x6-5-empty-groups",
+    "example": 19,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "groups/invalid-spec-example-20-current-reference-syntax.json",
+    "spec": "format",
+    "section": "6.6.1 Current Reference Syntax (Recommended)",
+    "anchor": "x6-6-1-current-reference-syntax-recommended",
+    "example": 20,
+    "kind": "invalid",
+    "verbatim": true,
+    "source": "spec-example",
+    "notes": "base has no $type and no typed ancestor, so it is invalid per §5.2.2. The alias inherits that problem once alias resolution lands (Milestone 4).",
+    "expected": "groups/invalid-spec-example-20-current-reference-syntax.expected.json"
+  },
+  {
+    "file": "groups/invalid-spec-example-21-json-pointer-references.json",
+    "spec": "format",
+    "section": "6.6.2 JSON Pointer Support",
+    "anchor": "x6-6-2-json-pointer-support",
+    "example": 21,
+    "kind": "invalid",
+    "verbatim": true,
+    "source": "spec-example",
+    "notes": "Same missing $type on base as Example 20. \"alias\" is a group carrying $ref (JSON Schema spelling of $extends); its target is resolved in Milestone 4.",
+    "expected": "groups/invalid-spec-example-21-json-pointer-references.expected.json"
+  },
+  {
+    "file": "groups/basic-example-24-basic-group-with-root-token.json",
+    "spec": "format",
+    "section": "6.9.1 Basic Group with Root Token",
+    "anchor": "x6-9-1-basic-group-with-root-token",
+    "example": 24,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "groups/invalid-spec-example-25-group-extension-with-override.json",
+    "spec": "format",
+    "section": "6.9.2 Group Extension with Override Example",
+    "anchor": "x6-9-2-group-extension-with-override-example",
+    "example": 25,
+    "kind": "invalid",
+    "verbatim": true,
+    "source": "spec-example",
+    "notes": "input.field.width uses unit \"%\", which §8.2 does not allow.",
+    "expected": "groups/invalid-spec-example-25-group-extension-with-override.expected.json"
+  },
+  {
+    "file": "groups/basic-example-26-complex-hierarchical-structure.json",
+    "spec": "format",
+    "section": "6.9.3 Complex Hierarchical Structure",
+    "anchor": "x6-9-3-complex-hierarchical-structure",
+    "example": 26,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "groups/basic-example-27-organized-token-groups.json",
+    "spec": "format",
+    "section": "6.10.1 File authoring & organization",
+    "anchor": "x6-10-1-file-authoring-organization",
+    "example": 27,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "groups/basic-example-28-flat-token-structure.json",
+    "spec": "format",
+    "section": "6.10.1 File authoring & organization",
+    "anchor": "x6-10-1-file-authoring-organization",
+    "example": 28,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "groups/basic-example-29-translation-tool-input.json",
+    "spec": "format",
+    "section": "6.10.3 Translation tools",
+    "anchor": "x6-10-3-translation-tools",
+    "example": 29,
+    "kind": "basic",
+    "verbatim": true
+  },
+  {
+    "file": "design-token/advanced-names-with-spaces-and-unicode.json",
+    "spec": "format",
+    "section": "5.1.1 Character restrictions",
+    "anchor": "x5-1-1-character-restrictions",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "design-token/advanced-all-optional-properties.json",
+    "spec": "format",
+    "section": "5.2 Additional properties",
+    "anchor": "x5-2-additional-properties",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "design-token/invalid-name-forbidden-characters.json",
+    "spec": "format",
+    "section": "5.1.1 Character restrictions",
+    "anchor": "x5-1-1-character-restrictions",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "design-token/invalid-name-forbidden-characters.expected.json"
+  },
+  {
+    "file": "design-token/invalid-name-empty.json",
+    "spec": "format",
+    "section": "5.1.1 Character restrictions",
+    "anchor": "x5-1-1-character-restrictions",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "An empty name is a valid JSON string, so this is a warning.",
+    "expected": "design-token/invalid-name-empty.expected.json"
+  },
+  {
+    "file": "design-token/invalid-type-missing.json",
+    "spec": "format",
+    "section": "5.2 Additional properties",
+    "anchor": "x5-2-additional-properties",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "No $type on the token or any parent group.",
+    "expected": "design-token/invalid-type-missing.expected.json"
+  },
+  {
+    "file": "design-token/invalid-type-invalid.json",
+    "spec": "format",
+    "section": "5.2 Additional properties",
+    "anchor": "x5-2-additional-properties",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "$type is case-sensitive; \"Color\" carries meta.suggestion \"color\". No value check runs when the type is unknown.",
+    "expected": "design-token/invalid-type-invalid.expected.json"
+  },
+  {
+    "file": "design-token/invalid-description-not-string.json",
+    "spec": "format",
+    "section": "5.2 Additional properties",
+    "anchor": "x5-2-additional-properties",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "design-token/invalid-description-not-string.expected.json"
+  },
+  {
+    "file": "design-token/invalid-deprecated-invalid.json",
+    "spec": "format",
+    "section": "5.2 Additional properties",
+    "anchor": "x5-2-additional-properties",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "design-token/invalid-deprecated-invalid.expected.json"
+  },
+  {
+    "file": "design-token/invalid-extensions.json",
+    "spec": "format",
+    "section": "5.2 Additional properties",
+    "anchor": "x5-2-additional-properties",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "design-token/invalid-extensions.expected.json"
+  },
+  {
+    "file": "design-token/invalid-unknown-dollar-property.json",
+    "spec": "format",
+    "section": "5.2 Additional properties",
+    "anchor": "x5-2-additional-properties",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "Unknown $-properties are warnings for forward compatibility.",
+    "expected": "design-token/invalid-unknown-dollar-property.expected.json"
+  },
+  {
+    "file": "groups/invalid-token-with-children.json",
+    "spec": "format",
+    "section": "6.1 Group Structure",
+    "anchor": "x6-1-group-structure",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "§6.1: an object cannot be both a token and a group.",
+    "expected": "groups/invalid-token-with-children.expected.json"
+  },
+  {
+    "file": "groups/invalid-member-not-object.json",
+    "spec": "format",
+    "section": "6.1 Group Structure",
+    "anchor": "x6-1-group-structure",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "groups/invalid-member-not-object.expected.json"
+  },
+  {
+    "file": "groups/invalid-root-not-token.json",
+    "spec": "format",
+    "section": "6.2 Root Tokens in Groups",
+    "anchor": "x6-2-root-tokens-in-groups",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "$root must be a token; here it is a group, and its child has no type.",
+    "expected": "groups/invalid-root-not-token.expected.json"
+  },
+  {
+    "file": "groups/advanced-root-token-inherits-type.json",
+    "spec": "format",
+    "section": "6.2 Root Tokens in Groups",
+    "anchor": "x6-2-root-tokens-in-groups",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "groups/advanced-empty-and-metadata-only.json",
+    "spec": "format",
+    "section": "6.5 Empty Groups",
+    "anchor": "x6-5-empty-groups",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "groups/advanced-schema-at-root.json",
+    "spec": "format",
+    "section": "6.3 Group Properties",
+    "anchor": "x6-3-group-properties",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "$schema is tolerated at the document root only."
+  },
+  {
+    "file": "groups/invalid-group-properties.json",
+    "spec": "format",
+    "section": "6.3 Group Properties",
+    "anchor": "x6-3-group-properties",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "groups/invalid-group-properties.expected.json"
+  },
+  {
+    "file": "groups/invalid-case-collision.json",
+    "spec": "format",
+    "section": "5.1 Name and value",
+    "anchor": "x5-1-name-and-value",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "One warning per colliding set, reported at the parent group.",
+    "expected": "groups/invalid-case-collision.expected.json"
+  },
+  {
+    "file": "groups/advanced-type-inheritance-override.json",
+    "spec": "format",
+    "section": "6.7.3 Type Inheritance",
+    "anchor": "x6-7-3-type-inheritance",
+    "kind": "advanced",
+    "verbatim": false
+  },
+  {
+    "file": "security/advanced-prototype-names.json",
+    "spec": "format",
+    "section": "5.1 Name and value",
+    "anchor": "x5-1-name-and-value",
+    "kind": "advanced",
+    "verbatim": false,
+    "notes": "Prototype-ish names are legal names and plain data."
+  },
+  {
+    "file": "security/invalid-proto-as-value.json",
+    "spec": "format",
+    "section": "5.1 Name and value",
+    "anchor": "x5-1-name-and-value",
+    "kind": "invalid",
+    "verbatim": false,
+    "expected": "security/invalid-proto-as-value.expected.json"
   }
 ]

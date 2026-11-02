@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "group.root.not-token",
+      "pointer": "/g/$root",
+      "severity": "error"
+    }
+  ]
+}

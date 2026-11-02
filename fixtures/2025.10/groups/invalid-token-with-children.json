@@ -1,0 +1,10 @@
+{
+  "t": {
+    "$type": "number",
+    "$value": 1,
+    "child": {
+      "$type": "number",
+      "$value": 2
+    }
+  }
+}

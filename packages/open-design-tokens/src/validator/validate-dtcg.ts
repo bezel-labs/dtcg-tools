@@ -1,5 +1,6 @@
-import type { ValidationIssue } from '../core/issue.js';
-import { createIssue, createRootContext } from './context.js';
+import type { PreparedDocument } from '../core/prepare.js';
+import { prepareDocument } from '../core/prepare.js';
+import { createRootContext } from './context.js';
 import type { SpecId } from './registry.js';
 import { getSpec, LATEST_SPEC } from './registry.js';
 import type { ValidationResult } from './result.js';
@@ -13,33 +14,27 @@ export interface ValidateOptions {
 /**
  * Validates a DTCG design tokens document.
  *
- * Accepts a parsed object or a JSON string. Invalid input of any shape yields
- * diagnostics in the result; it never throws. The only exception is an unknown
- * `spec` option, which is a programmer error.
+ * Accepts a parsed object, a JSON string, or a document from
+ * {@link prepareDocument}. Invalid input of any shape yields diagnostics in the
+ * result; it never throws. The only exception is an unknown `spec` option,
+ * which is a programmer error.
  *
  * @example
  * ```ts
- * const result = validateDtcg({ color: { primary: { $type: 'color', $value: { colorSpace: 'srgb', components: [1, 0, 0] } } } });
+ * const result = validateDtcg({
+ *   color: { primary: { $type: 'color', $value: { colorSpace: 'srgb', components: [1, 0, 0] } } },
+ * });
  * result.valid; // true
  * ```
  */
-export function validateDtcg(input: unknown, options: ValidateOptions = {}): ValidationResult {
+export function validateDtcg(
+  input: unknown | PreparedDocument,
+  options: ValidateOptions = {},
+): ValidationResult {
   const spec = getSpec(options.spec ?? LATEST_SPEC);
+  const doc = prepareDocument(input, { spec: spec.id });
   const ctx = createRootContext(spec.id);
-
-  let root: unknown = input;
-  if (typeof input === 'string') {
-    try {
-      root = JSON.parse(input);
-    } catch (err) {
-      const issue: ValidationIssue = createIssue(ctx, 'document.invalid-json', {
-        reason: err instanceof Error ? err.message : String(err),
-      });
-      return toResult(spec.id, [issue], { tokens: 0, groups: 0, aliases: 0 });
-    }
-  }
-
-  const { issues, stats } = spec.validateDocument(root, ctx);
+  const { issues, stats } = spec.validateDocument(doc, ctx);
   return toResult(spec.id, issues, stats);
 }
 

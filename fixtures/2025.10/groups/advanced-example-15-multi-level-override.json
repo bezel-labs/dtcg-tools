@@ -1,0 +1,41 @@
+{
+  "base": {
+    "color": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0, 0.2, 0.8],
+        "hex": "#0033cc"
+      }
+    },
+    "spacing": {
+      "$type": "dimension",
+      "$value": {
+        "value": 16,
+        "unit": "px"
+      }
+    }
+  },
+  "extended": {
+    "$extends": "{base}",
+    "color": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [0.9, 0.05, 0],
+        "hex": "#e60d00"
+      }
+    },
+    "border": {
+      "$type": "border",
+      "$value": {
+        "width": {
+          "value": 1,
+          "unit": "px"
+        },
+        "style": "solid",
+        "color": "{extended.color}"
+      }
+    }
+  }
+}

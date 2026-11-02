@@ -1,0 +1,10 @@
+{
+  "a": {},
+  "b": {
+    "$description": "d",
+    "$deprecated": true,
+    "$extensions": {
+      "com.example.x": 1
+    }
+  }
+}

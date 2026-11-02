@@ -1,0 +1,10 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "number.value.not-number",
+      "pointer": "/t/$value",
+      "severity": "error"
+    }
+  ]
+}
