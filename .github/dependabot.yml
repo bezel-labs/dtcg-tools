@@ -13,6 +13,9 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: next
         update-types: ["version-update:semver-major"]
+      # Node types track the oldest supported Node (engines: >=20.19).
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
   - package-ecosystem: github-actions
     directory: /
     schedule:
