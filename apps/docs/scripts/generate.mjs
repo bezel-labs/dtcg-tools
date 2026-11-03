@@ -19,21 +19,28 @@ const { rules, recommended } = await import(
   pathToFileURL(`${repo}packages/open-design-tokens/dist/linter.js`).href
 );
 
-/** Escapes text for an MDX table cell: pipes, newlines, and the characters MDX reads as JSX or expressions. */
+/** Escapes text for an MDX table cell: backslashes first, then pipes, newlines, and the characters MDX reads as JSX or expressions. */
 const esc = (s) =>
   String(s)
+    .replace(/\\/g, '\\\\')
     .replace(/\|/g, '\\|')
     .replace(/\n/g, ' ')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
     .replace(/\{/g, '\\{')
     .replace(/\}/g, '\\}');
-/** Escapes MDX-significant characters outside inline code spans. */
+/** Escapes MDX-significant characters outside inline code spans, backslashes first. */
 const escMdx = (md) =>
   md
     .split(/(`[^`]*`)/g)
     .map((part, i) =>
-      i % 2 ? part : part.replace(/</g, '&lt;').replace(/\{/g, '\\{').replace(/\}/g, '\\}'),
+      i % 2
+        ? part
+        : part
+            .replace(/\\/g, '\\\\')
+            .replace(/</g, '&lt;')
+            .replace(/\{/g, '\\{')
+            .replace(/\}/g, '\\}'),
     )
     .join('');
 
