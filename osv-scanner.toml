@@ -1,0 +1,13 @@
+# Vulnerabilities reviewed and accepted. OSV-Scanner, and OpenSSF Scorecard's
+# Vulnerabilities check, read this file. Revisit each entry when its reason no
+# longer holds.
+
+[[IgnoredVulns]]
+id = "GHSA-g3hv-75wg-m249"
+reason = """
+minimatch < 11.0.1 (ReDoS via glob patterns). Reaches the repo only through
+TypeDoc, a development-only tool that generates the API reference from a
+repository-controlled config; no untrusted glob ever reaches it, and it is not
+part of the published package (zero runtime dependencies). TypeDoc 0.28 pins
+minimatch ^10 and breaks with 11. Remove this entry when TypeDoc moves to 11.
+"""

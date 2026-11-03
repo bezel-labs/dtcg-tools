@@ -6,7 +6,7 @@ The latest minor release receives security fixes.
 
 ## Reporting a vulnerability
 
-Please do not open a public issue for security problems. Use GitHub's private vulnerability reporting on this repository ("Security" tab, "Report a vulnerability"). You will receive an acknowledgement within 5 working days and a resolution or status update within 90 days.
+Please do not open a public issue for security problems. Report them privately through GitHub's vulnerability reporting form: https://github.com/bezel-labs/open-design-tokens/security/advisories/new You will receive an acknowledgement within 5 working days and a resolution or status update within 90 days.
 
 ## Scope
 
