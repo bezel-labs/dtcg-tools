@@ -68,6 +68,8 @@ Messages are plain text and are part of the public surface users see in CI logs.
 
 Functional TypeScript: plain functions over plain data, no classes, state in closure factories. Biome formats and lints everything (`npm run check`). Commit messages follow Conventional Commits and are checked by a hook.
 
+Pull requests are squash-merged, and the pull request title becomes the commit on `main`, so the title must follow Conventional Commits too (`fix: …`, `feat(linter): …`). A check on every pull request enforces this; edit the title to fix it.
+
 ## Pull requests
 
 Each PR needs a changeset (`npx changeset`) unless it only touches docs, tests, or the playground. The PR template is the review checklist.

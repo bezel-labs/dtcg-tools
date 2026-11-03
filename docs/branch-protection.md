@@ -7,8 +7,10 @@ These settings live in GitHub (Settings → Branches → Branch protection rules
   - `CI / Node 20 on ubuntu-latest`, `Node 22 on ubuntu-latest`, `Node 24 on ubuntu-latest`
   - `CI / Node 22 on windows-latest`
   - `CodeQL / analyze`
+  - `PR title / conventional-title`
   - `Tarball / install-and-import`
 - Require conversation resolution before merging.
+- Merge method: squash only, with the pull request title as the default commit message (Settings → General → Pull Requests).
 - Require signed commits (recommended).
 - Do not allow force pushes or deletions.
 - Restrict who can push to matching branches: maintainers only; everyone else goes through pull requests.
