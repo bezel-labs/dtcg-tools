@@ -11,6 +11,31 @@ TypeScript toolkit for validating and linting DTCG design tokens.
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/bezel-labs/open-design-tokens/badge)](https://securityscorecards.dev/viewer/?uri=github.com/bezel-labs/open-design-tokens)
 [![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16302/badge)](https://www.bestpractices.dev/projects/16302)
 
+<table>
+  <tr>
+    <td align="center" width="25%">
+      <h2>Fast</h2>
+      Validates 10,000 tokens in ~20 ms.<br>
+      <a href="docs/benchmarks.md">Benchmarks</a>
+    </td>
+    <td align="center" width="25%">
+      <h2>Secure</h2>
+      Hardened against malicious token files.<br>
+      <a href="docs/security.md">Threat model</a>
+    </td>
+    <td align="center" width="25%">
+      <h2>Small</h2>
+      12.8 kB gzipped, <strong>zero dependencies</strong>.<br>
+      <a href="https://bundlejs.com/?q=open-design-tokens/validator">Bundle size</a>
+    </td>
+    <td align="center" width="25%">
+      <h2>Compliant</h2>
+      DTCG 2025.10, ready for future specs.<br>
+      <a href="docs/spec-coverage.md">Spec coverage</a>
+    </td>
+  </tr>
+</table>
+
 Supports the [Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/) and the [Color Module 2025.10](https://www.designtokens.org/tr/2025.10/color/). Zero runtime dependencies. Runs in Node 20.19+, evergreen browsers, and any modern bundler.
 
 **Status: beta.** Feature-complete for the 2025.10 specifications and tested against the spec text; the API will stay on 0.x until it has seen real-world use. Try it in the [playground](https://opendesigntokens.com/), and read the [documentation](https://opendesigntokens.com/docs/).
@@ -149,6 +174,10 @@ Not supported yet: the Resolver module. See [ROADMAP.md](ROADMAP.md).
 ## Security
 
 Token files are treated as untrusted input: no code evaluation, bounded nesting, cycle-safe resolution, document-local references only, escaped diagnostics, and zero runtime dependencies. Details in [docs/security.md](docs/security.md); report vulnerabilities as described in [SECURITY.md](SECURITY.md).
+
+## Questions and ideas
+
+Ask questions in [Q&A](https://github.com/bezel-labs/open-design-tokens/discussions/categories/q-a) and share ideas in [Ideas](https://github.com/bezel-labs/open-design-tokens/discussions/categories/ideas) on GitHub Discussions. Use [issues](https://github.com/bezel-labs/open-design-tokens/issues) for bugs and spec mismatches.
 
 ## Contributing
 

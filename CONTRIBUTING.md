@@ -2,6 +2,10 @@
 
 Thanks for helping make Open Design Tokens better. This guide covers setup, the repo layout, and how to add the most common kinds of change.
 
+## Questions and ideas
+
+Ask questions in [Q&A](https://github.com/bezel-labs/open-design-tokens/discussions/categories/q-a) and propose ideas in [Ideas](https://github.com/bezel-labs/open-design-tokens/discussions/categories/ideas) on GitHub Discussions. Open an issue for a bug, a spec mismatch, or a change that is ready to be worked on.
+
 ## Setup
 
 ```sh
@@ -31,7 +35,7 @@ Requirements: Node 20.19 or newer and npm 10.
 
 In scope: validating and linting DTCG Format Module and Color Module files, the types that describe them, and tooling that helps CI and editors use that validation.
 
-Out of scope for now: token transformation or code generation, the Resolver module, design-tool plugins, and network features of any kind. Open an issue first if you are unsure.
+Out of scope for now: token transformation or code generation, the Resolver module, design-tool plugins, and network features of any kind. Ask in [Discussions](https://github.com/bezel-labs/open-design-tokens/discussions) first if you are unsure.
 
 ## The validator / linter boundary
 
