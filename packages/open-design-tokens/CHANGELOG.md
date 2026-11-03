@@ -1,5 +1,11 @@
 # open-design-tokens
 
+## 0.1.1
+
+### Patch Changes
+
+- [`6cabdc1`](https://github.com/bezel-labs/open-design-tokens/commit/6cabdc1e6f95f22a6c4485a28cb11318111e5d3a) Thanks [@mr-robot-o](https://github.com/mr-robot-o)! - Fix `dtcg-lint --no-color`, which exited with an unknown-option error instead of disabling colors.
+
 ## 0.1.0
 
 ### Minor Changes
