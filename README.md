@@ -104,7 +104,7 @@ npx dtcg-lint 'src/**/*.tokens.json'
 npx dtcg-lint tokens.json --config lint.config.json --format github
 ```
 
-`dtcg-lint` validates, then lints. It loads `dtcg-lint.config.{json,mjs,js,ts}` from the current directory only, or the file given with `--config`. Formats: `pretty` (default), `json`, `github` (workflow annotations). Exit codes: 0 clean, 1 errors, 2 usage or configuration problem.
+`dtcg-lint` validates, then lints. It loads `dtcg-lint.config.{json,mjs,js,ts}` from the current directory only, or the file given with `--config`. Formats: `pretty` (default), `json`, `github` (workflow annotations). `--max-warnings <n>` fails the run when there are more than `n` warnings (`0` allows none). Exit codes: 0 clean, 1 errors or too many warnings, 2 usage or configuration problem.
 
 ### Rules
 

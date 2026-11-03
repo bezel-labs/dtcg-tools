@@ -3,8 +3,10 @@
  * `dtcg-lint`: validates DTCG token files against the specification, then lints them.
  *
  *   dtcg-lint <files or globs...> [--config <path>] [--format pretty|json|github] [--no-color]
+ *                                 [--max-warnings <n>]
  *
- * Exit codes: 0 no errors, 1 errors found, 2 usage or configuration problem.
+ * Exit codes: 0 no errors, 1 errors found or more than `--max-warnings` warnings,
+ * 2 usage or configuration problem.
  */
 import { readFileSync } from 'node:fs';
 import { relative, sep } from 'node:path';
@@ -23,8 +25,15 @@ Options:
   --config <path>     Lint config (dtcg-lint.config.{json,mjs,js,ts}); defaults to one in the current directory
   --format <name>     pretty (default), json, or github
   --no-color          Disable ANSI colors in pretty output
+  --max-warnings <n>  Exit 1 when the total number of warnings exceeds n (0 allows none)
   -h, --help          Show this help
 `;
+
+/** Parses a non-negative integer option value; returns undefined when it is not one. */
+function parseCount(value: string): number | undefined {
+  const n = /^\d+$/.test(value) ? Number(value) : Number.NaN;
+  return Number.isSafeInteger(n) ? n : undefined;
+}
 
 async function main(argv: readonly string[]): Promise<number> {
   const { values, positionals } = parseArgs({
@@ -36,6 +45,7 @@ async function main(argv: readonly string[]): Promise<number> {
       config: { type: 'string' },
       format: { type: 'string', default: 'pretty' },
       color: { type: 'boolean', default: true },
+      'max-warnings': { type: 'string' },
       help: { type: 'boolean', short: 'h', default: false },
     },
   });
@@ -51,6 +61,14 @@ async function main(argv: readonly string[]): Promise<number> {
   const formatter = FORMATTERS[format];
   if (!formatter) {
     process.stderr.write(`Unknown format: ${values.format}. Use pretty, json, or github.\n`);
+    return 2;
+  }
+  const maxWarnings =
+    values['max-warnings'] === undefined ? undefined : parseCount(values['max-warnings']);
+  if (values['max-warnings'] !== undefined && maxWarnings === undefined) {
+    process.stderr.write(
+      `Invalid --max-warnings value: ${JSON.stringify(values['max-warnings'])}. Use a non-negative integer.\n`,
+    );
     return 2;
   }
   const cwd = process.cwd();
@@ -74,6 +92,7 @@ async function main(argv: readonly string[]): Promise<number> {
   }
 
   let failed = false;
+  let warningCount = 0;
   const outputs: string[] = [];
   for (const file of files) {
     let source: string;
@@ -88,6 +107,7 @@ async function main(argv: readonly string[]): Promise<number> {
     }
     const result = lintDtcg(source, {}, { resolved });
     if (!result.valid) failed = true;
+    warningCount += result.warnings.length;
     const shown = (relative(cwd, file) || file).split(sep).join('/');
     outputs.push(formatter(result, { file: shown, color }));
   }
@@ -96,6 +116,12 @@ async function main(argv: readonly string[]): Promise<number> {
       ? `[${outputs.map((o) => o.trim()).join(',\n')}]\n`
       : outputs.join(''),
   );
+  if (maxWarnings !== undefined && warningCount > maxWarnings) {
+    process.stderr.write(
+      `Too many warnings: found ${warningCount}, maximum allowed is ${maxWarnings}.\n`,
+    );
+    return 1;
+  }
   return failed ? 1 : 0;
 }
 
