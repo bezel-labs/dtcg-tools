@@ -30,6 +30,8 @@ async function main(argv: readonly string[]): Promise<number> {
   const { values, positionals } = parseArgs({
     args: [...argv],
     allowPositionals: true,
+    // Enables `--no-color` (Node 20.16+ / 22.4+; engines require 20.19+).
+    allowNegative: true,
     options: {
       config: { type: 'string' },
       format: { type: 'string', default: 'pretty' },

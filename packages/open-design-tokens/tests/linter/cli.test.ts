@@ -39,6 +39,15 @@ describe('dtcg-lint CLI (built dist)', () => {
     expect(r.stderr).toContain('Usage');
   });
 
+  it('accepts --no-color and every documented flag', () => {
+    const dir = project();
+    const r = run(['tokens/bad.json', '--no-color', '--format', 'pretty'], dir);
+    expect(r.stderr).toBe('');
+    expect(r.status).toBe(1);
+    expect(r.stdout).not.toContain('\u001b[');
+    expect(run(['--help'], dir).status).toBe(0);
+  });
+
   it('exits 0 for a valid file and 1 for an invalid one', () => {
     const dir = project();
     expect(run(['tokens/good.json'], dir).status).toBe(0);
