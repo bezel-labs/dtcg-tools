@@ -28,6 +28,8 @@ jobs:
           node-version: 22
           cache: npm
           registry-url: https://registry.npmjs.org
+      # Trusted publishing (OIDC) needs npm 11.5.1 or newer; Node 22 ships npm 10.
+      - run: npm install -g npm@11.21.1
       - run: npm ci --ignore-scripts
       - run: npx turbo run lint typecheck test build --filter=open-design-tokens
       - name: Version or publish
