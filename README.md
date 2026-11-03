@@ -10,6 +10,7 @@ TypeScript toolkit for validating and linting DTCG design tokens.
 [![validator size](https://deno.bundlejs.com/badge?q=open-design-tokens/validator)](https://bundlejs.com/?q=open-design-tokens/validator)
 [![license: MIT](https://img.shields.io/npm/l/open-design-tokens.svg)](LICENSE)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/bezel-labs/open-design-tokens/badge)](https://securityscorecards.dev/viewer/?uri=github.com/bezel-labs/open-design-tokens)
+[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16302/badge)](https://www.bestpractices.dev/projects/16302)
 
 Supports the [Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/) and the [Color Module 2025.10](https://www.designtokens.org/tr/2025.10/color/). Zero runtime dependencies. Runs in Node 20.19+, evergreen browsers, and any modern bundler.
 
