@@ -57,7 +57,9 @@ export interface AliasResolution {
   status: Status;
   /** Final concrete token after following the chain. */
   target?: NodeInfo;
-  /** Pointers visited, starting with the alias token. */
+  /** Number of alias hops from the start token to the end of the chain. */
+  hops: number;
+  /** Pointers visited, starting with the alias token (abbreviated when a cached tail was reused). */
   chain: string[];
   /** Resolved target path pointer for diagnostics (even when missing). */
   path: string;
@@ -368,28 +370,49 @@ export function createResolver(doc: PreparedDocument): Resolver {
     while (current) {
       if (seen.has(current.pointer)) {
         const from = chain.indexOf(current.pointer);
-        result = { status: 'cycle', chain: chain.slice(from), path: current.pointer };
+        result = {
+          status: 'cycle',
+          hops: chain.length,
+          chain: chain.slice(from),
+          path: current.pointer,
+        };
         break;
       }
       const known = aliases.get(current.pointer);
       if (known && current.pointer !== start) {
-        result = known.status === 'cycle' ? known : { ...known, chain: [...chain, ...known.chain] };
+        // Reuse the cached result. The chain only serves diagnostics, so record the
+        // hops walked here plus the endpoint instead of copying the cached chain,
+        // which would make long chains quadratic in time and memory.
+        result =
+          known.status === 'cycle'
+            ? known
+            : {
+                ...known,
+                hops: chain.length + known.hops,
+                chain: [...chain, known.target?.pointer ?? known.path],
+              };
         break;
       }
       seen.add(current.pointer);
       chain.push(current.pointer);
       const s = step(current);
       if (s.kind === 'concrete') {
-        result = { status: 'ok', target: current, chain, path: current.pointer };
+        result = {
+          status: 'ok',
+          target: current,
+          hops: chain.length - 1,
+          chain,
+          path: current.pointer,
+        };
         break;
       }
       if (s.kind === 'error') {
-        result = { status: s.status, chain, path: s.path };
+        result = { status: s.status, hops: chain.length, chain, path: s.path };
         break;
       }
       current = s.next;
     }
-    result ??= { status: 'missing', chain, path: start };
+    result ??= { status: 'missing', hops: chain.length, chain, path: start };
     // Memoise every node walked so long chains stay linear. All of them share
     // one result object (the chain is only used for cycle diagnostics).
     for (const p of chain) if (!aliases.has(p)) aliases.set(p, result);

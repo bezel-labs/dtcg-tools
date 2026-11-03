@@ -9,7 +9,7 @@ import { execFileSync, spawnSync } from 'node:child_process';
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const pkgDir = join(root, 'packages', 'open-design-tokens');
@@ -71,7 +71,9 @@ if (bin.status !== 1 || !bin.stdout.includes('number.value.not-number'))
 console.log('✔ dtcg-lint bin runs and exits 1 on errors');
 
 // Browser bundle: esbuild resolves from the scratch project; jsdom executes it.
-const esbuild = await import(join(root, 'node_modules', 'esbuild', 'lib', 'main.js'));
+const esbuild = await import(
+  pathToFileURL(join(root, 'node_modules', 'esbuild', 'lib', 'main.js')).href
+);
 const bundle = await esbuild.build({
   stdin: {
     contents: `import { validateDtcg } from 'open-design-tokens/validator'; globalThis.__result = validateDtcg({ a: { $type: 'number', $value: 1 } }).valid;`,
@@ -86,7 +88,9 @@ const bundle = await esbuild.build({
 const code = bundle.outputFiles[0].text;
 if (/\brequire\(["']node:/.test(code) || /from ["']node:/.test(code))
   fail('browser bundle references node builtins');
-const { Window } = await import(join(root, 'node_modules', 'happy-dom', 'lib', 'index.js'));
+const { Window } = await import(
+  pathToFileURL(join(root, 'node_modules', 'happy-dom', 'lib', 'index.js')).href
+);
 const { createContext, runInContext } = await import('node:vm');
 const window = new Window({ url: 'https://example.test/' });
 const context = createContext(window);

@@ -23,7 +23,7 @@ export const aliasMaxDepth = defineRule<AliasDepthOptions>({
     const check = (node: { pointer: string; path: readonly string[] }) => {
       const res = ctx.resolver.resolveAlias(node.pointer);
       if (res.status !== 'ok') return;
-      const hops = res.chain.length - 1;
+      const hops = res.hops;
       if (hops > ctx.options.max) {
         ctx.report({
           code: 'exceeded',

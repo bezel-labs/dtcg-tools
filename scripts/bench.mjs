@@ -7,11 +7,15 @@ import { writeFileSync } from 'node:fs';
  */
 import { cpus, platform, release, totalmem } from 'node:os';
 import { performance } from 'node:perf_hooks';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
-const { validateDtcg } = await import(`${root}packages/open-design-tokens/dist/validator.js`);
-const { lintDtcg } = await import(`${root}packages/open-design-tokens/dist/linter.js`);
+const { validateDtcg } = await import(
+  pathToFileURL(`${root}packages/open-design-tokens/dist/validator.js`).href
+);
+const { lintDtcg } = await import(
+  pathToFileURL(`${root}packages/open-design-tokens/dist/linter.js`).href
+);
 
 /** Builds a document with `n` tokens where each alias chain is `depth` long. */
 function generate(n, depth) {

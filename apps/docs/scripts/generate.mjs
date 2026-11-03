@@ -5,7 +5,7 @@
  * the spec coverage table (from docs/spec-coverage.md). Runs before `next build`.
  */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 const repo = `${here}../../../`;
@@ -13,9 +13,11 @@ const out = `${here}../content/docs/reference/`;
 mkdirSync(out, { recursive: true });
 
 const { DEFAULT_SEVERITY, ISSUE_CODES, MESSAGES } = await import(
-  `${repo}packages/open-design-tokens/dist/validator.js`
+  pathToFileURL(`${repo}packages/open-design-tokens/dist/validator.js`).href
 );
-const { rules, recommended } = await import(`${repo}packages/open-design-tokens/dist/linter.js`);
+const { rules, recommended } = await import(
+  pathToFileURL(`${repo}packages/open-design-tokens/dist/linter.js`).href
+);
 
 /** Escapes text for an MDX table cell: pipes, newlines, and the characters MDX reads as JSX or expressions. */
 const esc = (s) =>

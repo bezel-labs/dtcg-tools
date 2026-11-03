@@ -19,7 +19,8 @@ export default async function Page(props: PageProps<'/[[...slug]]'>) {
   if (!page) notFound();
 
   const MDX = page.data.body;
-  const markdownUrl = `/docs${getPageMarkdownUrl(page).url}`;
+  // Fumadocs prefixes the Next.js basePath itself, so this stays relative to the app root.
+  const markdownUrl = getPageMarkdownUrl(page).url;
 
   return (
     <DocsPage toc={page.data.toc} full={page.data.full}>
