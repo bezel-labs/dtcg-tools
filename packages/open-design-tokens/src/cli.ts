@@ -7,7 +7,7 @@
  * Exit codes: 0 no errors, 1 errors found, 2 usage or configuration problem.
  */
 import { readFileSync } from 'node:fs';
-import { relative } from 'node:path';
+import { relative, sep } from 'node:path';
 import { parseArgs } from 'node:util';
 import { resolveConfig } from './linter/config.js';
 import { lintDtcg } from './linter/engine.js';
@@ -86,7 +86,8 @@ async function main(argv: readonly string[]): Promise<number> {
     }
     const result = lintDtcg(source, {}, { resolved });
     if (!result.valid) failed = true;
-    outputs.push(formatter(result, { file: relative(cwd, file) || file, color }));
+    const shown = (relative(cwd, file) || file).split(sep).join('/');
+    outputs.push(formatter(result, { file: shown, color }));
   }
   process.stdout.write(
     format === 'json' && files.length > 1

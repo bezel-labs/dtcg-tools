@@ -8,13 +8,13 @@
   {
     "name": "linter",
     "path": "packages/open-design-tokens/dist/linter.js",
-    "import": "{ lint }",
+    "import": "{ lintDtcg }",
     "limit": "40 kB"
   },
   {
     "name": "root",
     "path": "packages/open-design-tokens/dist/index.js",
-    "import": "{ validateDtcg, lint }",
+    "import": "{ validateDtcg, lintDtcg }",
     "limit": "45 kB"
   }
 ]

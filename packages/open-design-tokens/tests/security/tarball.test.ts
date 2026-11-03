@@ -10,6 +10,7 @@ describe('tarball contents', () => {
     const r = spawnSync('npm', ['pack', '--dry-run', '--json', '--ignore-scripts'], {
       cwd: PKG,
       encoding: 'utf8',
+      shell: process.platform === 'win32',
     });
     expect(r.status).toBe(0);
     const [info] = JSON.parse(r.stdout) as { files: { path: string }[] }[];

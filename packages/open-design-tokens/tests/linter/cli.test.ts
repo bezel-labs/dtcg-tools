@@ -1,7 +1,7 @@
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, mkdtempSync, symlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { expandFiles, globToRegExp } from '../../src/linter/node/files.js';
@@ -84,8 +84,13 @@ describe('dtcg-lint CLI (built dist)', () => {
     const dir = project();
     const outside = mkdtempSync(join(tmpdir(), 'outside-'));
     writeFileSync(join(outside, 'secret.json'), '{}');
-    symlinkSync(outside, join(dir, 'tokens', 'link'));
-    const files = expandFiles(['tokens/**/*.json'], dir).map((f) => f.slice(dir.length + 1));
+    symlinkSync(outside, join(dir, 'tokens', 'link'), 'junction');
+    const files = expandFiles(['tokens/**/*.json'], dir).map((f) =>
+      f
+        .slice(dir.length + 1)
+        .split(sep)
+        .join('/'),
+    );
     expect(files).toEqual(['tokens/bad.json', 'tokens/good.json', 'tokens/policy.json']);
     expect(globToRegExp('**/*.tokens.json').test('a/b/c.tokens.json')).toBe(true);
     expect(globToRegExp('*.json').test('a/b.json')).toBe(false);

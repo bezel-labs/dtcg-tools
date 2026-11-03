@@ -14,7 +14,12 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const pkgDir = join(root, 'packages', 'open-design-tokens');
 const run = (cmd, args, cwd) =>
-  execFileSync(cmd, args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'] });
+  execFileSync(cmd, args, {
+    cwd,
+    encoding: 'utf8',
+    stdio: ['ignore', 'pipe', 'inherit'],
+    shell: process.platform === 'win32',
+  });
 const fail = (msg) => {
   console.error(`✖ ${msg}`);
   process.exit(1);
