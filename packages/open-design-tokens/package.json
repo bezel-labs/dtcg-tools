@@ -43,7 +43,7 @@
     "./package.json": "./package.json"
   },
   "bin": {
-    "dtcg-lint": "./dist/cli.js"
+    "dtcg-lint": "dist/cli.js"
   },
   "files": [
     "dist"
