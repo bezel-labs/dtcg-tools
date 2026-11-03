@@ -6,7 +6,6 @@ TypeScript toolkit for validating and linting DTCG design tokens.
 [![CI](https://github.com/bezel-labs/open-design-tokens/actions/workflows/ci.yml/badge.svg)](https://github.com/bezel-labs/open-design-tokens/actions/workflows/ci.yml)
 [![spec 2025.10](https://img.shields.io/badge/DTCG-2025.10-blue.svg)](https://www.designtokens.org/tr/2025.10/format/)
 [![types included](https://img.shields.io/badge/types-included-blue.svg)](https://opendesigntokens.com/api/)
-[![node](https://img.shields.io/node/v/open-design-tokens.svg)](https://www.npmjs.com/package/open-design-tokens)
 [![validator size](https://deno.bundlejs.com/badge?q=open-design-tokens/validator)](https://bundlejs.com/?q=open-design-tokens/validator)
 [![license: MIT](https://img.shields.io/npm/l/open-design-tokens.svg)](LICENSE)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/bezel-labs/open-design-tokens/badge)](https://securityscorecards.dev/viewer/?uri=github.com/bezel-labs/open-design-tokens)
