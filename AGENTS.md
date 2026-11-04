@@ -21,7 +21,7 @@ npm run docs:dev                          # docs site
 
 ## Rules
 
-- **Validator is spec only.** It reports what the specification says and takes no options except the spec version and presentation of messages (`messages` overrides, later locales). Anything that changes *what* is reported is a lint rule. The validator must never import the linter.
+- **Validator is spec only.** It reports what the specification says and takes no options except the spec version and presentation of messages (`messages` overrides, later locales). Anything that changes _what_ is reported is a lint rule. The validator must never import the linter.
 - **Token files are untrusted input.** Never use `eval` or `new Function`, never build a `RegExp` from document content, never follow non-local `$ref`, and keep traversal bounded. Pass user values in messages through `formatValue`. Invalid input returns diagnostics and never throws.
 - **Functional style.** Use plain functions and data. Do not use classes or `this`. Hold state in closure factories such as `createResolver`.
 - **Zero runtime dependencies** in the published package. `node:` imports are allowed only in `cli.ts` and `linter/node/`.
