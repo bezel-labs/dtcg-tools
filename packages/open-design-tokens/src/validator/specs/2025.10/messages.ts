@@ -147,7 +147,8 @@ export interface IssueMeta {
   'document.circular': EmptyMeta;
   'document.unreadable-node': { reason: string };
   'value.unknown-property': { property: string; known: readonly string[] };
-  'name.forbidden-character': { name: string; character: string };
+  /** `characters` lists every forbidden character in the name; `character` is the first, kept for readers of 0.3. */
+  'name.forbidden-character': { name: string; character: string; characters: readonly string[] };
   'name.reserved-prefix': { name: string };
   'name.empty': EmptyMeta;
   'token.type.missing': {
@@ -278,6 +279,14 @@ function range(m: {
   return `[${min}, ${max}${m.maxExclusive ? ')' : ']'}`;
 }
 
+/** `"a"`, `"a" and "b"`, `"a", "b" and "c"`. */
+function either(values: readonly unknown[]): string {
+  const shown = values.map((v) => formatValue(v));
+  return shown.length <= 1
+    ? (shown[0] ?? '')
+    : `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 1]}`;
+}
+
 function list(values: unknown): string {
   return Array.isArray(values) ? values.map((v) => formatValue(v)).join(', ') : formatValue(values);
 }
@@ -309,8 +318,10 @@ export const MESSAGES: MessageCatalog = {
   'value.unknown-property': (m) =>
     `Property ${formatValue(m.property)} is not defined for this value type. Known properties: ${list(m.known)}.`,
 
-  'name.forbidden-character': (m) =>
-    `Name ${formatValue(m.name)} contains ${formatValue(m.character)}, which is not allowed in token or group names (reserved for alias syntax).`,
+  'name.forbidden-character': (m) => {
+    const characters = m.characters ?? [m.character];
+    return `Name ${formatValue(m.name)} contains ${either(characters)}, which ${characters.length === 1 ? 'is' : 'are'} not allowed in token or group names (reserved for alias syntax).`;
+  },
   'name.reserved-prefix': (m) =>
     `Name ${formatValue(m.name)} starts with "$", which is reserved for format properties; token and group names must not begin with "$".`,
   'name.empty': () => 'Token and group names should not be empty.',

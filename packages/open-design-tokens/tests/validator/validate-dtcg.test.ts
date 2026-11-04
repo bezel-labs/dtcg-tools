@@ -63,6 +63,29 @@ describe('validateDtcg', () => {
     expect(r.errors[0]?.meta).toEqual({ actualType: 'string', actual: '#zzz' });
   });
 
+  it('reports a name once, with every forbidden character it contains', () => {
+    const r = validateDtcg({
+      '}{.x': { $type: 'number', $value: 1 },
+      'a.b': { $type: 'number', $value: 2 },
+    });
+    expect(r.errors.map((i) => [i.code, i.path.dot, i.message])).toEqual([
+      [
+        'name.forbidden-character',
+        '}{.x',
+        'Name "}{.x" contains "{", "}" and ".", which are not allowed in token or group names (reserved for alias syntax).',
+      ],
+      [
+        'name.forbidden-character',
+        'a.b',
+        'Name "a.b" contains ".", which is not allowed in token or group names (reserved for alias syntax).',
+      ],
+    ]);
+    const first = r.errors[0];
+    if (first?.code === 'name.forbidden-character') {
+      expect(first.meta).toEqual({ name: '}{.x', character: '{', characters: ['{', '}', '.'] });
+    }
+  });
+
   it('throws only for an unknown spec id (programmer error)', () => {
     // @ts-expect-error deliberate bad option
     expect(() => validateDtcg({}, { spec: '1999.01' })).toThrow(RangeError);
