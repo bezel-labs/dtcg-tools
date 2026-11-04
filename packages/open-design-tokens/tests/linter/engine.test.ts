@@ -76,6 +76,16 @@ describe('lint engine', () => {
     expect(linter.config).toBe(linter.config);
   });
 
+  it('passes message overrides through to the validator', () => {
+    const linter = createLinter(
+      {},
+      { messages: { 'number.value.not-number': () => 'Numbers only.' } },
+    );
+    const r = linter.lint({ a: { $type: 'number', $value: 'x' } });
+    expect(r.validation.errors.map((i) => i.message)).toEqual(['Numbers only.']);
+    expect(r.validation.errors[0]?.code).toBe('number.value.not-number');
+  });
+
   it('presets apply first and explicit rules override', () => {
     const resolved = resolveConfig({
       extends: ['recommended'],

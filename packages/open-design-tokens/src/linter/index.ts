@@ -26,6 +26,7 @@ export type {
   LintConfig,
   LintContext,
   Linter,
+  LinterOptions,
   LintIssue,
   LintResult,
   LintRule,

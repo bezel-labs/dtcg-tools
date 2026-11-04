@@ -2,6 +2,7 @@ import type { IssuePath, Severity, ValidationIssue } from '../core/issue.js';
 import type { NodeInfo, PreparedDocument } from '../core/prepare.js';
 import type { ValidationResult } from '../validator/result.js';
 import type { Resolver } from '../validator/specs/2025.10/aliases/resolver.js';
+import type { MessageCatalog } from '../validator/specs/2025.10/messages.js';
 
 /** A lint diagnostic: a validation issue plus the rule that produced it. */
 export interface LintIssue extends ValidationIssue {
@@ -100,6 +101,12 @@ export interface ResolvedRule {
 
 export interface ResolvedConfig {
   rules: readonly ResolvedRule[];
+}
+
+/** Presentation options for a linter; none of them change what is reported. */
+export interface LinterOptions {
+  /** Validator message wording by issue code; see `ValidateOptions.messages`. */
+  messages?: Partial<MessageCatalog>;
 }
 
 /**

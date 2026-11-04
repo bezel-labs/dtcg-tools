@@ -8,7 +8,7 @@ import {
 describe('message catalog', () => {
   it('every code has a message and a default severity', () => {
     for (const code of ISSUE_CODES) {
-      expect(typeof MESSAGES[code]({})).toBe('string');
+      expect(typeof (MESSAGES[code] as (meta: unknown) => string)({})).toBe('string');
       expect(['error', 'warning']).toContain(DEFAULT_SEVERITY[code]);
     }
     expect(Object.keys(DEFAULT_SEVERITY).sort()).toEqual([...ISSUE_CODES].sort());

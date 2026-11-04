@@ -5,12 +5,14 @@ import { prepareDocument } from '../core/prepare.js';
 import { parseAlias, parseRef } from '../validator/specs/2025.10/aliases/parse.js';
 import type { Resolver } from '../validator/specs/2025.10/aliases/resolver.js';
 import { createResolver } from '../validator/specs/2025.10/aliases/resolver.js';
+import type { ValidateOptions } from '../validator/validate-dtcg.js';
 import { validateDtcg } from '../validator/validate-dtcg.js';
 import { resolveConfig } from './config.js';
 import type {
   LintConfig,
   LintContext,
   Linter,
+  LinterOptions,
   LintIssue,
   LintResult,
   ReferenceGraph,
@@ -69,14 +71,19 @@ export function buildReferenceGraph(doc: PreparedDocument, resolver: Resolver): 
  * error, so one spec violation does not cascade into misleading policy
  * findings. `lint` never throws on document input.
  */
-export function createLinter(config: LintConfig = {}): Linter {
+export function createLinter(config: LintConfig = {}, options: LinterOptions = {}): Linter {
   const resolved = resolveConfig(config);
-  return { lint: (input) => lint(input, resolved), config: resolved };
+  const validateOptions: ValidateOptions = options.messages ? { messages: options.messages } : {};
+  return { lint: (input) => lint(input, resolved, validateOptions), config: resolved };
 }
 
-function lint(input: unknown, resolved: ResolvedConfig): LintResult {
+function lint(
+  input: unknown,
+  resolved: ResolvedConfig,
+  validateOptions: ValidateOptions,
+): LintResult {
   const doc = prepareDocument(input);
-  const validation = validateDtcg(doc);
+  const validation = validateDtcg(doc, validateOptions);
   const issues: LintIssue[] = [];
   const skipped: SkippedCheck[] = [];
 

@@ -23,7 +23,7 @@ export type {
 export { isPreparedDocument, prepareDocument } from '../core/prepare.js';
 export type { Visitor } from '../core/walk.js';
 export { getNodeAtPointer, walkDocument } from '../core/walk.js';
-export type { ValidationContext } from './context.js';
+export type { ContextOptions, ValidationContext } from './context.js';
 export { createIssue, createRootContext } from './context.js';
 export type { SpecId } from './registry.js';
 export { LATEST_SPEC, SPEC_IDS } from './registry.js';
@@ -84,7 +84,17 @@ export { validateGroup } from './specs/2025.10/groups/validate-group.js';
 export { validateNameCollisions } from './specs/2025.10/groups/validate-name-collisions.js';
 export type { DocumentValidation } from './specs/2025.10/index.js';
 export { validateDocument } from './specs/2025.10/index.js';
-export type { IssueCode, MessageMeta } from './specs/2025.10/messages.js';
+export type {
+  EmptyMeta,
+  EnumMeta,
+  IssueCode,
+  IssueMeta,
+  MessageCatalog,
+  MessageMeta,
+  RangeMeta,
+  ShapeMeta,
+  SpecIssue,
+} from './specs/2025.10/messages.js';
 export { DEFAULT_SEVERITY, ISSUE_CODES, MESSAGES } from './specs/2025.10/messages.js';
 export type { PropertyOwner } from './specs/2025.10/tokens/validate-common-props.js';
 export {
