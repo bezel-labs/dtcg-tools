@@ -5,10 +5,17 @@ import type { SpecId } from './registry.js';
 import { getSpec, LATEST_SPEC } from './registry.js';
 import type { ValidationResult } from './result.js';
 import { toResult } from './result.js';
+import type { MessageCatalog } from './specs/2025.10/messages.js';
 
 export interface ValidateOptions {
   /** Spec version to validate against. Defaults to the latest supported. */
   spec?: SpecId;
+  /**
+   * Message wording by issue code, for codes you want phrased differently (a product's own voice,
+   * another language). Codes not listed keep the built-in message. Codes, severities, paths, and
+   * `meta` are never affected.
+   */
+  messages?: Partial<MessageCatalog>;
 }
 
 /**
@@ -33,7 +40,7 @@ export function validateDtcg(
 ): ValidationResult {
   const spec = getSpec(options.spec ?? LATEST_SPEC);
   const doc = prepareDocument(input, { spec: spec.id });
-  const ctx = createRootContext(spec.id);
+  const ctx = createRootContext(spec.id, options.messages ? { messages: options.messages } : {});
   const { issues, stats } = spec.validateDocument(doc, ctx);
   return toResult(spec.id, issues, stats);
 }

@@ -1,5 +1,6 @@
 import type { ValidationIssue } from '../core/issue.js';
 import type { SpecId } from './registry.js';
+import type { SpecIssue } from './specs/2025.10/messages.js';
 
 export interface ValidationStats {
   tokens: number;
@@ -10,9 +11,10 @@ export interface ValidationStats {
 export interface ValidationResult {
   /** `true` when no issue has severity `error`. */
   valid: boolean;
-  issues: ValidationIssue[];
-  errors: ValidationIssue[];
-  warnings: ValidationIssue[];
+  /** Every issue, with `meta` typed by `code`: narrow on `code` to read the details. */
+  issues: SpecIssue[];
+  errors: SpecIssue[];
+  warnings: SpecIssue[];
   spec: SpecId;
   stats: ValidationStats;
 }
@@ -22,7 +24,9 @@ export function toResult(
   issues: ValidationIssue[],
   stats: ValidationStats,
 ): ValidationResult {
-  const errors = issues.filter((i) => i.severity === 'error');
-  const warnings = issues.filter((i) => i.severity === 'warning');
-  return { valid: errors.length === 0, issues, errors, warnings, spec, stats };
+  // Every validator issue is built by `createIssue`, which types `meta` by `code`.
+  const typed = issues as SpecIssue[];
+  const errors = typed.filter((i) => i.severity === 'error');
+  const warnings = typed.filter((i) => i.severity === 'warning');
+  return { valid: errors.length === 0, issues: typed, errors, warnings, spec, stats };
 }

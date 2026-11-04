@@ -72,7 +72,7 @@ export function checkAliasToken(
       : isReference(ref)
         ? ref.$ref
         : undefined;
-  const actual = refString ?? ref;
+  const actual = String(refString ?? ref);
 
   if (isCurly && !parseAlias(ref as string)) {
     issues.push(createIssue(ctx, 'alias.syntax.invalid', { actual }));

@@ -17,6 +17,7 @@ import type {
   IssueCode,
   Severity,
   ShadowValue,
+  SpecIssue,
   TokenType,
   TypedToken,
   ValidateOptions,
@@ -79,10 +80,25 @@ describe('public types', () => {
   it('validateDtcg options and result', () => {
     expectTypeOf(validateDtcg).parameter(1).toEqualTypeOf<ValidateOptions | undefined>();
     expectTypeOf(validateDtcg).returns.toEqualTypeOf<ValidationResult>();
-    expectTypeOf<ValidationResult['issues'][number]>().toEqualTypeOf<ValidationIssue>();
+    expectTypeOf<ValidationResult['issues'][number]>().toEqualTypeOf<SpecIssue>();
+    expectTypeOf<SpecIssue>().toMatchTypeOf<ValidationIssue>();
     expectTypeOf<ValidationIssue['severity']>().toEqualTypeOf<Severity>();
     expectTypeOf<ValidateOptions['spec']>().toEqualTypeOf<'2025.10' | undefined>();
     expectTypeOf<IssueCode>().toMatchTypeOf<string>();
+  });
+
+  it('issue meta is typed by code', () => {
+    const issue = validateDtcg({}).issues[0] as SpecIssue;
+    if (issue.code === 'dimension.unit.invalid') {
+      expectTypeOf(issue.meta).toEqualTypeOf<
+        { actual: unknown; allowed: readonly string[]; suggestion?: string | undefined } | undefined
+      >();
+    }
+    if (issue.code === 'color.value.not-object') {
+      expectTypeOf(issue.meta?.actual).toEqualTypeOf<unknown>();
+      // @ts-expect-error no such detail on this code
+      issue.meta?.allowed;
+    }
   });
 
   it('lint config and result shapes', () => {

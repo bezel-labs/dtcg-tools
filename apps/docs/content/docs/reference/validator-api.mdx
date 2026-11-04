@@ -7,7 +7,7 @@ The complete, generated reference with every signature is at [/api/](https://ope
 
 ## Entry point
 
-- `validateDtcg(input, options?)` validates a JSON string, an object, or a prepared document. Returns `ValidationResult`. Never throws on a document; throws only for an unknown `spec`.
+- `validateDtcg(input, options?)` validates a JSON string, an object, or a prepared document. Returns `ValidationResult`, whose issues are `SpecIssue`s: `meta` typed by `code`. Never throws on a document; throws only for an unknown `spec`. `options.messages` overrides message wording by code (a `Partial<MessageCatalog>`); codes, severities, paths, and `meta` are unaffected.
 
 ## Document preparation
 

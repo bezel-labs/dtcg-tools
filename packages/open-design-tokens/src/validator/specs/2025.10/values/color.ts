@@ -7,7 +7,6 @@ import {
   expectEnum,
   expectInRange,
   expectObject,
-  expectString,
   typeName,
   warnUnknownKeys,
 } from '../../../primitives.js';
@@ -119,7 +118,14 @@ export function validateColorValue(value: unknown, ctx: ValidationContext): Vali
   // hex
   if (hasOwn(value, 'hex')) {
     const hctx = child(ctx, 'hex');
-    if (expectString(value.hex, hctx, 'color.hex.invalid', issues)) {
+    if (typeof value.hex !== 'string') {
+      issues.push(
+        createIssue(hctx, 'color.hex.invalid', {
+          actualType: typeName(value.hex),
+          actual: value.hex,
+        }),
+      );
+    } else {
       if (!HEX_COLOR_RE.test(value.hex)) {
         issues.push(createIssue(hctx, 'color.hex.invalid', { actual: value.hex }));
       } else if (colorSpace === 'srgb' && numeric) {
