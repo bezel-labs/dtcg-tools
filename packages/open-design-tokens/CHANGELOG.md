@@ -1,5 +1,11 @@
 # open-design-tokens
 
+## 0.4.0
+
+### Minor Changes
+
+- [#28](https://github.com/bezel-labs/open-design-tokens/pull/28) [`8ccbd1c`](https://github.com/bezel-labs/open-design-tokens/commit/8ccbd1cf10f9195e35249e2cc0c9a47dc35d30e3) Thanks [@mr-robot-o](https://github.com/mr-robot-o)! - Report an invalid name once. `name.forbidden-character` now lists every forbidden character the name contains in `meta.characters` (and in the message), instead of one issue per character. `meta.character` remains the first of them.
+
 ## 0.3.0
 
 ### Minor Changes
