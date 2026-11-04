@@ -1,5 +1,15 @@
 # open-design-tokens
 
+## 0.2.0
+
+### Minor Changes
+
+- [#24](https://github.com/bezel-labs/open-design-tokens/pull/24) [`f21750b`](https://github.com/bezel-labs/open-design-tokens/commit/f21750b30a3ab509091e2bc9b552496bd0f6693d) Thanks [@mr-robot-o](https://github.com/mr-robot-o)! - Replace `lintDtcg(input, config, options)` with `createLinter(config)`, which resolves the config once and returns `{ lint, config }`. Configuration mistakes now throw when the linter is created rather than on the first document, and the resolved rules (with merged options) are readable from `linter.config`. `LintOptions` and the custom-rule loader are removed; a namespaced plugin contract is on the roadmap.
+  
+  Ship a CommonJS build next to the ESM one, with top-level `main` and `types` fields and `require` conditions, so the package resolves under `moduleResolution: node` and in CommonJS test runners.
+  
+  Add the `name.reserved-prefix` error: a `$`-prefixed group member that holds an object is a token or group whose name begins with `$`, which §5.1.1 forbids. A `$`-prefixed scalar is still reported as `group.property.unknown` (warning).
+
 ## 0.1.1
 
 ### Patch Changes
