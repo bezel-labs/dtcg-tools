@@ -130,6 +130,25 @@ describe('dtcg-lint CLI (built dist)', () => {
       expect(run(['tokens/good.json', '--max-warnings', '0'], dir).status).toBe(0);
     });
 
+    it('counts warnings reported by the validator as well as lint warnings', () => {
+      const dir = project();
+      // `color.hex.mismatch` is a validator warning; no lint rule is enabled here.
+      writeFileSync(
+        join(dir, 'tokens', 'hex-mismatch.json'),
+        JSON.stringify({
+          c: {
+            $type: 'color',
+            $value: { colorSpace: 'srgb', components: [1, 0, 0], hex: '#00ff00' },
+          },
+        }),
+      );
+      expect(run(['tokens/hex-mismatch.json'], dir).status).toBe(0);
+      expect(run(['tokens/hex-mismatch.json', '--max-warnings', '1'], dir).status).toBe(0);
+      const over = run(['tokens/hex-mismatch.json', '--max-warnings', '0'], dir);
+      expect(over.status).toBe(1);
+      expect(over.stderr).toContain('Too many warnings: found 1, maximum allowed is 0');
+    });
+
     it('still exits 1 for errors when the warnings are within the limit', () => {
       const dir = warned();
       const r = run(['tokens/bad.json', '--max-warnings', '10'], dir);

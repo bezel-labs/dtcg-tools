@@ -107,7 +107,7 @@ async function main(argv: readonly string[]): Promise<number> {
     }
     const result = lintDtcg(source, {}, { resolved });
     if (!result.valid) failed = true;
-    warningCount += result.warnings.length;
+    warningCount += result.validation.warnings.length + result.warnings.length;
     const shown = (relative(cwd, file) || file).split(sep).join('/');
     outputs.push(formatter(result, { file: shown, color }));
   }
