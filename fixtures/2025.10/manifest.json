@@ -961,7 +961,8 @@
     "anchor": "x5-1-1-character-restrictions",
     "kind": "invalid",
     "verbatim": false,
-    "expected": "design-token/invalid-name-forbidden-characters.expected.json"
+    "expected": "design-token/invalid-name-forbidden-characters.expected.json",
+    "notes": "One issue per name: g{h}.i contains three forbidden characters and is reported once, with all of them in meta.characters."
   },
   {
     "file": "design-token/invalid-name-empty.json",

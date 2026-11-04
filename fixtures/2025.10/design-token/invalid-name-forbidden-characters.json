@@ -10,5 +10,9 @@
   "e}f": {
     "$type": "number",
     "$value": 3
+  },
+  "g{h}.i": {
+    "$type": "number",
+    "$value": 4
   }
 }
