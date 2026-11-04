@@ -101,12 +101,12 @@ The validator checks the specification. The linter checks your project's policie
 
 A token named `x` is valid DTCG. A project that requires names of 2 to 20 characters configures `token-name-length` as an error, and its CI rejects the file. The rejection means "not accepted by this project", not "invalid DTCG".
 
-`lintDtcg()` always validates first and skips policy rules on nodes with spec errors, so one spec mistake never cascades into misleading lint findings.
+A linter always validates first and skips policy rules on nodes with spec errors, so one spec mistake never cascades into misleading lint findings.
 
 ## Lint
 
 ```ts
-import { lintDtcg, defineConfig } from 'open-design-tokens/linter';
+import { createLinter, defineConfig } from 'open-design-tokens/linter';
 
 const config = defineConfig({
   extends: ['recommended'],
@@ -117,7 +117,8 @@ const config = defineConfig({
   },
 });
 
-const result = lintDtcg(tokens, config);
+const linter = createLinter(config); // resolves the config once; throws here if it is wrong
+const result = linter.lint(tokens); // reuse `linter` for every document
 result.valid; // spec-valid and no lint errors
 result.validation; // the full validation result
 result.issues; // lint findings, each with a ruleId
@@ -152,18 +153,18 @@ Each rule takes `"error"`, `"warning"`, `"off"`, or `[severity, options]`. The `
 | `extensions-allowed-vendors` | `{ vendors: [keys] }`                                                   |     | Only listed vendor keys in `$extensions`         |
 | `extensions-schema`          | `{ vendors: { key: schema or function } }`                              |     | Vendor blocks match a declared shape             |
 
-Custom rules use `defineRule` and are passed through `lintDtcg(tokens, config, { rules: [myRule] })`.
+Loading rules from outside the package is not supported yet; see the [roadmap](ROADMAP.md).
 
 ## Entry points
 
 | Import                         | Contents                                                                                             |
 | ------------------------------ | ---------------------------------------------------------------------------------------------------- |
 | `open-design-tokens/validator` | `validateDtcg`, composable `validate*` functions, `prepareDocument`, resolver, spec tables, messages |
-| `open-design-tokens/linter`    | `lintDtcg`, `defineConfig`, `defineRule`, `rules`, presets, formatters                               |
+| `open-design-tokens/linter`    | `createLinter`, `defineConfig`, `rules`, presets, formatters                                         |
 | `open-design-tokens/types`     | All TypeScript types, no runtime code                                                                |
 | `open-design-tokens`           | Everything above                                                                                     |
 
-The package is ESM. Node 20.19+ and 22.12+ can `require()` it as well. Guides and concepts are at [opendesigntokens.com/docs](https://opendesigntokens.com/docs/); the generated API reference is at [/api/](https://opendesigntokens.com/api/).
+The package ships ESM and CommonJS builds, so both `import` and `require()` work. Guides and concepts are at [opendesigntokens.com/docs](https://opendesigntokens.com/docs/); the generated API reference is at [/api/](https://opendesigntokens.com/api/).
 
 ## Spec coverage and known issues
 

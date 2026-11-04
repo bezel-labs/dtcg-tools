@@ -9,8 +9,7 @@
 import { readFileSync } from 'node:fs';
 import { relative, sep } from 'node:path';
 import { parseArgs } from 'node:util';
-import { resolveConfig } from './linter/config.js';
-import { lintDtcg } from './linter/engine.js';
+import { createLinter } from './linter/engine.js';
 import { FORMATTERS, type FormatName } from './linter/formatters/index.js';
 import { expandFiles } from './linter/node/files.js';
 import { loadConfig } from './linter/node/load-config.js';
@@ -56,10 +55,10 @@ async function main(argv: readonly string[]): Promise<number> {
   const cwd = process.cwd();
   const color = values.color && !process.env.NO_COLOR && (process.stdout.isTTY ?? false);
 
-  let resolved: ReturnType<typeof resolveConfig>;
+  let linter: ReturnType<typeof createLinter>;
   try {
     const loaded = await loadConfig(cwd, values.config);
-    resolved = resolveConfig(loaded.config);
+    linter = createLinter(loaded.config);
   } catch (err) {
     process.stderr.write(
       `Configuration error: ${err instanceof Error ? err.message : String(err)}\n`,
@@ -86,7 +85,7 @@ async function main(argv: readonly string[]): Promise<number> {
       failed = true;
       continue;
     }
-    const result = lintDtcg(source, {}, { resolved });
+    const result = linter.lint(source);
     if (!result.valid) failed = true;
     const shown = (relative(cwd, file) || file).split(sep).join('/');
     outputs.push(formatter(result, { file: shown, color }));

@@ -86,7 +86,7 @@ for (const rule of Object.values(rules)) {
       : `\`${esc(JSON.stringify(rule.meta.defaultOptions))}\``;
   rulesMd += `| \`${rule.id}\` | ${rule.meta.defaultSeverity} | ${inPreset.has(rule.id) ? '✔' : ''} | ${opts} | ${esc(rule.meta.description)} |\n`;
 }
-rulesMd += `\nSee [Linting](/guides/linting) for configuration and [Writing custom rules](/guides/custom-rules) for the rule API.\n`;
+rulesMd += `\nSee [Linting](/guides/linting) for configuration and [Validating a draft edit](/guides/draft-edits) for using a linter inside an editor.\n`;
 writeFileSync(`${out}lint-rules.mdx`, rulesMd);
 
 // Spec coverage: reuse the repo-level generated document.

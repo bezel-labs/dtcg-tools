@@ -1,0 +1,38 @@
+---
+title: Validating a draft edit
+description: Lint the edited copy of a document and refuse the change when it introduces an error.
+---
+
+Token editors change one name or value at a time, but many checks only make sense against the whole document: whether an alias still resolves after a rename, whether a value matches the type the token inherits, whether two sibling names collide. The simplest correct approach is to lint the whole document after applying the edit to a copy, and to commit the copy only when it is clean.
+
+```ts
+import { createLinter } from 'open-design-tokens/linter';
+
+const linter = createLinter({
+  extends: ['recommended'],
+  rules: { 'group-name-length': ['error', { min: 1, max: 20 }] },
+});
+
+type Result = { ok: true; tokens: unknown } | { ok: false; errors: LintIssue[] };
+
+function applyEdit(tokens: unknown, edit: (draft: any) => void): Result {
+  const draft = structuredClone(tokens);
+  edit(draft);
+  const { valid, errors } = linter.lint(draft);
+  return valid ? { ok: true, tokens: draft } : { ok: false, errors };
+}
+```
+
+One linter instance, created once, serves every edit. The result's `errors` carry a `path` for each problem, so a rename that breaks an alias elsewhere reports the alias's location, not only the renamed node:
+
+```ts
+const r = applyEdit(tokens, (d) => {
+  d.color.brand = d.color.primary;
+  delete d.color.primary;
+});
+// r.errors -> [{ code: 'alias.target.missing', path: { dot: 'semantic.accent.$value', ... }, message: '...' }]
+```
+
+Because a document with errors is never committed, there is nothing to track between edits: no diff against previous issues and no stale markers. Warnings do not block; show them or ignore them as the product prefers.
+
+The validator and linter run in a few milliseconds on typical files (see the performance test in the repository), so linting on every commit of a field is affordable. Validate on blur or on save rather than on every keystroke if documents grow very large.

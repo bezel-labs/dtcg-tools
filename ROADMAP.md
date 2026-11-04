@@ -4,7 +4,11 @@ Items are added when there is an actual need.
 
 ## Message localisation
 
-`validateDtcg(json, { locale })` and `lintDtcg(…, { locale })` selecting a message catalog. The English catalog becomes `en`; additional locales ship as `open-design-tokens/locales/<lang>` so only the requested one loads. Every message is already keyed by issue code, so this is additive.
+`validateDtcg(json, { locale })` and `createLinter(config, { locale })` selecting a message catalog. The English catalog becomes `en`; additional locales ship as `open-design-tokens/locales/<lang>` so only the requested one loads. Every message is already keyed by issue code, so this is additive.
+
+## Lint plugins
+
+Rules from outside the package. A plugin is an object any package can export, `{ name, rules, presets? }`, loaded from a JavaScript or TypeScript config through a `plugins` array. Rule ids are namespaced by the plugin name (`name/rule`), presets are referenced as `name/preset` in `extends`, and `resolveConfig` rejects a plugin whose name collides with a built-in rule. The rule-author types (`LintRule`, `LintContext`, `RuleVisitor`, `NodeInfo`, `Resolver`) become public API at that point. Deferred until a real need appears; shipping no custom-rule loading today means there are no flat custom ids to migrate later.
 
 ## MCP server
 

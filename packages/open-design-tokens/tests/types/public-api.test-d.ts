@@ -1,5 +1,12 @@
 import { describe, expectTypeOf, it } from 'vitest';
-import type { LintConfig, LintIssue, LintResult } from '../../src/linter/index.js';
+import {
+  createLinter,
+  type LintConfig,
+  type Linter,
+  type LintIssue,
+  type LintResult,
+  type ResolvedConfig,
+} from '../../src/linter/index.js';
 import type {
   AliasOr,
   ColorValue,
@@ -87,5 +94,12 @@ describe('public types', () => {
     expectTypeOf<LintResult['issues'][number]>().toEqualTypeOf<LintIssue>();
     expectTypeOf<LintIssue['ruleId']>().toEqualTypeOf<string>();
     expectTypeOf<LintResult['validation']>().toEqualTypeOf<ValidationResult>();
+  });
+
+  it('createLinter takes one config and returns a reusable linter', () => {
+    expectTypeOf(createLinter).parameter(0).toEqualTypeOf<LintConfig | undefined>();
+    expectTypeOf(createLinter).returns.toEqualTypeOf<Linter>();
+    expectTypeOf<Linter['lint']>().returns.toEqualTypeOf<LintResult>();
+    expectTypeOf<Linter['config']>().toEqualTypeOf<ResolvedConfig>();
   });
 });

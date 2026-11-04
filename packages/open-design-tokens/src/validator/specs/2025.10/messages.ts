@@ -17,6 +17,7 @@ export type IssueCode =
   | 'value.unknown-property'
   // §5.1 / §6 names
   | 'name.forbidden-character'
+  | 'name.reserved-prefix'
   | 'name.empty'
   // §5 tokens
   | 'token.type.missing'
@@ -147,6 +148,8 @@ export const MESSAGES: Record<IssueCode, (meta: MessageMeta) => string> = {
 
   'name.forbidden-character': (m) =>
     `Name ${formatValue(m.name)} contains ${formatValue(m.character)}, which is not allowed in token or group names (reserved for alias syntax).`,
+  'name.reserved-prefix': (m) =>
+    `Name ${formatValue(m.name)} starts with "$", which is reserved for format properties; token and group names must not begin with "$".`,
   'name.empty': () => 'Token and group names should not be empty.',
 
   'token.type.missing': () =>
@@ -321,6 +324,7 @@ export const DEFAULT_SEVERITY: Record<IssueCode, Severity> = {
   'document.unreadable-node': 'error',
   'value.unknown-property': 'warning',
   'name.forbidden-character': 'error',
+  'name.reserved-prefix': 'error',
   'name.empty': 'warning',
   'token.type.missing': 'error',
   'token.type.invalid': 'error',

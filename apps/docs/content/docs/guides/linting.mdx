@@ -30,7 +30,8 @@ Each rule takes `"error"`, `"warning"`, `"off"`, or `[severity, options]`. Prese
 ## Results
 
 ```ts
-const result = lintDtcg(tokens, config);
+const linter = createLinter(config);
+const result = linter.lint(tokens);
 result.valid;       // validation.valid && no lint errors
 result.validation;  // the full ValidationResult
 result.issues;      // LintIssue[], each with ruleId

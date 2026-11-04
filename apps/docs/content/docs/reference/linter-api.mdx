@@ -3,13 +3,31 @@ title: Linter API
 description: Exports of open-design-tokens/linter.
 ---
 
-- `lintDtcg(input, config?, options?)` validates, then lints. `options.rules` registers custom rules; `options.resolved` reuses a resolved config across many files.
-- `defineConfig(config)` and `defineRule(rule)` are typed identity helpers.
-- `resolveConfig(config, { rules? })` turns a config into the list of rules to run. Throws on unknown rules, bad severities, or malformed options.
-- `rules` is the object of built-in rule definitions, by camelCase name, for reuse in custom presets.
+- `createLinter(config?)` resolves the config once and returns a `Linter`. Unknown rules or presets, bad severities, and malformed options throw a `RangeError` here, not on the first document. With no config it only validates.
+- `linter.lint(input)` validates against the spec, then runs the configured rules. Accepts a JSON string, an object, or a prepared document. Never throws on document input.
+- `linter.config` is the resolved configuration: the rules that run, each with its severity and merged options. Read limits back from it instead of repeating them, for example `linter.config.rules.find((r) => r.rule.id === 'token-name-length')?.options`.
+- `defineConfig(config)` is a typed identity helper for config files.
+- `resolveConfig(config)` is what `createLinter` calls; exported for tools that inspect a config without linting.
+- `rules` is the object of built-in rule definitions, by camelCase name, for reuse in presets.
 - `recommended` and `PRESETS`.
 - `formatPretty(result, { file?, color? })`, `formatJson(result, { file? })`, `formatGithub(result, { file? })`.
 
-Types: `LintConfig`, `LintOptions`, `LintResult`, `LintIssue`, `LintRule`, `RuleMeta`, `RuleVisitor`, `LintContext`, `RuleReport`, `RuleSetting`, `RuleSeverity`, `SkippedCheck`, `ReferenceGraph`, `ResolvedConfig`, `ResolvedRule`, `PresetName`, and the option types of each built-in rule.
+```ts
+import { createLinter, defineConfig } from 'open-design-tokens/linter';
+
+const linter = createLinter(defineConfig({
+  extends: ['recommended'],
+  rules: { 'token-name-length': ['error', { min: 2, max: 40 }] },
+}));
+
+for (const file of files) {
+  const result = linter.lint(file);
+  if (!result.valid) report(result.errors);
+}
+```
+
+Types: `Linter`, `LintConfig`, `LintResult`, `LintIssue`, `LintRule`, `RuleMeta`, `RuleVisitor`, `LintContext`, `RuleReport`, `RuleSetting`, `RuleSeverity`, `SkippedCheck`, `ReferenceGraph`, `ResolvedConfig`, `ResolvedRule`, `PresetName`, and the option types of each built-in rule.
+
+Rules from outside the package cannot be loaded yet. `defineRule` is exported because the built-in rules are written with it; a namespaced plugin contract is on the [roadmap](https://github.com/bezel-labs/open-design-tokens/blob/main/ROADMAP.md).
 
 The generated reference with every signature is at [/api/](https://opendesigntokens.com/api/).

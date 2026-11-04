@@ -24,18 +24,24 @@
     "design-system"
   ],
   "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
     "./validator": {
       "types": "./dist/validator.d.ts",
-      "default": "./dist/validator.js"
+      "import": "./dist/validator.js",
+      "require": "./dist/validator.cjs"
     },
     "./linter": {
       "types": "./dist/linter.d.ts",
-      "default": "./dist/linter.js"
+      "import": "./dist/linter.js",
+      "require": "./dist/linter.cjs"
     },
     "./types": {
       "types": "./dist/types.d.ts"

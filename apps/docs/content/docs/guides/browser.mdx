@@ -7,11 +7,11 @@ Both the `validator` and `linter` entries are browser-safe: no Node built-ins, n
 
 ```ts
 import { validateDtcg } from 'open-design-tokens/validator';
-import { lintDtcg } from 'open-design-tokens/linter';
+import { createLinter } from 'open-design-tokens/linter';
 ```
 
 Sizes, minified and compressed: about 10 kB for the validator and 14 kB for the linter. The root entry includes both. Tree-shaking works per entry, and the validator never pulls in linter code.
 
-File-based configuration (`dtcg-lint.config.*`) and the CLI are Node-only; in the browser pass a config object to `lintDtcg` directly.
+File-based configuration (`dtcg-lint.config.*`) and the CLI are Node-only; in the browser pass a config object to `createLinter` directly.
 
 The [playground](https://opendesigntokens.com/) is a plain static page that does exactly this, under a strict Content Security Policy with no inline scripts and no network access.

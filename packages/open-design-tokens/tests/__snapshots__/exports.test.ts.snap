@@ -3,12 +3,12 @@
 exports[`public exports > linter entry 1`] = `
 [
   "PRESETS",
+  "createLinter",
   "defineConfig",
   "defineRule",
   "formatGithub",
   "formatJson",
   "formatPretty",
-  "lintDtcg",
   "recommended",
   "resolveConfig",
   "rules",

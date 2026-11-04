@@ -23,7 +23,10 @@ describe('tarball contents', () => {
     const files = (info?.files ?? []).map((f) => f.path);
     expect(files.length).toBeGreaterThan(5);
     const disallowed = files.filter(
-      (f) => !/^(dist\/[^/]+\.(js|d\.ts|js\.map)|package\.json|README\.md|LICENSE)$/.test(f),
+      (f) =>
+        !/^(dist\/[^/]+\.(js|cjs|d\.ts|d\.cts|js\.map|cjs\.map)|package\.json|README\.md|LICENSE)$/.test(
+          f,
+        ),
     );
     expect(disallowed).toEqual([]);
     expect(files.some((f) => f.includes('.map'))).toBe(true);

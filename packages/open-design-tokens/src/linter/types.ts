@@ -102,9 +102,13 @@ export interface ResolvedConfig {
   rules: readonly ResolvedRule[];
 }
 
-export interface LintOptions {
-  /** Additional rules (custom or third-party) made available by id. */
-  rules?: readonly LintRule[];
-  /** A config already passed through `resolveConfig`; takes precedence over the config argument. */
-  resolved?: ResolvedConfig;
+/**
+ * A configured linter. Create one with `createLinter` and reuse it for every
+ * document: the config is resolved once, when the linter is created.
+ */
+export interface Linter {
+  /** Validates against the spec, then runs the configured rules. Never throws on document input. */
+  lint(input: unknown): LintResult;
+  /** The resolved configuration: the rules that run, each with its severity and merged options. */
+  config: ResolvedConfig;
 }
