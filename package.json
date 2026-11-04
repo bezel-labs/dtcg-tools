@@ -42,7 +42,7 @@
     "spec-coverage": "node scripts/spec-coverage.mjs",
     "prepare": "husky",
     "size": "size-limit",
-    "attw": "attw --pack packages/open-design-tokens --profile esm-only",
+    "attw": "attw --pack packages/open-design-tokens --profile strict",
     "bench": "node scripts/bench.mjs",
     "tarball-test": "node scripts/tarball-test.mjs",
     "docs:api": "typedoc",

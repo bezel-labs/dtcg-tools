@@ -29,24 +29,57 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "require": "./dist/index.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
     },
     "./validator": {
-      "types": "./dist/validator.d.ts",
-      "import": "./dist/validator.js",
-      "require": "./dist/validator.cjs"
+      "import": {
+        "types": "./dist/validator.d.ts",
+        "default": "./dist/validator.js"
+      },
+      "require": {
+        "types": "./dist/validator.d.cts",
+        "default": "./dist/validator.cjs"
+      }
     },
     "./linter": {
-      "types": "./dist/linter.d.ts",
-      "import": "./dist/linter.js",
-      "require": "./dist/linter.cjs"
+      "import": {
+        "types": "./dist/linter.d.ts",
+        "default": "./dist/linter.js"
+      },
+      "require": {
+        "types": "./dist/linter.d.cts",
+        "default": "./dist/linter.cjs"
+      }
     },
     "./types": {
-      "types": "./dist/types.d.ts"
+      "import": {
+        "types": "./dist/types.d.ts"
+      },
+      "require": {
+        "types": "./dist/types.d.cts"
+      }
     },
     "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "validator": [
+        "./dist/validator.d.ts"
+      ],
+      "linter": [
+        "./dist/linter.d.ts"
+      ],
+      "types": [
+        "./dist/types.d.ts"
+      ]
+    }
   },
   "bin": {
     "dtcg-lint": "dist/cli.js"
