@@ -29,7 +29,7 @@ TypeScript toolkit for validating and linting DTCG design tokens.
       <a href="https://bundlejs.com/?q=open-design-tokens/validator">Bundle size</a>
     </td>
     <td align="center" width="25%">
-      <h2>Compliant</h2>
+      <h2>W3C</h2>
       DTCG 2025.10, ready for future specs.<br>
       <a href="docs/spec-coverage.md">Spec coverage</a>
     </td>

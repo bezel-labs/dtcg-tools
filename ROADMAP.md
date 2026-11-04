@@ -9,3 +9,7 @@ Items are added when there is an actual need.
 ## MCP server
 
 A Model Context Protocol (MCP) server that gives AI coding agents `validate` and `lint` tools for design token files, with the same diagnostics as the library and CLI. It runs locally over stdio, reads only the files or text it is given, and makes no network requests. It ships as a separate package so the core package keeps zero runtime dependencies.
+
+## Documentation improvements
+
+Improve the [documentation site](https://opendesigntokens.com/docs/) with clearer guides, more worked examples, and better coverage of the validator, linter, and CLI.
