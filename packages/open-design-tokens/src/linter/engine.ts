@@ -10,10 +10,11 @@ import { resolveConfig } from './config.js';
 import type {
   LintConfig,
   LintContext,
+  Linter,
   LintIssue,
-  LintOptions,
   LintResult,
   ReferenceGraph,
+  ResolvedConfig,
   RuleReport,
   RuleVisitor,
   SkippedCheck,
@@ -61,19 +62,21 @@ export function buildReferenceGraph(doc: PreparedDocument, resolver: Resolver): 
 }
 
 /**
- * Lints a document. Always validates first: rules run only on nodes the
- * validator did not flag with an error, so one spec violation does not
- * cascade into misleading policy findings. Never throws on document input;
- * configuration mistakes are programmer errors and do throw.
+ * Creates a linter from a config. The config is resolved here, once, so a
+ * mistake in it (unknown rule or preset, bad severity, malformed options) throws
+ * at creation rather than on the first document. The returned `lint` always
+ * validates first: rules run only on nodes the validator did not flag with an
+ * error, so one spec violation does not cascade into misleading policy
+ * findings. `lint` never throws on document input.
  */
-export function lintDtcg(
-  input: unknown,
-  config: LintConfig = {},
-  options: LintOptions = {},
-): LintResult {
+export function createLinter(config: LintConfig = {}): Linter {
+  const resolved = resolveConfig(config);
+  return { lint: (input) => lint(input, resolved), config: resolved };
+}
+
+function lint(input: unknown, resolved: ResolvedConfig): LintResult {
   const doc = prepareDocument(input);
   const validation = validateDtcg(doc);
-  const resolved = options.resolved ?? resolveConfig(config, options);
   const issues: LintIssue[] = [];
   const skipped: SkippedCheck[] = [];
 

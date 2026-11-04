@@ -95,6 +95,13 @@ export const EXAMPLE_GROUPS: ExampleGroup[] = [
         json: j({ 'brand.primary': { $type: 'number', $value: 1 } }),
       },
       {
+        title: 'Name starting with $',
+        description:
+          'The $ prefix is reserved for format properties, so a token or group cannot be named $dark (§5.1.1).',
+        expect: ['name.reserved-prefix'],
+        json: j({ brand: { $type: 'number', $root: { $value: 1 }, $dark: { $value: 2 } } }),
+      },
+      {
         title: 'Token with child members',
         description:
           'An object with $value is a token and cannot also hold child tokens or groups (§6.1).',

@@ -71,7 +71,19 @@ export function validateGroup(
         }
         continue;
       }
-      issues.push(createIssue(child(ctx, key), 'group.property.unknown', { property: key }));
+      // An object under an unknown `$` key is a token or group whose name starts with `$`
+      // (forbidden by §5.1.1); a scalar is an unknown format property.
+      let unknown: unknown;
+      try {
+        unknown = group[key];
+      } catch {
+        continue; // a throwing getter was already reported by prepareDocument
+      }
+      issues.push(
+        isPlainObject(unknown)
+          ? createIssue(child(ctx, key), 'name.reserved-prefix', { name: key })
+          : createIssue(child(ctx, key), 'group.property.unknown', { property: key }),
+      );
       continue;
     }
     memberNames.push(key);

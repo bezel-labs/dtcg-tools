@@ -1,11 +1,11 @@
 /**
- * Linter entry point: `import { lintDtcg, defineConfig } from 'open-design-tokens/linter'`.
+ * Linter entry point: `import { createLinter, defineConfig } from 'open-design-tokens/linter'`.
  * Browser-safe; takes a config object. File-based config loading lives in
  * `./node/load-config` and is used by the CLI only.
  */
 export { resolveConfig } from './config.js';
 export { defineConfig, defineRule } from './define.js';
-export { lintDtcg } from './engine.js';
+export { createLinter } from './engine.js';
 export type { FormatName, FormatOptions } from './formatters/index.js';
 export { formatGithub, formatJson, formatPretty } from './formatters/index.js';
 export { PRESETS, recommended } from './presets/index.js';
@@ -25,8 +25,8 @@ export { rules } from './rules/index.js';
 export type {
   LintConfig,
   LintContext,
+  Linter,
   LintIssue,
-  LintOptions,
   LintResult,
   LintRule,
   PresetName,

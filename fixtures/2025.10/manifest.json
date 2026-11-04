@@ -38,7 +38,7 @@
   {
     "file": "types/cubic-bezier/basic-example-43-cubic-bezier.json",
     "spec": "format",
-    "section": "8.6 Cubic Bézier",
+    "section": "8.6 Cubic B\u00e9zier",
     "anchor": "x8-6-cubic-bezier",
     "example": 43,
     "kind": "basic",
@@ -667,7 +667,7 @@
   {
     "file": "types/cubic-bezier/advanced-y-unbounded.json",
     "spec": "format",
-    "section": "8.6 Cubic Bézier",
+    "section": "8.6 Cubic B\u00e9zier",
     "anchor": "x8-6-cubic-bezier",
     "kind": "advanced",
     "verbatim": false,
@@ -676,7 +676,7 @@
   {
     "file": "types/cubic-bezier/invalid-x-out-of-range.json",
     "spec": "format",
-    "section": "8.6 Cubic Bézier",
+    "section": "8.6 Cubic B\u00e9zier",
     "anchor": "x8-6-cubic-bezier",
     "kind": "invalid",
     "verbatim": false,
@@ -685,7 +685,7 @@
   {
     "file": "types/cubic-bezier/invalid-wrong-length.json",
     "spec": "format",
-    "section": "8.6 Cubic Bézier",
+    "section": "8.6 Cubic B\u00e9zier",
     "anchor": "x8-6-cubic-bezier",
     "kind": "invalid",
     "verbatim": false,
@@ -694,7 +694,7 @@
   {
     "file": "types/cubic-bezier/invalid-point-not-number.json",
     "spec": "format",
-    "section": "8.6 Cubic Bézier",
+    "section": "8.6 Cubic B\u00e9zier",
     "anchor": "x8-6-cubic-bezier",
     "kind": "invalid",
     "verbatim": false,
@@ -703,7 +703,7 @@
   {
     "file": "types/cubic-bezier/invalid-not-array.json",
     "spec": "format",
-    "section": "8.6 Cubic Bézier",
+    "section": "8.6 Cubic B\u00e9zier",
     "anchor": "x8-6-cubic-bezier",
     "kind": "invalid",
     "verbatim": false,
@@ -812,7 +812,7 @@
     "kind": "invalid",
     "verbatim": true,
     "source": "spec-example",
-    "notes": "Uses $type \"string\", which this spec version does not define (§8 lists no string type).",
+    "notes": "Uses $type \"string\", which this spec version does not define (\u00a78 lists no string type).",
     "expected": "groups/invalid-spec-example-12-group-type-inheritance.expected.json"
   },
   {
@@ -834,7 +834,7 @@
     "verbatim": false,
     "cleaned": ["removed // comments", "removed trailing commas"],
     "source": "spec-example",
-    "notes": "input.field.background has no determinable $type (§5.2.2). The override input-amount.field.width (\"100px\") sits under $extends and is judged once group extension is resolved (Milestone 4).",
+    "notes": "input.field.background has no determinable $type (\u00a75.2.2). The override input-amount.field.width (\"100px\") sits under $extends and is judged once group extension is resolved (Milestone 4).",
     "expected": "groups/invalid-spec-example-14-override-example.expected.json"
   },
   {
@@ -866,7 +866,7 @@
     "kind": "invalid",
     "verbatim": true,
     "source": "spec-example",
-    "notes": "base has no $type and no typed ancestor, so it is invalid per §5.2.2. The alias inherits that problem once alias resolution lands (Milestone 4).",
+    "notes": "base has no $type and no typed ancestor, so it is invalid per \u00a75.2.2. The alias inherits that problem once alias resolution lands (Milestone 4).",
     "expected": "groups/invalid-spec-example-20-current-reference-syntax.expected.json"
   },
   {
@@ -899,7 +899,7 @@
     "kind": "invalid",
     "verbatim": true,
     "source": "spec-example",
-    "notes": "input.field.width uses unit \"%\", which §8.2 does not allow.",
+    "notes": "input.field.width uses unit \"%\", which \u00a78.2 does not allow.",
     "expected": "groups/invalid-spec-example-25-group-extension-with-override.expected.json"
   },
   {
@@ -974,6 +974,16 @@
     "expected": "design-token/invalid-name-empty.expected.json"
   },
   {
+    "file": "groups/invalid-name-reserved-prefix.json",
+    "spec": "format",
+    "section": "5.1.1 Character restrictions",
+    "anchor": "x5-1-1-character-restrictions",
+    "kind": "invalid",
+    "verbatim": false,
+    "notes": "A $-prefixed key holding an object is a mis-named token or group (error); a $-prefixed scalar stays an unknown property (warning).",
+    "expected": "groups/invalid-name-reserved-prefix.expected.json"
+  },
+  {
     "file": "design-token/invalid-type-missing.json",
     "spec": "format",
     "section": "5.2 Additional properties",
@@ -1037,7 +1047,7 @@
     "anchor": "x6-1-group-structure",
     "kind": "invalid",
     "verbatim": false,
-    "notes": "§6.1: an object cannot be both a token and a group.",
+    "notes": "\u00a76.1: an object cannot be both a token and a group.",
     "expected": "groups/invalid-token-with-children.expected.json"
   },
   {
@@ -1165,7 +1175,7 @@
     "verbatim": false,
     "cleaned": ["removed // comments", "removed trailing commas"],
     "source": "spec-example",
-    "notes": "button-large.padding has no determinable $type: neither the token, its group, the extended group, nor any ancestor declares one (§5.2.2, §6.7.3).",
+    "notes": "button-large.padding has no determinable $type: neither the token, its group, the extended group, nor any ancestor declares one (\u00a75.2.2, \u00a76.7.3).",
     "expected": "groups/invalid-spec-example-18-valid-inheritance-patterns.expected.json"
   },
   {
@@ -1191,7 +1201,7 @@
     "verbatim": false,
     "cleaned": ["removed // comments", "removed trailing commas"],
     "source": "spec-example",
-    "notes": "Deliberately invalid in the spec: a → b → c → a. The spec requires an error on all three groups.",
+    "notes": "Deliberately invalid in the spec: a \u2192 b \u2192 c \u2192 a. The spec requires an error on all three groups.",
     "expected": "groups/invalid-spec-example-23-circular-reference-detection.expected.json"
   },
   {
@@ -1232,7 +1242,7 @@
     "verbatim": false,
     "cleaned": ["removed // comments"],
     "source": "spec-example",
-    "notes": "Deliberately invalid in the spec: a → b → c → a. The spec requires an error on all tokens in the chain.",
+    "notes": "Deliberately invalid in the spec: a \u2192 b \u2192 c \u2192 a. The spec requires an error on all tokens in the chain.",
     "expected": "aliases/invalid-spec-example-34-circular-references.expected.json"
   },
   {
@@ -1462,7 +1472,7 @@
     "verbatim": true,
     "source": "spec-example",
     "expected": "aliases/invalid-spec-example-37-typography-component-references.expected.json",
-    "notes": "The typography values omit letterSpacing, which §9.8 requires. The $ref fragments themselves resolve correctly."
+    "notes": "The typography values omit letterSpacing, which \u00a79.8 requires. The $ref fragments themselves resolve correctly."
   },
   {
     "file": "composites/shadow/basic-example-45-composite-token.json",

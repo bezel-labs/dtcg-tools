@@ -1,4 +1,4 @@
-import { type LintResult, lintDtcg } from 'open-design-tokens/linter';
+import { createLinter, type LintResult } from 'open-design-tokens/linter';
 import { type ValidationResult, validateDtcg } from 'open-design-tokens/validator';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IssueList, type Row } from './components/issue-list.js';
@@ -9,7 +9,7 @@ import { createPositionIndex } from './lib/positions.js';
 /** Inputs above this size are refused before parsing. */
 const MAX_INPUT_BYTES = 2 * 1024 * 1024;
 
-const LINT_CONFIG = { extends: ['recommended' as const] };
+const LINTER = createLinter({ extends: ['recommended'] });
 
 export function App() {
   const [source, setSource] = useState(FULL_PROJECT_JSON);
@@ -30,7 +30,7 @@ export function App() {
       }
       setTooLarge(false);
       if (lintEnabled) {
-        const r = lintDtcg(source, LINT_CONFIG);
+        const r = LINTER.lint(source);
         setLintResult(r);
         setResult(r.validation);
       } else {

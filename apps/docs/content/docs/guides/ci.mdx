@@ -34,4 +34,4 @@ Use `--format json` and parse the output, or rely on the exit code:
 
 ## Programmatic checks
 
-For a custom gate, call `lintDtcg` directly and inspect `result.validation.errors` and `result.errors` separately: the first is "not valid DTCG", the second is "not accepted by this project".
+For a custom gate, create a linter with `createLinter(config)`, call `lint` on each file, and inspect `result.validation.errors` and `result.errors` separately: the first is "not valid DTCG", the second is "not accepted by this project".

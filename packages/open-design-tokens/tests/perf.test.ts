@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { lintDtcg } from '../src/linter/index.js';
+import { createLinter } from '../src/linter/index.js';
 import { validateDtcg } from '../src/validator/index.js';
 
 function generate(n: number): Record<string, unknown> {
@@ -33,7 +33,7 @@ describe('performance guard', () => {
   it('lints a 10k-token document with the recommended preset in bounded time', () => {
     const doc = generate(10_000);
     const t0 = performance.now();
-    const r = lintDtcg(doc, { extends: ['recommended'] });
+    const r = createLinter({ extends: ['recommended'] }).lint(doc);
     expect(r.validation.valid).toBe(true);
     expect(performance.now() - t0).toBeLessThan(10_000);
   });

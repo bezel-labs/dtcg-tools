@@ -6,15 +6,15 @@ import {
   formatPretty,
   stripControl,
 } from '../../src/linter/formatters/index.js';
-import { lintDtcg } from '../../src/linter/index.js';
+import { createLinter } from '../../src/linter/index.js';
 
 const HOSTILE = '\u001b[31mevil\u001b[0m\n::set-output name=x::y%0A';
 
 describe('formatters', () => {
-  const result = lintDtcg(
-    { [HOSTILE]: { $type: 'number', $value: 'x' }, ok: { $type: 'number', $value: 1 } },
-    { rules: { 'require-description': 'warning' } },
-  );
+  const result = createLinter({ rules: { 'require-description': 'warning' } }).lint({
+    [HOSTILE]: { $type: 'number', $value: 'x' },
+    ok: { $type: 'number', $value: 1 },
+  });
 
   it('pretty output contains no control characters or ANSI sequences from the document', () => {
     const out = formatPretty(result, { file: `tok\u001b[2Jens.json`, color: false });

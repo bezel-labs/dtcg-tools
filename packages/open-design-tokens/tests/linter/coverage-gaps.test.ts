@@ -4,7 +4,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import * as examples from '../../src/linter/examples/com.example.app.js';
 import { formatGithub, formatJson, formatPretty } from '../../src/linter/formatters/index.js';
-import { lintDtcg } from '../../src/linter/index.js';
+import { createLinter, type LintConfig } from '../../src/linter/index.js';
 import { expandFiles } from '../../src/linter/node/files.js';
 import { CONFIG_FILE_NAMES, loadConfig } from '../../src/linter/node/load-config.js';
 
@@ -13,6 +13,7 @@ const num = (v: unknown, extra: Record<string, unknown> = {}) => ({
   $value: v,
   ...extra,
 });
+const lintDtcg = (input: unknown, config?: LintConfig) => createLinter(config).lint(input);
 const codes = (r: ReturnType<typeof lintDtcg>) =>
   r.issues.map((i) => `${i.code} ${i.path.pointer}`);
 

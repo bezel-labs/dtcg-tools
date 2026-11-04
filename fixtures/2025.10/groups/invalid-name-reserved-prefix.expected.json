@@ -1,0 +1,20 @@
+{
+  "valid": false,
+  "issues": [
+    {
+      "code": "name.reserved-prefix",
+      "pointer": "/$spacing",
+      "severity": "error"
+    },
+    {
+      "code": "group.property.unknown",
+      "pointer": "/$note",
+      "severity": "warning"
+    },
+    {
+      "code": "name.reserved-prefix",
+      "pointer": "/color/$dark",
+      "severity": "error"
+    }
+  ]
+}

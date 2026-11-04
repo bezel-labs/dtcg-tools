@@ -4,8 +4,6 @@ import { PRESETS } from './presets/index.js';
 import { BUILTIN_RULES } from './rules/index.js';
 import type {
   LintConfig,
-  LintOptions,
-  LintRule,
   ResolvedConfig,
   ResolvedRule,
   RuleSetting,
@@ -29,13 +27,8 @@ function isSeverity(s: unknown): s is RuleSeverity {
  * reads the file system. Unknown rule ids, bad severities, and malformed rule
  * options are programmer errors and throw.
  */
-export function resolveConfig(
-  config: LintConfig = {},
-  opts: Pick<LintOptions, 'rules'> = {},
-): ResolvedConfig {
-  const registry = new Map<string, LintRule>();
-  for (const r of BUILTIN_RULES) registry.set(r.id, r);
-  for (const r of opts.rules ?? []) registry.set(r.id, r);
+export function resolveConfig(config: LintConfig = {}): ResolvedConfig {
+  const registry = new Map(BUILTIN_RULES.map((r) => [r.id, r]));
 
   // Start with presets (in order), then apply explicit rules.
   const settings = new Map<string, RuleSetting>();
