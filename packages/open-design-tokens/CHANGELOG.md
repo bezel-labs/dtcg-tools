@@ -1,5 +1,13 @@
 # open-design-tokens
 
+## 0.3.0
+
+### Minor Changes
+
+- [#26](https://github.com/bezel-labs/open-design-tokens/pull/26) [`41b353e`](https://github.com/bezel-labs/open-design-tokens/commit/41b353e4224b1a930a61a0f17954ea088099d6bd) Thanks [@mr-robot-o](https://github.com/mr-robot-o)! - Type each issue's `meta` by its `code` (`IssueMeta`, `SpecIssue`): `ValidationResult.issues` narrows on `code`, so clients can build their own messages or UI from the details without parsing the sentence. Shape errors now carry the offending value as `meta.actual` when it is a primitive, and their messages name it ("received the string "#zzz""); objects and arrays are still described by type only.
+  
+  Add `messages` to `ValidateOptions` and a second `createLinter(config, { messages })` argument: a partial catalog keyed by code that replaces the wording of those codes and nothing else.
+
 ## 0.2.0
 
 ### Minor Changes
