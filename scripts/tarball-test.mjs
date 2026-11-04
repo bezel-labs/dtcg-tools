@@ -42,12 +42,13 @@ console.log('✔ installed from tarball');
 
 const esm = `
 import { validateDtcg } from 'open-design-tokens/validator';
-import { lintDtcg } from 'open-design-tokens/linter';
+import { createLinter } from 'open-design-tokens/linter';
 import * as all from 'open-design-tokens';
 const r = validateDtcg({ a: { $type: 'number', $value: 1 } });
 if (!r.valid) throw new Error('esm validate');
-if (!lintDtcg({ a: { $type: 'number', $value: 1 } }, { extends: ['recommended'] }).validation.valid) throw new Error('esm lint');
-if (typeof all.validateDtcg !== 'function' || typeof all.lintDtcg !== 'function') throw new Error('esm root');
+const linter = createLinter({ extends: ['recommended'] });
+if (!linter.lint({ a: { $type: 'number', $value: 1 } }).validation.valid) throw new Error('esm lint');
+if (typeof all.validateDtcg !== 'function' || typeof all.createLinter !== 'function') throw new Error('esm root');
 console.log('✔ esm imports');
 `;
 writeFileSync(join(scratch, 'esm.mjs'), esm);
@@ -55,10 +56,12 @@ run(process.execPath, ['esm.mjs'], scratch);
 
 const cjs = `
 const { validateDtcg } = require('open-design-tokens/validator');
-const { lintDtcg } = require('open-design-tokens/linter');
+const { createLinter } = require('open-design-tokens/linter');
+const root = require('open-design-tokens');
 if (!validateDtcg({ a: { $type: 'number', $value: 1 } }).valid) throw new Error('cjs validate');
-if (typeof lintDtcg !== 'function') throw new Error('cjs lint');
-console.log('✔ require() of ESM entries');
+if (!createLinter({ extends: ['recommended'] }).lint({ a: { $type: 'number', $value: 1 } }).valid) throw new Error('cjs lint');
+if (root.createLinter !== createLinter) throw new Error('cjs root');
+console.log('✔ require() of CommonJS entries');
 `;
 writeFileSync(join(scratch, 'cjs.cjs'), cjs);
 run(process.execPath, ['--no-warnings', 'cjs.cjs'], scratch);
