@@ -1,48 +1,44 @@
-# Open Design Tokens
+# <p align="center">Open Design Tokens</p>
 
-TypeScript toolkit for validating and linting DTCG design tokens.
+<p align="center"><strong>Check a design token file with one command:</strong></p>
 
-[![npm](https://img.shields.io/npm/v/open-design-tokens.svg)](https://www.npmjs.com/package/open-design-tokens)
-[![CI](https://github.com/bezel-labs/open-design-tokens/actions/workflows/ci.yml/badge.svg)](https://github.com/bezel-labs/open-design-tokens/actions/workflows/ci.yml)
-[![spec 2025.10](https://img.shields.io/badge/DTCG-2025.10-blue.svg)](https://www.designtokens.org/tr/2025.10/format/)
-[![types included](https://img.shields.io/badge/types-included-blue.svg)](https://opendesigntokens.com/api/)
-[![validator size](https://deno.bundlejs.com/badge?q=open-design-tokens/validator)](https://bundlejs.com/?q=open-design-tokens/validator)
-[![license: MIT](https://img.shields.io/npm/l/open-design-tokens.svg)](LICENSE)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/bezel-labs/open-design-tokens/badge)](https://securityscorecards.dev/viewer/?uri=github.com/bezel-labs/open-design-tokens)
-[![OpenSSF Best Practices](https://www.bestpractices.dev/projects/16302/badge)](https://www.bestpractices.dev/projects/16302)
+```sh
+npx -p open-design-tokens dtcg-lint tokens.json
+```
 
-Try it in the [playground](https://opendesigntokens.com/), and read the [documentation](https://opendesigntokens.com/docs/).
+<p align="center"><strong>A free, open-source TypeScript toolkit for validating and linting DTCG design tokens.</strong></p>
 
-<table>
-  <tr>
-    <td align="center" width="25%">
-      <h2>Fast</h2>
-      Validates 10,000 tokens in ~20 ms.<br>
-      <a href="docs/benchmarks.md">Benchmarks</a>
-    </td>
-    <td align="center" width="25%">
-      <h2>Secure</h2>
-      Hardened against malicious token files.<br>
-      <a href="docs/security.md">Threat model</a>
-    </td>
-    <td align="center" width="25%">
-      <h2>Small</h2>
-      12.8 kB gzipped, <strong>zero dependencies</strong>.<br>
-      <a href="https://bundlejs.com/?q=open-design-tokens/validator">Bundle size</a>
-    </td>
-    <td align="center" width="25%">
-      <h2>W3C</h2>
-      DTCG 2025.10, ready for future specs.<br>
-      <a href="docs/spec-coverage.md">Spec coverage</a>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <a href="https://www.npmjs.com/package/open-design-tokens"><img src="https://img.shields.io/npm/v/open-design-tokens?style=for-the-badge&label=npm&logo=npm&logoColor=white&color=CB3837" alt="npm" /></a>
+  <a href="https://github.com/bezel-labs/open-design-tokens/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/bezel-labs/open-design-tokens/ci.yml?style=for-the-badge&label=CI" alt="CI Status" /></a>
+  <a href="https://www.designtokens.org/tr/2025.10/format/"><img src="https://img.shields.io/badge/DTCG-2025.10-blue?style=for-the-badge" alt="DTCG spec 2025.10" /></a>
+  <a href="https://opendesigntokens.com/api/"><img src="https://img.shields.io/badge/types-included-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="Types included" /></a>
+  <a href="https://bundlejs.com/?q=open-design-tokens/validator"><img src="https://img.shields.io/bundlejs/size/open-design-tokens/validator?style=for-the-badge&label=validator%20size" alt="Validator size" /></a>
+  <a href="https://github.com/bezel-labs/open-design-tokens/blob/main/LICENSE"><img src="https://img.shields.io/github/license/bezel-labs/open-design-tokens?style=for-the-badge&label=License" alt="License" /></a>
+  <a href="https://securityscorecards.dev/viewer/?uri=github.com/bezel-labs/open-design-tokens"><img src="https://img.shields.io/ossf-scorecard/github.com/bezel-labs/open-design-tokens?style=for-the-badge&label=OpenSSF%20Scorecard" alt="OpenSSF Scorecard" /></a>
+  <a href="https://www.bestpractices.dev/projects/16302"><img src="https://img.shields.io/cii/level/16302?style=for-the-badge&label=OpenSSF%20Best%20Practices" alt="OpenSSF Best Practices" /></a>
+</p>
 
-Supports the [Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/) and the [Color Module 2025.10](https://www.designtokens.org/tr/2025.10/color/). Zero runtime dependencies. Runs in Node 20.19+, evergreen browsers, and any modern bundler.
+<p align="center">Try it in the <a href="https://opendesigntokens.com/">playground</a>, and read the <a href="https://opendesigntokens.com/docs/">documentation</a>.</p>
 
-**Status: beta.** Feature-complete for the 2025.10 specifications and tested against the spec text; the API will stay on 0.x until it has seen real-world use.
+A token file goes in and a clear answer comes out: is it valid DTCG, and does it follow your project's policies? Open Design Tokens supports the [Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/) and the [Color Module 2025.10](https://www.designtokens.org/tr/2025.10/color/), and runs in Node 20.19+, evergreen browsers, and any modern bundler.
 
-## Install
+**100% free** for personal and commercial use, under the MIT license.
+
+**Project status.** Open Design Tokens is in beta. It is feature-complete for the 2025.10 specifications and tested against the spec text. The API will stay on 0.x until it has seen real-world use, so expect occasional breaking changes. Bug reports are welcome: [open an issue](https://github.com/bezel-labs/open-design-tokens/issues).
+
+## Core Features
+
+- Validate token files against DTCG 2025.10, with every normative section covered by fixtures derived from the spec text ([spec coverage](docs/spec-coverage.md)). Ready for future specs.
+- Lint against your project's policies with 12 built-in rules, each with its own severity and options.
+- Get diagnostics with a stable code, a plain-text message, a severity, and both a JSON pointer and a dotted path.
+- Validate 10,000 tokens in ~20 ms ([benchmarks](docs/benchmarks.md)).
+- Ship 12.8 kB gzipped with zero runtime dependencies ([bundle size](https://bundlejs.com/?q=open-design-tokens/validator)).
+- Handle untrusted files safely, hardened against malicious token files ([threat model](docs/security.md)).
+- Run in CI from the command line, with pretty, JSON, or GitHub workflow annotation output.
+- Import from ESM or CommonJS, with TypeScript types included.
+
+## Installation
 
 ```sh
 npm install open-design-tokens
@@ -125,7 +121,9 @@ result.issues; // lint findings, each with a ruleId
 result.skipped; // rule checks skipped on invalid nodes
 ```
 
-### Command line
+### Command-line interface
+
+Open Design Tokens ships a CLI for scripts and CI. Once the package is installed:
 
 ```sh
 npx dtcg-lint 'src/**/*.tokens.json'
@@ -170,22 +168,32 @@ The package ships ESM and CommonJS builds, so both `import` and `require()` work
 
 Every normative section of both specifications is covered by fixtures derived from the spec text; see [docs/spec-coverage.md](docs/spec-coverage.md).
 
-The 2025.10 specifications contain a few examples that contradict their own normative rules, for example a `$type` of `"string"` that no section defines, a `%` dimension unit, and typography values that omit a required sub-value. This toolkit follows the rules, not the examples: those examples are kept as expected-failure test cases and listed, with the codes emitted, under [Known spec issues](docs/spec-coverage.md#known-spec-issues). Decisions on genuinely ambiguous points are recorded in [docs/spec-decisions.md](docs/spec-decisions.md).
+> [!NOTE]
+> **A spec example fails validation?** The 2025.10 specifications contain a few examples that contradict their own normative rules, for example a `$type` of `"string"` that no section defines, a `%` dimension unit, and typography values that omit a required sub-value. This toolkit follows the rules, not the examples: those examples are kept as expected-failure test cases and listed, with the codes emitted, under [Known spec issues](docs/spec-coverage.md#known-spec-issues).
 
-Not supported yet: the Resolver module. See [ROADMAP.md](ROADMAP.md).
+Decisions on genuinely ambiguous points are recorded in [docs/spec-decisions.md](docs/spec-decisions.md).
+
+The Resolver module is not supported yet. See the [roadmap](ROADMAP.md).
 
 ## Security
 
 Token files are treated as untrusted input: no code evaluation, bounded nesting, cycle-safe resolution, document-local references only, escaped diagnostics, and zero runtime dependencies. Details in [docs/security.md](docs/security.md); report vulnerabilities as described in [SECURITY.md](SECURITY.md).
 
-## Questions and ideas
-
-Ask questions in [Q&A](https://github.com/bezel-labs/open-design-tokens/discussions/categories/q-a) and share ideas in [Ideas](https://github.com/bezel-labs/open-design-tokens/discussions/categories/ideas) on GitHub Discussions. Use [issues](https://github.com/bezel-labs/open-design-tokens/issues) for bugs and spec mismatches.
-
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Versioning and the public API policy are in [docs/versioning.md](docs/versioning.md).
 
+## Community
+
+If you need help, want to report a bug, or have an idea:
+
+- 💬 **[Q&A](https://github.com/bezel-labs/open-design-tokens/discussions/categories/q-a)**: ask questions on GitHub Discussions
+- 💡 **[Ideas](https://github.com/bezel-labs/open-design-tokens/discussions/categories/ideas)**: share ideas on GitHub Discussions
+- 🐞 **[GitHub Issues](https://github.com/bezel-labs/open-design-tokens/issues)**: bugs and spec mismatches
+- 🗺️ **[Roadmap](ROADMAP.md)**: see what's planned next
+
+---
+
 ## License
 
-MIT
+This project is licensed under the [MIT License](LICENSE).
