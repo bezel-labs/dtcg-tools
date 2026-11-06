@@ -10,7 +10,7 @@ The following are covered by the SemVer guarantee:
 - Every runtime export and exported type of those entry points, by name and signature.
 - Issue codes (`color.component.out-of-range` and so on), their severities, and the `path` of each issue.
 - Lint rule ids, their option shapes, and the rules in the `recommended` preset.
-- The `dtcg-lint` command, its flags, output formats, and exit codes.
+- The `dtcg-lint` and `open-design-tokens` commands, their flags, output formats, and exit codes.
 - The `ValidationResult` and `LintResult` shapes.
 
 Not covered:

@@ -82,6 +82,7 @@
     }
   },
   "bin": {
+    "open-design-tokens": "dist/cli.js",
     "dtcg-lint": "dist/cli.js"
   },
   "files": [
