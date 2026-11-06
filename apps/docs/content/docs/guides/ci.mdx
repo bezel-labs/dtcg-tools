@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
-      - run: npx --yes open-design-tokens dtcg-lint 'tokens/**/*.json' --format github
+      - run: npx --yes -p open-design-tokens dtcg-lint 'tokens/**/*.json' --format github
 ```
 
 The `github` format writes one `::error` or `::warning` command per issue, which GitHub renders as an annotation on the changed lines of the pull request. The job fails when `dtcg-lint` exits 1, which happens on any error; warnings alone pass unless you set a limit with `--max-warnings <n>` (`--max-warnings 0` fails on any warning).
@@ -34,4 +34,4 @@ Use `--format json` and parse the output, or rely on the exit code:
 
 ## Programmatic checks
 
-For a custom gate, call `lintDtcg` directly and inspect `result.validation.errors` and `result.errors` separately: the first is "not valid DTCG", the second is "not accepted by this project".
+For a custom gate, create a linter with `createLinter(config)`, call `lint` on each file, and inspect `result.validation.errors` and `result.errors` separately: the first is "not valid DTCG", the second is "not accepted by this project".

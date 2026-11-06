@@ -37,4 +37,14 @@ Issues are returned in document order, then in the order they were found, so out
 
 ## Meta
 
-`meta` carries whatever the message was built from: `expected` and `actual`, allowed values, a `suggestion` when a value differs only by case, the `chain` of a cycle, or the `target` of an alias. It is the right place to look when building richer UI than a message string.
+`meta` carries whatever the message was built from, and its shape is typed per code by `IssueMeta`: narrow on `code` and the details are known to the compiler. Shape errors (`*.not-object`, `*.not-array`, `*.not-number`, ...) carry `actualType` and, when the offending value is a primitive, `actual`; enum errors carry `actual`, `allowed`, and a `suggestion` when a value differs only by case; range errors carry `actual`, `min`, `max`; cycles carry the `chain`. Objects and arrays are described by type only, so an issue never embeds a large value. It is the right place to look when building richer UI than a message string.
+
+```ts
+for (const issue of result.issues) {
+  if (issue.code === 'dimension.unit.invalid') {
+    issue.meta?.allowed; // readonly string[]
+  }
+}
+```
+
+To change the wording of a message while keeping everything else, pass `messages` to `validateDtcg` or `createLinter`: a partial catalog keyed by code, each entry a function of that code's typed `meta`. Codes you do not list keep the built-in English text.

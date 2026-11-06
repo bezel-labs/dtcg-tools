@@ -4,6 +4,7 @@ import type { ValidationContext } from '../../../context.js';
 import { createIssue } from '../../../context.js';
 import { expectInRange, typeName } from '../../../primitives.js';
 import { FONT_WEIGHT_ALIASES, FONT_WEIGHT_RANGE } from '../constants.js';
+import type { EnumMeta } from '../messages.js';
 
 const KEYWORDS = Object.keys(FONT_WEIGHT_ALIASES);
 
@@ -19,7 +20,7 @@ export function validateFontWeightValue(value: unknown, ctx: ValidationContext):
   }
   if (typeof value === 'string') {
     if (hasOwn(FONT_WEIGHT_ALIASES, value)) return issues;
-    const meta: Record<string, unknown> = { actual: value, allowed: KEYWORDS };
+    const meta: EnumMeta = { actual: value, allowed: KEYWORDS };
     const ci = KEYWORDS.find((k) => k.toLowerCase() === value.toLowerCase());
     if (ci) meta.suggestion = ci;
     issues.push(createIssue(ctx, 'font-weight.keyword.invalid', meta));

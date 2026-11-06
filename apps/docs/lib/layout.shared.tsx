@@ -10,6 +10,11 @@ export function baseOptions(): BaseLayoutProps {
     links: [
       { text: 'Playground', url: `${siteUrl}/`, external: true },
       { text: 'API reference', url: `${siteUrl}/api/`, external: true },
+      {
+        text: 'Discussions',
+        url: 'https://github.com/bezel-labs/open-design-tokens/discussions',
+        external: true,
+      },
       { text: 'npm', url: 'https://www.npmjs.com/package/open-design-tokens', external: true },
     ],
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,

@@ -44,7 +44,13 @@ export function validateType(
     );
     return undefined;
   }
-  return expectEnum(node.$type, TOKEN_TYPES, tctx, `${owner}.type.invalid` as IssueCode, issues)
+  return expectEnum(
+    node.$type,
+    TOKEN_TYPES,
+    tctx,
+    `${owner}.type.invalid` as 'token.type.invalid' | 'group.type.invalid',
+    issues,
+  )
     ? (node.$type as TokenType)
     : undefined;
 }

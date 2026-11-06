@@ -2,7 +2,7 @@ import type { ValidationIssue } from '../../../../core/issue.js';
 import { isAlias, isToken } from '../../../../core/predicates.js';
 import type { NodeInfo } from '../../../../core/prepare.js';
 import type { ValidationContext } from '../../../context.js';
-import { createIssue } from '../../../context.js';
+import { child, createIssue } from '../../../context.js';
 import { expectEnum, typeName } from '../../../primitives.js';
 import { parseAlias } from '../aliases/parse.js';
 import type { Resolver } from '../aliases/resolver.js';
@@ -161,14 +161,14 @@ export function validateCompositeObject(
         createIssue(ctx, 'composite.property.missing', {
           type,
           property: prop,
-          expectedType: fields[prop],
+          expectedType: fields[prop] ?? 'unknown',
         }),
       );
     }
   }
   for (const key of Object.keys(obj)) {
     const expected = fields[key];
-    const kctx = { spec: ctx.spec, path: [...ctx.path, key] };
+    const kctx = child(ctx, key);
     if (expected === undefined) {
       issues.push(
         createIssue(kctx, 'value.unknown-property', { property: key, known: Object.keys(fields) }),

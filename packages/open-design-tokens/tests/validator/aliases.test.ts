@@ -43,7 +43,8 @@ describe('alias resolution', () => {
     const r = validateDtcg(doc);
     expect(r.errors).toHaveLength(1_000);
     expect(new Set(r.errors.map((i) => i.code))).toEqual(new Set(['alias.cycle']));
-    expect(r.errors[0]?.meta?.chain).toHaveLength(1_000);
+    const first = r.errors[0];
+    expect(first?.code === 'alias.cycle' ? first.meta?.chain : undefined).toHaveLength(1_000);
   });
 
   it('accepts a prepared document and reuses it', () => {

@@ -15,6 +15,11 @@
       "code": "name.forbidden-character",
       "pointer": "/e}f",
       "severity": "error"
+    },
+    {
+      "code": "name.forbidden-character",
+      "pointer": "/g{h}.i",
+      "severity": "error"
     }
   ]
 }

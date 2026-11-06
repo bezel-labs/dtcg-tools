@@ -2,11 +2,12 @@ import type { ValidationIssue } from '../../../core/issue.js';
 import { isPlainObject } from '../../../core/predicates.js';
 import type { PreparedDocument } from '../../../core/prepare.js';
 import type { ValidationContext } from '../../context.js';
-import { createIssue } from '../../context.js';
+import { createIssue, withPath } from '../../context.js';
 import { typeName } from '../../primitives.js';
 import type { ValidationStats } from '../../result.js';
 import { createResolver } from './aliases/resolver.js';
 import { validateGroup } from './groups/validate-group.js';
+import type { IssueMeta } from './messages.js';
 import { validateDesignToken } from './tokens/validate-design-token.js';
 
 export interface DocumentValidation {
@@ -39,9 +40,7 @@ export function orderIssues(doc: PreparedDocument, issues: ValidationIssue[]): V
     .map((x) => x.issue);
 }
 
-function ctxAt(ctx: ValidationContext, path: readonly string[]): ValidationContext {
-  return { spec: ctx.spec, path };
-}
+const ctxAt = withPath;
 
 /**
  * Validates a prepared document against the 2025.10 format: structural issues
@@ -66,7 +65,7 @@ export function validateDocument(
   }
 
   for (const s of doc.structuralIssues) {
-    issues.push(createIssue(ctxAt(ctx, s.path), s.code, s.meta));
+    issues.push(createIssue(ctxAt(ctx, s.path), s.code, s.meta as IssueMeta[typeof s.code]));
   }
 
   const resolver = createResolver(doc);

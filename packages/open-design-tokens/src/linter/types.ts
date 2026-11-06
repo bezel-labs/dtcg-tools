@@ -2,6 +2,7 @@ import type { IssuePath, Severity, ValidationIssue } from '../core/issue.js';
 import type { NodeInfo, PreparedDocument } from '../core/prepare.js';
 import type { ValidationResult } from '../validator/result.js';
 import type { Resolver } from '../validator/specs/2025.10/aliases/resolver.js';
+import type { MessageCatalog } from '../validator/specs/2025.10/messages.js';
 
 /** A lint diagnostic: a validation issue plus the rule that produced it. */
 export interface LintIssue extends ValidationIssue {
@@ -102,9 +103,19 @@ export interface ResolvedConfig {
   rules: readonly ResolvedRule[];
 }
 
-export interface LintOptions {
-  /** Additional rules (custom or third-party) made available by id. */
-  rules?: readonly LintRule[];
-  /** A config already passed through `resolveConfig`; takes precedence over the config argument. */
-  resolved?: ResolvedConfig;
+/** Presentation options for a linter; none of them change what is reported. */
+export interface LinterOptions {
+  /** Validator message wording by issue code; see `ValidateOptions.messages`. */
+  messages?: Partial<MessageCatalog>;
+}
+
+/**
+ * A configured linter. Create one with `createLinter` and reuse it for every
+ * document: the config is resolved once, when the linter is created.
+ */
+export interface Linter {
+  /** Validates against the spec, then runs the configured rules. Never throws on document input. */
+  lint(input: unknown): LintResult;
+  /** The resolved configuration: the rules that run, each with its severity and merged options. */
+  config: ResolvedConfig;
 }

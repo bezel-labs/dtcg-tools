@@ -5,15 +5,18 @@ import { prepareDocument } from '../core/prepare.js';
 import { parseAlias, parseRef } from '../validator/specs/2025.10/aliases/parse.js';
 import type { Resolver } from '../validator/specs/2025.10/aliases/resolver.js';
 import { createResolver } from '../validator/specs/2025.10/aliases/resolver.js';
+import type { ValidateOptions } from '../validator/validate-dtcg.js';
 import { validateDtcg } from '../validator/validate-dtcg.js';
 import { resolveConfig } from './config.js';
 import type {
   LintConfig,
   LintContext,
+  Linter,
+  LinterOptions,
   LintIssue,
-  LintOptions,
   LintResult,
   ReferenceGraph,
+  ResolvedConfig,
   RuleReport,
   RuleVisitor,
   SkippedCheck,
@@ -61,19 +64,26 @@ export function buildReferenceGraph(doc: PreparedDocument, resolver: Resolver): 
 }
 
 /**
- * Lints a document. Always validates first: rules run only on nodes the
- * validator did not flag with an error, so one spec violation does not
- * cascade into misleading policy findings. Never throws on document input;
- * configuration mistakes are programmer errors and do throw.
+ * Creates a linter from a config. The config is resolved here, once, so a
+ * mistake in it (unknown rule or preset, bad severity, malformed options) throws
+ * at creation rather than on the first document. The returned `lint` always
+ * validates first: rules run only on nodes the validator did not flag with an
+ * error, so one spec violation does not cascade into misleading policy
+ * findings. `lint` never throws on document input.
  */
-export function lintDtcg(
+export function createLinter(config: LintConfig = {}, options: LinterOptions = {}): Linter {
+  const resolved = resolveConfig(config);
+  const validateOptions: ValidateOptions = options.messages ? { messages: options.messages } : {};
+  return { lint: (input) => lint(input, resolved, validateOptions), config: resolved };
+}
+
+function lint(
   input: unknown,
-  config: LintConfig = {},
-  options: LintOptions = {},
+  resolved: ResolvedConfig,
+  validateOptions: ValidateOptions,
 ): LintResult {
   const doc = prepareDocument(input);
-  const validation = validateDtcg(doc);
-  const resolved = options.resolved ?? resolveConfig(config, options);
+  const validation = validateDtcg(doc, validateOptions);
   const issues: LintIssue[] = [];
   const skipped: SkippedCheck[] = [];
 

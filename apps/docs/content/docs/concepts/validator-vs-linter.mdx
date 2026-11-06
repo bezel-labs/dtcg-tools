@@ -22,9 +22,9 @@ A concrete case: a token named `x` is valid DTCG. A project that requires names 
 
 ```
 Input → prepareDocument() → validateDtcg()   spec checks
-                          → lintDtcg()       policy checks (validates first)
+                          → linter.lint()    policy checks (validates first)
 ```
 
-`prepareDocument` parses and indexes the document once. `lintDtcg` calls `validateDtcg` on that prepared document, then runs the configured rules. Rules are skipped on nodes the validator flagged with an error, so one spec mistake does not cascade into misleading policy findings; the skipped checks are listed in `result.skipped`.
+`prepareDocument` parses and indexes the document once. A linter from `createLinter(config)` calls `validateDtcg` on that prepared document, then runs the configured rules. Rules are skipped on nodes the validator flagged with an error, so one spec mistake does not cascade into misleading policy findings; the skipped checks are listed in `result.skipped`.
 
 The separation is enforced by tests: the validator never imports the linter, no lint rule can emit a validator issue code, and the validation result is byte-for-byte identical with and without a lint config.

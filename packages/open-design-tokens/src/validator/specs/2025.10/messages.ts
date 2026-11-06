@@ -1,4 +1,4 @@
-import type { Severity } from '../../../core/issue.js';
+import type { Severity, ValidationIssue } from '../../../core/issue.js';
 import { formatValue } from '../../../core/issue.js';
 import { MAX_DEPTH } from '../../../core/limits.js';
 
@@ -17,6 +17,7 @@ export type IssueCode =
   | 'value.unknown-property'
   // §5.1 / §6 names
   | 'name.forbidden-character'
+  | 'name.reserved-prefix'
   | 'name.empty'
   // §5 tokens
   | 'token.type.missing'
@@ -111,29 +112,201 @@ export type IssueCode =
   // §8.7 number
   | 'number.value.not-number';
 
-/** Structured details attached to an issue and interpolated into its message. */
+/** No structured details: the code and path say everything. */
+export type EmptyMeta = Record<string, never>;
+/** The JSON type a value turned out to have, plus the value itself when it is a primitive. */
+export type ShapeMeta = {
+  actualType: string;
+  /** The offending value when it is a string, number, boolean, or null; omitted for objects and arrays. */
+  actual?: unknown;
+};
+/** A value that had to be one of a fixed set of strings. */
+export type EnumMeta = {
+  actual: unknown;
+  allowed: readonly string[];
+  /** The allowed value that differs from `actual` only by case, when there is one. */
+  suggestion?: string | undefined;
+};
+/** A number outside its allowed range. */
+export type RangeMeta = {
+  actual: number;
+  min?: number | undefined;
+  max?: number | undefined;
+  maxExclusive: boolean;
+};
+
+/**
+ * The structured details (`meta`) each issue code carries, so clients can build their own
+ * messages or UI from the data rather than parsing the English sentence. Public API: keys are
+ * only added, never renamed or removed, without a major version.
+ */
+export interface IssueMeta {
+  'document.not-object': ShapeMeta;
+  'document.invalid-json': { reason: string };
+  'document.too-deep': { depth: number };
+  'document.circular': EmptyMeta;
+  'document.unreadable-node': { reason: string };
+  'value.unknown-property': { property: string; known: readonly string[] };
+  /** `characters` lists every forbidden character in the name; `character` is the first, kept for readers of 0.3. */
+  'name.forbidden-character': { name: string; character: string; characters: readonly string[] };
+  'name.reserved-prefix': { name: string };
+  'name.empty': EmptyMeta;
+  'token.type.missing': {
+    actualValueType?: string | undefined;
+    via?: 'alias' | undefined;
+    target?: string | undefined;
+  };
+  'token.type.invalid': EnumMeta;
+  'token.type.not-string': ShapeMeta;
+  'token.description.not-string': ShapeMeta;
+  'token.deprecated.invalid': ShapeMeta;
+  'token.extensions.not-object': ShapeMeta;
+  'token.extensions.key-not-namespaced': { key: string };
+  'token.property.unknown': { property: string };
+  'token.property.not-allowed': { property: string };
+  'group.description.not-string': ShapeMeta;
+  'group.type.invalid': EnumMeta;
+  'group.type.not-string': ShapeMeta;
+  'group.deprecated.invalid': ShapeMeta;
+  'group.extensions.not-object': ShapeMeta;
+  'group.extensions.key-not-namespaced': { key: string };
+  'group.extends.invalid': { actual: unknown };
+  'group.ref.invalid': { actual: unknown };
+  'group.property.unknown': { property: string };
+  'group.member.invalid': { name: string; actualType: string };
+  'group.root.not-token': EmptyMeta;
+  'group.name.case-collision': { names: readonly string[] };
+  'alias.syntax.invalid': { actual: unknown };
+  'alias.target.missing': { alias: string; actual?: string | undefined; path: string };
+  'alias.target.not-token': { alias: string; path: string };
+  'alias.cycle': { chain: readonly string[] };
+  'alias.type.mismatch': {
+    alias: string;
+    actual: string;
+    actualType?: string | undefined;
+    expected: string;
+    target: string;
+  };
+  'ref.not-local': { actual: unknown };
+  'ref.syntax.invalid': { actual: unknown };
+  'ref.target.missing': { alias?: string | undefined; actual: string; path: string };
+  'ref.cycle': { chain: readonly string[] };
+  'ref.type.mismatch': {
+    alias?: string | undefined;
+    actual: string;
+    actualType: string;
+    expected: string;
+    target: string;
+  };
+  'extends.target.missing': { actual: unknown; path: string };
+  'extends.target.not-group': { actual: unknown; path: string };
+  'extends.cycle': { chain: readonly string[] };
+  'extends.inherited-token.invalid': {
+    token: string;
+    inheritedFrom: string;
+    effectiveType?: string | undefined;
+    originType?: string | undefined;
+    reason: string;
+  };
+  'composite.property.missing': { type: string; property: string; expectedType: string };
+  'composite.value.not-object': { type: string; properties: readonly string[]; actualType: string };
+  'stroke-style.value.invalid': ShapeMeta;
+  'stroke-style.keyword.invalid': EnumMeta;
+  'stroke-style.dash-array.not-array': ShapeMeta;
+  'stroke-style.line-cap.invalid': EnumMeta;
+  'shadow.value.invalid': ShapeMeta;
+  'shadow.item.invalid': { index: number; actualType: string };
+  'shadow.inset.not-boolean': ShapeMeta;
+  'gradient.value.not-array': ShapeMeta;
+  'gradient.stop.invalid': { index: number; actualType: string };
+  'gradient.position.out-of-range': { actual: number };
+  'color.value.not-object': ShapeMeta;
+  'color.color-space.missing': EmptyMeta;
+  'color.color-space.invalid': EnumMeta;
+  'color.components.missing': EmptyMeta;
+  'color.components.not-array': ShapeMeta;
+  'color.components.wrong-length': { expected: number; actual: number; colorSpace: unknown };
+  'color.component.invalid': { index: number; actual: unknown };
+  'color.component.out-of-range': RangeMeta & {
+    index: number;
+    name: string;
+    colorSpace: string | undefined;
+  };
+  'color.alpha.not-number': ShapeMeta;
+  'color.alpha.out-of-range': RangeMeta;
+  'color.hex.invalid': { actualType?: string | undefined; actual: unknown };
+  'color.hex.mismatch': { hex: string; expected: string };
+  'dimension.value.not-object': ShapeMeta;
+  'dimension.value.missing': EmptyMeta;
+  'dimension.value.not-number': ShapeMeta;
+  'dimension.unit.missing': EmptyMeta;
+  'dimension.unit.invalid': EnumMeta;
+  'font-family.value.invalid': ShapeMeta;
+  'font-family.name.not-string': { index: number; actualType: string };
+  'font-weight.value.invalid': ShapeMeta;
+  'font-weight.number.out-of-range': RangeMeta;
+  'font-weight.keyword.invalid': EnumMeta;
+  'duration.value.not-object': ShapeMeta;
+  'duration.value.missing': EmptyMeta;
+  'duration.value.not-number': ShapeMeta;
+  'duration.unit.missing': EmptyMeta;
+  'duration.unit.invalid': EnumMeta;
+  'cubic-bezier.value.not-array': ShapeMeta;
+  'cubic-bezier.value.wrong-length': { actual: number };
+  'cubic-bezier.point.not-number': { index: number; actualType: string };
+  'cubic-bezier.x.out-of-range': RangeMeta & { index: number };
+  'number.value.not-number': ShapeMeta;
+}
+
+/** @deprecated Use `IssueMeta[code]`; kept as the loose shape for callers that do not narrow. */
 export type MessageMeta = Record<string, unknown>;
 
-function range(m: MessageMeta): string {
+/** A message for every code, built from that code's typed `meta`. Pass a partial one to override wording. */
+export type MessageCatalog = { [C in IssueCode]: (meta: IssueMeta[C]) => string };
+
+/** A validator issue whose `meta` is typed by its `code`: narrow on `code` to read the details safely. */
+export type SpecIssue = {
+  [C in IssueCode]: Omit<ValidationIssue, 'code' | 'meta'> & { code: C; meta?: IssueMeta[C] };
+}[IssueCode];
+
+function range(m: {
+  min?: number | undefined;
+  max?: number | undefined;
+  maxExclusive?: boolean | undefined;
+}): string {
   const min = m.min === undefined ? '-∞' : String(m.min);
   const max = m.max === undefined ? '∞' : String(m.max);
   return `[${min}, ${max}${m.maxExclusive ? ')' : ']'}`;
+}
+
+/** `"a"`, `"a" and "b"`, `"a", "b" and "c"`. */
+function either(values: readonly unknown[]): string {
+  const shown = values.map((v) => formatValue(v));
+  return shown.length <= 1
+    ? (shown[0] ?? '')
+    : `${shown.slice(0, -1).join(', ')} and ${shown[shown.length - 1]}`;
 }
 
 function list(values: unknown): string {
   return Array.isArray(values) ? values.map((v) => formatValue(v)).join(', ') : formatValue(values);
 }
 
-function suggest(m: MessageMeta): string {
+function suggest(m: { suggestion?: string | undefined }): string {
   return m.suggestion === undefined
     ? ''
     : ` Did you mean ${formatValue(m.suggestion)}? Values are case-sensitive.`;
 }
 
+/** "received the string "#zzz"" when the offending value is a primitive, else just its type. */
+function received(m: ShapeMeta): string {
+  return m.actual === undefined
+    ? formatValue(m.actualType)
+    : `the ${m.actualType} ${formatValue(m.actual)}`;
+}
+
 /** Message catalog (English). Values come from `meta` and are always passed through `formatValue`. */
-export const MESSAGES: Record<IssueCode, (meta: MessageMeta) => string> = {
-  'document.not-object': (m) =>
-    `The document root must be a JSON object, received ${formatValue(m.actualType)}.`,
+export const MESSAGES: MessageCatalog = {
+  'document.not-object': (m) => `The document root must be a JSON object, received ${received(m)}.`,
   'document.invalid-json': (m) => `The input is not valid JSON: ${formatValue(m.reason)}.`,
   'document.too-deep': () =>
     `The document nests groups deeper than the supported limit of ${MAX_DEPTH} levels.`,
@@ -145,21 +318,24 @@ export const MESSAGES: Record<IssueCode, (meta: MessageMeta) => string> = {
   'value.unknown-property': (m) =>
     `Property ${formatValue(m.property)} is not defined for this value type. Known properties: ${list(m.known)}.`,
 
-  'name.forbidden-character': (m) =>
-    `Name ${formatValue(m.name)} contains ${formatValue(m.character)}, which is not allowed in token or group names (reserved for alias syntax).`,
+  'name.forbidden-character': (m) => {
+    const characters = m.characters ?? [m.character];
+    return `Name ${formatValue(m.name)} contains ${either(characters)}, which ${characters.length === 1 ? 'is' : 'are'} not allowed in token or group names (reserved for alias syntax).`;
+  },
+  'name.reserved-prefix': (m) =>
+    `Name ${formatValue(m.name)} starts with "$", which is reserved for format properties; token and group names must not begin with "$".`,
   'name.empty': () => 'Token and group names should not be empty.',
 
   'token.type.missing': () =>
     'The token has no $type and none can be inherited from a parent group, so its type cannot be determined.',
   'token.type.invalid': (m) =>
     `Unknown $type ${formatValue(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
-  'token.type.not-string': (m) => `$type must be a string, received ${formatValue(m.actualType)}.`,
+  'token.type.not-string': (m) => `$type must be a string, received ${received(m)}.`,
   'token.description.not-string': (m) =>
-    `$description must be a plain string, received ${formatValue(m.actualType)}.`,
+    `$description must be a plain string, received ${received(m)}.`,
   'token.deprecated.invalid': (m) =>
-    `$deprecated must be true, false, or a string explanation, received ${formatValue(m.actualType)}.`,
-  'token.extensions.not-object': (m) =>
-    `$extensions must be an object, received ${formatValue(m.actualType)}.`,
+    `$deprecated must be true, false, or a string explanation, received ${received(m)}.`,
+  'token.extensions.not-object': (m) => `$extensions must be an object, received ${received(m)}.`,
   'token.extensions.key-not-namespaced': (m) =>
     `$extensions key ${formatValue(m.key)} should use reverse domain name notation (for example "com.example.tool") to avoid clashes.`,
   'token.property.unknown': (m) =>
@@ -168,14 +344,13 @@ export const MESSAGES: Record<IssueCode, (meta: MessageMeta) => string> = {
     `Property ${formatValue(m.property)} is not allowed on a token: an object with $value cannot also contain child tokens or groups.`,
 
   'group.description.not-string': (m) =>
-    `$description must be a plain string, received ${formatValue(m.actualType)}.`,
+    `$description must be a plain string, received ${received(m)}.`,
   'group.type.invalid': (m) =>
     `Unknown group $type ${formatValue(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
-  'group.type.not-string': (m) => `$type must be a string, received ${formatValue(m.actualType)}.`,
+  'group.type.not-string': (m) => `$type must be a string, received ${received(m)}.`,
   'group.deprecated.invalid': (m) =>
-    `$deprecated must be true, false, or a string explanation, received ${formatValue(m.actualType)}.`,
-  'group.extensions.not-object': (m) =>
-    `$extensions must be an object, received ${formatValue(m.actualType)}.`,
+    `$deprecated must be true, false, or a string explanation, received ${received(m)}.`,
+  'group.extensions.not-object': (m) => `$extensions must be an object, received ${received(m)}.`,
   'group.extensions.key-not-namespaced': (m) =>
     `$extensions key ${formatValue(m.key)} should use reverse domain name notation (for example "com.example.tool") to avoid clashes.`,
   'group.extends.invalid': (m) =>
@@ -226,42 +401,39 @@ export const MESSAGES: Record<IssueCode, (meta: MessageMeta) => string> = {
   'composite.value.not-object': (m) =>
     `A ${formatValue(m.type)} value must be an object with ${list(m.properties)}, received ${formatValue(m.actualType)}.`,
   'stroke-style.value.invalid': (m) =>
-    `A strokeStyle value must be a keyword string or an object with "dashArray" and "lineCap", received ${formatValue(m.actualType)}.`,
+    `A strokeStyle value must be a keyword string or an object with "dashArray" and "lineCap", received ${received(m)}.`,
   'stroke-style.keyword.invalid': (m) =>
     `Unknown stroke style ${formatValue(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
   'stroke-style.dash-array.not-array': (m) =>
-    `"dashArray" must be an array of dimension values or references, received ${formatValue(m.actualType)}.`,
+    `"dashArray" must be an array of dimension values or references, received ${received(m)}.`,
   'stroke-style.line-cap.invalid': (m) =>
     `"lineCap" must be one of ${list(m.allowed)}, received ${formatValue(m.actual)}.${suggest(m)}`,
   'shadow.value.invalid': (m) =>
-    `A shadow value must be a shadow object or an array of shadow objects and references, received ${formatValue(m.actualType)}.`,
+    `A shadow value must be a shadow object or an array of shadow objects and references, received ${received(m)}.`,
   'shadow.item.invalid': (m) =>
     `Shadow entry ${formatValue(m.index)} must be a shadow object or a reference to a shadow token, received ${formatValue(m.actualType)}.`,
-  'shadow.inset.not-boolean': (m) =>
-    `"inset" must be true or false, received ${formatValue(m.actualType)}.`,
+  'shadow.inset.not-boolean': (m) => `"inset" must be true or false, received ${received(m)}.`,
   'gradient.value.not-array': (m) =>
-    `A gradient value must be an array of gradient stops and references, received ${formatValue(m.actualType)}.`,
+    `A gradient value must be an array of gradient stops and references, received ${received(m)}.`,
   'gradient.stop.invalid': (m) =>
     `Gradient entry ${formatValue(m.index)} must be a stop object with "color" and "position" or a reference to a gradient token, received ${formatValue(m.actualType)}.`,
   'gradient.position.out-of-range': (m) =>
     `Gradient stop position ${formatValue(m.actual)} is outside [0, 1] and will be clamped by consumers.`,
 
   'color.value.not-object': (m) =>
-    `A color value must be an object with "colorSpace" and "components", received ${formatValue(m.actualType)}.`,
+    `A color value must be an object with "colorSpace" and "components", received ${received(m)}.`,
   'color.color-space.missing': () => 'A color value must have a "colorSpace" property.',
   'color.color-space.invalid': (m) =>
     `Unsupported color space ${formatValue(m.actual)}. Supported: ${list(m.allowed)}.${suggest(m)}`,
   'color.components.missing': () => 'A color value must have a "components" array.',
-  'color.components.not-array': (m) =>
-    `"components" must be an array, received ${formatValue(m.actualType)}.`,
+  'color.components.not-array': (m) => `"components" must be an array, received ${received(m)}.`,
   'color.components.wrong-length': (m) =>
     `"components" must have exactly ${formatValue(m.expected)} entries for ${formatValue(m.colorSpace)}, received ${formatValue(m.actual)}.`,
   'color.component.invalid': (m) =>
     `Color component ${formatValue(m.index)} must be a number or "none", received ${formatValue(m.actual)}.`,
   'color.component.out-of-range': (m) =>
     `Color component ${formatValue(m.index)} (${formatValue(m.name)}) of ${formatValue(m.colorSpace)} must be in ${range(m)}, received ${formatValue(m.actual)}.`,
-  'color.alpha.not-number': (m) =>
-    `"alpha" must be a number, received ${formatValue(m.actualType)}.`,
+  'color.alpha.not-number': (m) => `"alpha" must be a number, received ${received(m)}.`,
   'color.alpha.out-of-range': (m) =>
     `"alpha" must be in [0, 1], received ${formatValue(m.actual)}.`,
   'color.hex.invalid': (m) =>
@@ -270,38 +442,37 @@ export const MESSAGES: Record<IssueCode, (meta: MessageMeta) => string> = {
     `"hex" ${formatValue(m.hex)} does not match the sRGB components (expected ${formatValue(m.expected)}).`,
 
   'dimension.value.not-object': (m) =>
-    `A dimension value must be an object with "value" and "unit", received ${formatValue(m.actualType)}.`,
+    `A dimension value must be an object with "value" and "unit", received ${received(m)}.`,
   'dimension.value.missing': () => 'A dimension value must have a "value" property.',
   'dimension.value.not-number': (m) =>
-    `Dimension "value" must be a number, received ${formatValue(m.actualType)}.`,
+    `Dimension "value" must be a number, received ${received(m)}.`,
   'dimension.unit.missing': () =>
     'A dimension value must have a "unit" property, even when "value" is 0.',
   'dimension.unit.invalid': (m) =>
     `Dimension "unit" must be one of ${list(m.allowed)}, received ${formatValue(m.actual)}.${suggest(m)}`,
 
   'font-family.value.invalid': (m) =>
-    `A font family value must be a string or an array of strings, received ${formatValue(m.actualType)}.`,
+    `A font family value must be a string or an array of strings, received ${received(m)}.`,
   'font-family.name.not-string': (m) =>
     `Font family entry ${formatValue(m.index)} must be a string, received ${formatValue(m.actualType)}.`,
 
   'font-weight.value.invalid': (m) =>
-    `A font weight value must be a number in [1, 1000] or a keyword, received ${formatValue(m.actualType)}.`,
+    `A font weight value must be a number in [1, 1000] or a keyword, received ${received(m)}.`,
   'font-weight.number.out-of-range': (m) =>
     `Font weight must be in [1, 1000], received ${formatValue(m.actual)}.`,
   'font-weight.keyword.invalid': (m) =>
     `Unknown font weight keyword ${formatValue(m.actual)}. Allowed: ${list(m.allowed)}.${suggest(m)}`,
 
   'duration.value.not-object': (m) =>
-    `A duration value must be an object with "value" and "unit", received ${formatValue(m.actualType)}.`,
+    `A duration value must be an object with "value" and "unit", received ${received(m)}.`,
   'duration.value.missing': () => 'A duration value must have a "value" property.',
-  'duration.value.not-number': (m) =>
-    `Duration "value" must be a number, received ${formatValue(m.actualType)}.`,
+  'duration.value.not-number': (m) => `Duration "value" must be a number, received ${received(m)}.`,
   'duration.unit.missing': () => 'A duration value must have a "unit" property.',
   'duration.unit.invalid': (m) =>
     `Duration "unit" must be one of ${list(m.allowed)}, received ${formatValue(m.actual)}.${suggest(m)}`,
 
   'cubic-bezier.value.not-array': (m) =>
-    `A cubic Bézier value must be an array of four numbers, received ${formatValue(m.actualType)}.`,
+    `A cubic Bézier value must be an array of four numbers, received ${received(m)}.`,
   'cubic-bezier.value.wrong-length': (m) =>
     `A cubic Bézier value must have exactly 4 numbers [P1x, P1y, P2x, P2y], received ${formatValue(m.actual)}.`,
   'cubic-bezier.point.not-number': (m) =>
@@ -310,7 +481,7 @@ export const MESSAGES: Record<IssueCode, (meta: MessageMeta) => string> = {
     `Cubic Bézier x coordinate ${formatValue(m.index)} must be in [0, 1], received ${formatValue(m.actual)}.`,
 
   'number.value.not-number': (m) =>
-    `A number value must be a JSON number, received ${formatValue(m.actualType)}.`,
+    `A number value must be a JSON number, received ${received(m)}.`,
 };
 
 export const DEFAULT_SEVERITY: Record<IssueCode, Severity> = {
@@ -321,6 +492,7 @@ export const DEFAULT_SEVERITY: Record<IssueCode, Severity> = {
   'document.unreadable-node': 'error',
   'value.unknown-property': 'warning',
   'name.forbidden-character': 'error',
+  'name.reserved-prefix': 'error',
   'name.empty': 'warning',
   'token.type.missing': 'error',
   'token.type.invalid': 'error',

@@ -5,9 +5,10 @@
  *
  * @example
  * ```ts
- * import { lintDtcg } from 'open-design-tokens/linter';
+ * import { createLinter } from 'open-design-tokens/linter';
  * import { exampleAppSchema } from './path/to/your/vendor-schema.js';
- * lintDtcg(tokens, { rules: { 'extensions-schema': ['error', { vendors: { 'com.example.app': exampleAppSchema } }] } });
+ * const linter = createLinter({ rules: { 'extensions-schema': ['error', { vendors: { 'com.example.app': exampleAppSchema } }] } });
+ * linter.lint(tokens);
  * ```
  */
 import type { FieldSchema } from '../rules/extensions.js';

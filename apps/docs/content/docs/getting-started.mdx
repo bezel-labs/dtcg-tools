@@ -10,7 +10,7 @@ icon: Rocket
 npm install open-design-tokens
 ```
 
-Requirements: Node 20.19 or newer, or any evergreen browser through a bundler. The package is ESM; Node 20.19+ and 22.12+ can also `require()` it.
+Requirements: Node 20.19 or newer, or any evergreen browser through a bundler. The package ships both ESM and CommonJS builds, so `import` and `require()` both work.
 
 ## Validate a file
 
@@ -57,7 +57,7 @@ Each issue has a stable `code`, a plain-text `message`, a `severity`, and a `pat
 ## Lint with your own policies
 
 ```ts
-import { defineConfig, lintDtcg } from 'open-design-tokens/linter';
+import { createLinter, defineConfig } from 'open-design-tokens/linter';
 
 const config = defineConfig({
   extends: ['recommended'],
@@ -67,7 +67,8 @@ const config = defineConfig({
   },
 });
 
-const result = lintDtcg(tokens, config);
+const linter = createLinter(config); // resolves the config once; throws here if it is wrong
+const result = linter.lint(tokens);  // reuse `linter` for every document
 result.valid;      // spec-valid and no lint errors
 result.validation; // the validation result from above
 result.issues;     // lint findings, each with a ruleId

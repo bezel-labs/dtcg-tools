@@ -1,5 +1,29 @@
 # open-design-tokens
 
+## 0.4.0
+
+### Minor Changes
+
+- [#28](https://github.com/bezel-labs/open-design-tokens/pull/28) [`8ccbd1c`](https://github.com/bezel-labs/open-design-tokens/commit/8ccbd1cf10f9195e35249e2cc0c9a47dc35d30e3) Thanks [@mr-robot-o](https://github.com/mr-robot-o)! - Report an invalid name once. `name.forbidden-character` now lists every forbidden character the name contains in `meta.characters` (and in the message), instead of one issue per character. `meta.character` remains the first of them.
+
+## 0.3.0
+
+### Minor Changes
+
+- [#26](https://github.com/bezel-labs/open-design-tokens/pull/26) [`41b353e`](https://github.com/bezel-labs/open-design-tokens/commit/41b353e4224b1a930a61a0f17954ea088099d6bd) Thanks [@mr-robot-o](https://github.com/mr-robot-o)! - Type each issue's `meta` by its `code` (`IssueMeta`, `SpecIssue`): `ValidationResult.issues` narrows on `code`, so clients can build their own messages or UI from the details without parsing the sentence. Shape errors now carry the offending value as `meta.actual` when it is a primitive, and their messages name it ("received the string "#zzz""); objects and arrays are still described by type only.
+
+  Add `messages` to `ValidateOptions` and a second `createLinter(config, { messages })` argument: a partial catalog keyed by code that replaces the wording of those codes and nothing else.
+
+## 0.2.0
+
+### Minor Changes
+
+- [#24](https://github.com/bezel-labs/open-design-tokens/pull/24) [`f21750b`](https://github.com/bezel-labs/open-design-tokens/commit/f21750b30a3ab509091e2bc9b552496bd0f6693d) Thanks [@mr-robot-o](https://github.com/mr-robot-o)! - Replace `lintDtcg(input, config, options)` with `createLinter(config)`, which resolves the config once and returns `{ lint, config }`. Configuration mistakes now throw when the linter is created rather than on the first document, and the resolved rules (with merged options) are readable from `linter.config`. `LintOptions` and the custom-rule loader are removed; a namespaced plugin contract is on the roadmap.
+
+  Ship a CommonJS build next to the ESM one, with top-level `main` and `types` fields and `require` conditions, so the package resolves under `moduleResolution: node` and in CommonJS test runners.
+
+  Add the `name.reserved-prefix` error: a `$`-prefixed group member that holds an object is a token or group whose name begins with `$`, which §5.1.1 forbids. A `$`-prefixed scalar is still reported as `group.property.unknown` (warning).
+
 ## 0.1.1
 
 ### Patch Changes

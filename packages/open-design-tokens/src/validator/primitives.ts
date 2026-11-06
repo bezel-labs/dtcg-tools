@@ -6,7 +6,13 @@ import type { ValidationIssue } from '../core/issue.js';
 import { isFiniteNumber, isPlainObject } from '../core/predicates.js';
 import type { ValidationContext } from './context.js';
 import { createIssue } from './context.js';
-import type { IssueCode } from './specs/2025.10/messages.js';
+import type {
+  EnumMeta,
+  IssueCode,
+  IssueMeta,
+  RangeMeta,
+  ShapeMeta,
+} from './specs/2025.10/messages.js';
 
 export function typeName(value: unknown): string {
   if (value === null) return 'null';
@@ -14,37 +20,54 @@ export function typeName(value: unknown): string {
   return typeof value;
 }
 
+/** What a shape error reports: the type, and the value itself when it is small enough to show (a primitive). */
+export function shapeOf(value: unknown): ShapeMeta {
+  const meta: ShapeMeta = { actualType: typeName(value) };
+  if (value === null || (typeof value !== 'object' && typeof value !== 'function'))
+    meta.actual = value;
+  return meta;
+}
+
+/** Codes whose `meta` is a `ShapeMeta`, so the shape helpers stay typed without widening `createIssue`. */
+export type ShapeCode = {
+  [C in IssueCode]: IssueMeta[C] extends ShapeMeta
+    ? ShapeMeta extends IssueMeta[C]
+      ? C
+      : never
+    : never;
+}[IssueCode];
+
 /** Pushes `code` unless `value` is a plain object. Returns whether it was. */
 export function expectObject(
   value: unknown,
   ctx: ValidationContext,
-  code: IssueCode,
+  code: ShapeCode,
   issues: ValidationIssue[],
 ): value is Record<string, unknown> {
   if (isPlainObject(value)) return true;
-  issues.push(createIssue(ctx, code, { actualType: typeName(value) }));
+  issues.push(createIssue(ctx, code, shapeOf(value)));
   return false;
 }
 
 export function expectArray(
   value: unknown,
   ctx: ValidationContext,
-  code: IssueCode,
+  code: ShapeCode,
   issues: ValidationIssue[],
 ): value is unknown[] {
   if (Array.isArray(value)) return true;
-  issues.push(createIssue(ctx, code, { actualType: typeName(value) }));
+  issues.push(createIssue(ctx, code, shapeOf(value)));
   return false;
 }
 
 export function expectString(
   value: unknown,
   ctx: ValidationContext,
-  code: IssueCode,
+  code: ShapeCode,
   issues: ValidationIssue[],
 ): value is string {
   if (typeof value === 'string') return true;
-  issues.push(createIssue(ctx, code, { actualType: typeName(value) }));
+  issues.push(createIssue(ctx, code, shapeOf(value)));
   return false;
 }
 
@@ -52,28 +75,30 @@ export function expectString(
 export function expectFiniteNumber(
   value: unknown,
   ctx: ValidationContext,
-  code: IssueCode,
+  code: ShapeCode,
   issues: ValidationIssue[],
 ): value is number {
   if (isFiniteNumber(value)) return true;
-  issues.push(
-    createIssue(ctx, code, {
-      actualType: typeof value === 'number' ? 'non-finite number' : typeName(value),
-      actual: typeof value === 'number' ? String(value) : value,
-    }),
-  );
+  const meta = shapeOf(value);
+  if (typeof value === 'number') {
+    meta.actualType = 'non-finite number';
+    meta.actual = String(value);
+  }
+  issues.push(createIssue(ctx, code, meta));
   return false;
 }
+
+export type EnumCode = { [C in IssueCode]: IssueMeta[C] extends EnumMeta ? C : never }[IssueCode];
 
 export function expectEnum<T extends string>(
   value: unknown,
   allowed: readonly T[],
   ctx: ValidationContext,
-  code: IssueCode,
+  code: EnumCode,
   issues: ValidationIssue[],
 ): value is T {
   if (typeof value === 'string' && (allowed as readonly string[]).includes(value)) return true;
-  const meta: Record<string, unknown> = { actual: value, allowed };
+  const meta: EnumMeta = { actual: value, allowed };
   if (typeof value === 'string') {
     const ci = allowed.find((a) => a.toLowerCase() === value.toLowerCase());
     if (ci) meta.suggestion = ci;
@@ -90,27 +115,28 @@ export interface NumberRange {
 }
 
 /** Checks an already-finite number against a spec range. */
-export function expectInRange(
+export type RangeCode = { [C in IssueCode]: IssueMeta[C] extends RangeMeta ? C : never }[IssueCode];
+
+export function expectInRange<C extends RangeCode>(
   value: number,
   range: NumberRange,
   ctx: ValidationContext,
-  code: IssueCode,
+  code: C,
   issues: ValidationIssue[],
-  extraMeta?: Record<string, unknown>,
+  extraMeta?: Omit<IssueMeta[C], keyof RangeMeta>,
 ): boolean {
   const belowMin = range.min !== undefined && value < range.min;
   const aboveMax =
     range.max !== undefined && (range.maxExclusive ? value >= range.max : value > range.max);
   if (!belowMin && !aboveMax) return true;
-  issues.push(
-    createIssue(ctx, code, {
-      actual: value,
-      min: range.min,
-      max: range.max,
-      maxExclusive: range.maxExclusive ?? false,
-      ...extraMeta,
-    }),
-  );
+  const meta = {
+    actual: value,
+    min: range.min,
+    max: range.max,
+    maxExclusive: range.maxExclusive ?? false,
+    ...extraMeta,
+  } as IssueMeta[C];
+  issues.push(createIssue(ctx, code, meta));
   return false;
 }
 
