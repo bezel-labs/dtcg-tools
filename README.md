@@ -1,6 +1,8 @@
 # <p align="center">Open Design Tokens</p>
 
-<p align="center"><strong>Check a design token file with one command:</strong></p>
+<p align="center"><img src="assets/logo.svg" alt="Open Design Tokens" width="100%" /></p>
+
+<p align="center"><strong>Check a design token file with one command</strong></p>
 
 ```sh
 npx -p open-design-tokens dtcg-lint tokens.json
@@ -21,30 +23,47 @@ npx -p open-design-tokens dtcg-lint tokens.json
 
 <p align="center">Try it in the <a href="https://opendesigntokens.com/">playground</a>, and read the <a href="https://opendesigntokens.com/docs/">documentation</a>.</p>
 
-A token file goes in and a clear answer comes out: is it valid DTCG, and does it follow your project's policies? Open Design Tokens supports the [Design Tokens Format Module 2025.10](https://www.designtokens.org/tr/2025.10/format/) and the [Color Module 2025.10](https://www.designtokens.org/tr/2025.10/color/), and runs in Node 20.19+, evergreen browsers, and any modern bundler.
+Design tokens store colors, spacing, typography, and other design decisions as data that tools can share. The [Design Tokens Community Group](https://www.designtokens.org/) (DTCG) defines a standard JSON format for them. Open Design Tokens tells you whether a file follows that format and your project's own policies. It's free and MIT licensed.
 
-**100% free** for personal and commercial use, under the MIT license.
+- ✅ Checks every normative section of the [Format](https://www.designtokens.org/tr/2025.10/format/) and [Color](https://www.designtokens.org/tr/2025.10/color/) 2025.10 specifications ([coverage](docs/spec-coverage.md))
+- 🧹 Lints against your policies with [12 configurable rules](https://opendesigntokens.com/docs/reference/lint-rules/)
+- 🤖 Runs in CI with pretty, JSON, or GitHub annotation output
+- ⚡ Validates 10,000 tokens in about 20 ms ([benchmarks](docs/benchmarks.md))
+- 📦 Validator is about 13 kB gzipped, with zero runtime dependencies
+- 🔒 Safe on untrusted files ([threat model](docs/security.md))
 
-**Project status.** Open Design Tokens is in beta. It is feature-complete for the 2025.10 specifications and tested against the spec text. The API will stay on 0.x until it has seen real-world use, so expect occasional breaking changes. Bug reports are welcome: [open an issue](https://github.com/bezel-labs/open-design-tokens/issues).
+**Status: beta.** The specifications are fully covered, but the API stays on 0.x until it has seen real-world use, so expect occasional breaking changes.
 
-## Core Features
+## Motivation
 
-- Validate token files against DTCG 2025.10, with every normative section covered by fixtures derived from the spec text ([spec coverage](docs/spec-coverage.md)). Ready for future specs.
-- Lint against your project's policies with 12 built-in rules, each with its own severity and options.
-- Get diagnostics with a stable code, a plain-text message, a severity, and both a JSON pointer and a dotted path.
-- Validate 10,000 tokens in ~20 ms ([benchmarks](docs/benchmarks.md)).
-- Ship 12.8 kB gzipped with zero runtime dependencies ([bundle size](https://bundlejs.com/?q=open-design-tokens/validator)).
-- Handle untrusted files safely, hardened against malicious token files ([threat model](docs/security.md)).
-- Run in CI from the command line, with pretty, JSON, or GitHub workflow annotation output.
-- Import from ESM or CommonJS, with TypeScript types included.
+Design tokens pass between designers, developers, build tools, and now AI agents. The DTCG specification defines what a valid token file looks like, but not your team's own conventions. Open Design Tokens gives everyone one check for both:
 
-## Installation
+- **The validator asks "is this valid DTCG?"** It works on any W3C DTCG 2025.10 file with no configuration, and reports only what the specification says.
+- **The linter asks "does this meet our standards?"** It goes beyond the specification with rules you choose, such as limiting how long alias chains can get, banning aliases to deprecated tokens, or enforcing a naming style.
+
+Designers and developers can confirm a file is sound before it ships. AI agents can run the same command and get errors with stable codes and exact paths, so their edits stay within your team's standards. Writing your own rules is [on the roadmap](ROADMAP.md).
+
+## Quick start
+
+Run it on a file without installing anything:
+
+```sh
+npx -p open-design-tokens dtcg-lint tokens.json
+```
+
+```
+tokens.json
+  color.brand.primary.$value.colorSpace error   Unsupported color space "sRGB". Supported: "srgb", "srgb-linear", "hsl", "hwb", "lab", "lch", "oklab", "oklch", "display-p3", "a98-rgb", "prophoto-rgb", "rec2020", "xyz-d65", "xyz-d50". Did you mean "srgb"? Values are case-sensitive.  color.color-space.invalid
+  spacing.small.$value             error   A dimension value must have a "unit" property, even when "value" is 0.  dimension.unit.missing
+
+2 errors, 0 warnings
+```
+
+Or install it and call it from code. It runs in Node 20.19+, evergreen browsers, and modern bundlers:
 
 ```sh
 npm install open-design-tokens
 ```
-
-## Validate a file
 
 ```js
 import { validateDtcg } from 'open-design-tokens/validator';
@@ -52,148 +71,57 @@ import { readFileSync } from 'node:fs';
 
 const result = validateDtcg(readFileSync('tokens.json', 'utf8'));
 
-if (!result.valid) {
-  for (const issue of result.errors) {
-    console.log(`${issue.path.dot}: ${issue.message} [${issue.code}]`);
+for (const issue of result.errors) {
+  console.log(`${issue.path.dot}: ${issue.message} [${issue.code}]`);
+}
+```
+
+`validateDtcg` never throws on a document: invalid input of any shape comes back as diagnostics. Import from `open-design-tokens/validator`, `/linter`, `/types`, or the package root. ESM and CommonJS are both supported.
+
+## Set your team's standards
+
+A token named `x` is valid DTCG, but a project that requires names of 2 to 40 characters can reject it in CI. Add a `dtcg-lint.config.json` to set your policies:
+
+```json
+{
+  "extends": ["recommended"],
+  "rules": {
+    "token-name-length": ["error", { "min": 2, "max": 40 }],
+    "naming-convention": ["error", { "tokens": "kebab" }]
   }
 }
 ```
 
-With types:
+## Run in CI
 
-```ts
-import { validateDtcg, type ValidationIssue } from 'open-design-tokens/validator';
-import type { DesignTokens } from 'open-design-tokens/types';
-
-const tokens: DesignTokens = {
-  color: {
-    $type: 'color',
-    primary: { $value: { colorSpace: 'srgb', components: [0.2, 0.4, 1] } },
-  },
-};
-
-const { valid, issues }: { valid: boolean; issues: ValidationIssue[] } = validateDtcg(tokens);
+```yaml
+- run: npx --yes -p open-design-tokens dtcg-lint 'tokens/**/*.json' --format github
 ```
 
-Sample output for a file with a mis-cased color space and a missing unit:
+This adds annotations to the pull request and fails the job on errors; warnings alone pass. See the [CI guide](https://opendesigntokens.com/docs/guides/ci/) for the full workflow.
 
-```
-color.brand.primary.$value.colorSpace: Unsupported color space "sRGB". Supported: "srgb", "srgb-linear", "hsl", … Did you mean "srgb"? Values are case-sensitive. [color.color-space.invalid]
-spacing.small.$value: A dimension value must have a "unit" property, even when "value" is 0. [dimension.unit.missing]
-```
+## Spec support
 
-Every issue carries a stable `code`, a plain-text `message`, a `severity`, and a `path` as both a JSON pointer and a dotted path. Invalid input of any shape produces diagnostics; `validateDtcg` never throws on a document.
+The 2025.10 specifications include a few examples that break their own rules. This toolkit follows the rules, and those examples are listed under [known spec issues](docs/spec-coverage.md#known-spec-issues). The Resolver module isn't supported yet; see the [roadmap](ROADMAP.md).
 
-## Validator or linter?
+This project is built to support future versions of the DTCG specification, including breaking changes. Each version lives in its own module and is selected with the `spec` option, so existing users aren't moved to a new version until they opt in or a new major release changes the default ([versioning policy](docs/versioning.md#specification-versions)). We look forward to working with and supporting the [W3C Design Tokens Community Group](https://www.designtokens.org/).
 
-The validator checks the specification. The linter checks your project's policies. Neither contains vendor-specific rules.
+## Learn more
 
-|                           | Validator                                                    | Linter                                              |
-| ------------------------- | ------------------------------------------------------------ | --------------------------------------------------- |
-| Question                  | "Is this valid DTCG?"                                        | "Does this follow our policies?"                    |
-| Rules                     | Defined by the supported specification version               | Configured by you                                   |
-| Examples                  | Invalid value type, missing alias target, circular reference | Name length, naming style, required descriptions    |
-| Can the rules be changed? | Not while claiming the same DTCG conformance                 | Yes: enable, disable, configure, or change severity |
-
-A token named `x` is valid DTCG. A project that requires names of 2 to 20 characters configures `token-name-length` as an error, and its CI rejects the file. The rejection means "not accepted by this project", not "invalid DTCG".
-
-A linter always validates first and skips policy rules on nodes with spec errors, so one spec mistake never cascades into misleading lint findings.
-
-## Lint
-
-```ts
-import { createLinter, defineConfig } from 'open-design-tokens/linter';
-
-const config = defineConfig({
-  extends: ['recommended'],
-  rules: {
-    'token-name-length': ['error', { min: 2, max: 40 }],
-    'naming-convention': ['error', { tokens: 'kebab', groups: 'camel' }],
-    'no-unused-tokens': ['warning', { ignore: ['component.**'] }],
-  },
-});
-
-const linter = createLinter(config); // resolves the config once; throws here if it is wrong
-const result = linter.lint(tokens); // reuse `linter` for every document
-result.valid; // spec-valid and no lint errors
-result.validation; // the full validation result
-result.issues; // lint findings, each with a ruleId
-result.skipped; // rule checks skipped on invalid nodes
-```
-
-### Command-line interface
-
-Open Design Tokens ships a CLI for scripts and CI. Once the package is installed:
-
-```sh
-npx dtcg-lint 'src/**/*.tokens.json'
-npx dtcg-lint tokens.json --config lint.config.json --format github
-```
-
-`dtcg-lint` validates, then lints. It loads `dtcg-lint.config.{json,mjs,js,ts}` from the current directory only, or the file given with `--config`. Formats: `pretty` (default), `json`, `github` (workflow annotations). Exit codes: 0 clean, 1 errors, 2 usage or configuration problem.
-
-### Rules
-
-Each rule takes `"error"`, `"warning"`, `"off"`, or `[severity, options]`. The `recommended` preset enables the rules marked ✔, all as warnings.
-
-| Rule                         | Options                                                                 |  ✔  | Checks                                           |
-| ---------------------------- | ----------------------------------------------------------------------- | :-: | ------------------------------------------------ |
-| `token-name-length`          | `{ min, max }`                                                          |     | Token names within a length range                |
-| `group-name-length`          | `{ min, max }`                                                          |     | Group names within a length range                |
-| `description-length`         | `{ min, max }`                                                          |     | `$description` within a length range             |
-| `naming-convention`          | `{ tokens, groups }`: `kebab`, `camel`, `pascal`, `snake`, or a pattern |     | Names follow a style                             |
-| `require-description`        |                                                                         |     | Every token has a `$description`                 |
-| `require-explicit-type`      |                                                                         |     | Every token declares its own `$type`             |
-| `max-alias-depth`            | `{ max }`                                                               |  ✔  | Alias chains resolve within `max` hops           |
-| `no-unused-tokens`           | `{ ignore: [patterns] }`                                                |  ✔  | Every token is referenced, except ignored layers |
-| `no-deprecated-alias`        |                                                                         |  ✔  | No alias points at a deprecated token            |
-| `no-empty-groups`            |                                                                         |  ✔  | Groups contain at least one member               |
-| `extensions-allowed-vendors` | `{ vendors: [keys] }`                                                   |     | Only listed vendor keys in `$extensions`         |
-| `extensions-schema`          | `{ vendors: { key: schema or function } }`                              |     | Vendor blocks match a declared shape             |
-
-Loading rules from outside the package is not supported yet; see the [roadmap](ROADMAP.md).
-
-## Entry points
-
-| Import                         | Contents                                                                                             |
-| ------------------------------ | ---------------------------------------------------------------------------------------------------- |
-| `open-design-tokens/validator` | `validateDtcg`, composable `validate*` functions, `prepareDocument`, resolver, spec tables, messages |
-| `open-design-tokens/linter`    | `createLinter`, `defineConfig`, `rules`, presets, formatters                                         |
-| `open-design-tokens/types`     | All TypeScript types, no runtime code                                                                |
-| `open-design-tokens`           | Everything above                                                                                     |
-
-The package ships ESM and CommonJS builds, so both `import` and `require()` work. Guides and concepts are at [opendesigntokens.com/docs](https://opendesigntokens.com/docs/); the generated API reference is at [/api/](https://opendesigntokens.com/api/).
-
-## Spec coverage and known issues
-
-Every normative section of both specifications is covered by fixtures derived from the spec text; see [docs/spec-coverage.md](docs/spec-coverage.md).
-
-> [!NOTE]
-> **A spec example fails validation?** The 2025.10 specifications contain a few examples that contradict their own normative rules, for example a `$type` of `"string"` that no section defines, a `%` dimension unit, and typography values that omit a required sub-value. This toolkit follows the rules, not the examples: those examples are kept as expected-failure test cases and listed, with the codes emitted, under [Known spec issues](docs/spec-coverage.md#known-spec-issues).
-
-Decisions on genuinely ambiguous points are recorded in [docs/spec-decisions.md](docs/spec-decisions.md).
-
-The Resolver module is not supported yet. See the [roadmap](ROADMAP.md).
+- [Getting started](https://opendesigntokens.com/docs/getting-started/)
+- [Lint rules](https://opendesigntokens.com/docs/reference/lint-rules/) and [issue codes](https://opendesigntokens.com/docs/reference/issue-codes/)
+- [CLI reference](https://opendesigntokens.com/docs/reference/cli/) and [API reference](https://opendesigntokens.com/api/)
+- [Changelog](packages/open-design-tokens/CHANGELOG.md) and [roadmap](ROADMAP.md)
+- [Q&A](https://github.com/bezel-labs/open-design-tokens/discussions/categories/q-a), [ideas](https://github.com/bezel-labs/open-design-tokens/discussions/categories/ideas), and [issues](https://github.com/bezel-labs/open-design-tokens/issues)
 
 ## Security
 
-Token files are treated as untrusted input: no code evaluation, bounded nesting, cycle-safe resolution, document-local references only, escaped diagnostics, and zero runtime dependencies. Details in [docs/security.md](docs/security.md); report vulnerabilities as described in [SECURITY.md](SECURITY.md).
+Token files are treated as untrusted input. See the [threat model](docs/security.md), and report vulnerabilities as described in [SECURITY.md](SECURITY.md).
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Versioning and the public API policy are in [docs/versioning.md](docs/versioning.md).
-
-## Community
-
-If you need help, want to report a bug, or have an idea:
-
-- 💬 **[Q&A](https://github.com/bezel-labs/open-design-tokens/discussions/categories/q-a)**: ask questions on GitHub Discussions
-- 💡 **[Ideas](https://github.com/bezel-labs/open-design-tokens/discussions/categories/ideas)**: share ideas on GitHub Discussions
-- 🐞 **[GitHub Issues](https://github.com/bezel-labs/open-design-tokens/issues)**: bugs and spec mismatches
-- 🗺️ **[Roadmap](ROADMAP.md)**: see what's planned next
-
----
+Contributors are welcome, and we look forward to improving Open Design Tokens together with the community. See [CONTRIBUTING.md](CONTRIBUTING.md) to get started, and the [versioning policy](docs/versioning.md) for how releases work.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+[MIT](LICENSE)
