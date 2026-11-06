@@ -5,7 +5,7 @@
 <p align="center"><strong>Check a design token file with one command</strong></p>
 
 ```sh
-npx -p open-design-tokens dtcg-lint tokens.json
+npx open-design-tokens tokens.json
 ```
 
 <p align="center"><strong>A free, open-source TypeScript toolkit for validating and linting DTCG design tokens.</strong></p>
@@ -48,7 +48,7 @@ Designers and developers can confirm a file is sound before it ships. AI agents 
 Run it on a file without installing anything:
 
 ```sh
-npx -p open-design-tokens dtcg-lint tokens.json
+npx open-design-tokens tokens.json
 ```
 
 ```
@@ -95,7 +95,7 @@ A token named `x` is valid DTCG, but a project that requires names of 2 to 40 ch
 ## Run in CI
 
 ```yaml
-- run: npx --yes -p open-design-tokens dtcg-lint 'tokens/**/*.json' --format github
+- run: npx --yes open-design-tokens 'tokens/**/*.json' --format github
 ```
 
 This adds annotations to the pull request and fails the job on errors; warnings alone pass. See the [CI guide](https://opendesigntokens.com/docs/guides/ci/) for the full workflow.

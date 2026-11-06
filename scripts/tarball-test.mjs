@@ -2,7 +2,7 @@
 /**
  * Tests what users actually install: packs the package, installs the tarball
  * into a scratch project, imports every subpath with ESM and require(), runs
- * the dtcg-lint bin, and bundles the validator for the browser with esbuild
+ * both CLI bins, and bundles the validator for the browser with esbuild
  * and executes it inside a happy-dom window. Exits non-zero on any failure.
  */
 import { execFileSync, spawnSync } from 'node:child_process';
@@ -70,13 +70,15 @@ writeFileSync(
   join(scratch, 'tokens.json'),
   JSON.stringify({ a: { $type: 'number', $value: 'x' } }),
 );
-const bin = spawnSync(join(scratch, 'node_modules', '.bin', 'dtcg-lint'), ['tokens.json'], {
-  cwd: scratch,
-  encoding: 'utf8',
-});
-if (bin.status !== 1 || !bin.stdout.includes('number.value.not-number'))
-  fail(`dtcg-lint bin: status ${bin.status}\n${bin.stdout}${bin.stderr}`);
-console.log('✔ dtcg-lint bin runs and exits 1 on errors');
+for (const name of ['open-design-tokens', 'dtcg-lint']) {
+  const bin = spawnSync(join(scratch, 'node_modules', '.bin', name), ['tokens.json'], {
+    cwd: scratch,
+    encoding: 'utf8',
+  });
+  if (bin.status !== 1 || !bin.stdout.includes('number.value.not-number'))
+    fail(`${name} bin: status ${bin.status}\n${bin.stdout}${bin.stderr}`);
+  console.log(`✔ ${name} bin runs and exits 1 on errors`);
+}
 
 // Browser bundle: esbuild resolves from the scratch project; jsdom executes it.
 const esbuild = await import(
