@@ -98,7 +98,7 @@ A token named `x` is valid DTCG, but a project that requires names of 2 to 40 ch
 - run: npx --yes -p open-design-tokens dtcg-lint 'tokens/**/*.json' --format github
 ```
 
-This adds annotations to the pull request and fails the job on errors; warnings alone pass. See the [CI guide](https://opendesigntokens.com/docs/guides/ci/) for the full workflow.
+This adds annotations to the pull request and fails the job on errors; warnings alone pass unless you add `--max-warnings <n>` (`0` fails on any warning). See the [CI guide](https://opendesigntokens.com/docs/guides/ci/) for the full workflow.
 
 ## Spec support
 

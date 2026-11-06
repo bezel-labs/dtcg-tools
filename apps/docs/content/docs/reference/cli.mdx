@@ -12,9 +12,10 @@ dtcg-lint <files or globs...> [options]
 | `--config <path>` | Lint config to use. Without it, `dtcg-lint.config.{json,mjs,js,ts}` in the current directory is loaded; parent directories are never searched. |
 | `--format <name>` | `pretty` (default), `json`, or `github`. |
 | `--no-color` | Disable ANSI colors in pretty output. `NO_COLOR=1` does the same. |
+| `--max-warnings <n>` | Exit `1` when the total number of warnings across all files is greater than `n`, even if there are no errors. `0` allows no warnings. `n` must be a non-negative integer. |
 | `-h`, `--help` | Print usage. |
 
-Exit codes: `0` no errors, `1` validation or lint errors, `2` usage or configuration problem.
+Exit codes: `0` no errors, `1` validation or lint errors or more warnings than `--max-warnings` allows, `2` usage or configuration problem.
 
 ## Globs
 

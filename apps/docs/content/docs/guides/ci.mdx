@@ -18,7 +18,7 @@ jobs:
       - run: npx --yes -p open-design-tokens dtcg-lint 'tokens/**/*.json' --format github
 ```
 
-The `github` format writes one `::error` or `::warning` command per issue, which GitHub renders as an annotation on the changed lines of the pull request. The job fails when `dtcg-lint` exits 1, which happens on any error; warnings alone pass.
+The `github` format writes one `::error` or `::warning` command per issue, which GitHub renders as an annotation on the changed lines of the pull request. The job fails when `dtcg-lint` exits 1, which happens on any error; warnings alone pass unless you set a limit with `--max-warnings <n>` (`--max-warnings 0` fails on any warning).
 
 Put a `dtcg-lint.config.json` in the repository root to apply lint rules as well. Prefer JSON configs in CI: a `.js` or `.ts` config executes code, which is fine for your own repository but not for linting files from untrusted contributors.
 
