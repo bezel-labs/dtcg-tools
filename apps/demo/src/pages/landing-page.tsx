@@ -1,4 +1,5 @@
 import { CommandLine } from '../components/command-line.js';
+import { LiveCheck } from '../components/live-check.js';
 import { SiteHeader } from '../components/site-header.js';
 import { LINKS } from '../lib/links.js';
 import { LOGO_ART } from '../lib/logo-art.js';
@@ -41,29 +42,36 @@ export function LandingPage() {
   return (
     <>
       <SiteHeader current="landing" />
-      <main>
-        <section className="landing-section hero">
+      <main className="landing">
+        <div className="masthead">
           <div className="hero-logo" aria-hidden="true">
             {LOGO_ART}
           </div>
-          <h1 className="hero-title">Check a design token file with one command</h1>
-          <p className="hero-copy">
-            A free, open-source TypeScript toolkit for validating and linting DTCG design tokens.
-          </p>
-          <CommandLine command="npx open-design-tokens tokens.json" />
-          <div className="actions">
-            <a className="button button-primary" href={LINKS.gettingStarted}>
-              Get started
-            </a>
-            <a className="button" href={LINKS.playground}>
-              Try the playground
-            </a>
+        </div>
+
+        <section className="hero">
+          <div className="hero-text">
+            <h1 className="hero-title">Check a design token file with one command</h1>
+            <p className="hero-copy">
+              A free, open-source TypeScript toolkit for validating and linting DTCG design tokens.
+            </p>
+            <div className="actions">
+              <a className="button button-primary" href={LINKS.gettingStarted}>
+                Get started
+              </a>
+              <a className="button" href={LINKS.playground}>
+                Try the playground
+              </a>
+            </div>
+            <CommandLine command="npx open-design-tokens tokens.json" />
           </div>
-          {/* The animated terminal goes here. */}
-          <div className="hero-media" />
+          <div className="pane hero-media">
+            <LiveCheck />
+          </div>
         </section>
 
-        <section className="landing-section stats-section" aria-label="At a glance">
+        <section className="pane">
+          <h2 className="pane-title">At a glance</h2>
           <dl className="stats">
             {STATS.map(({ value, label }) => (
               <div key={label} className="stat">
@@ -74,7 +82,7 @@ export function LandingPage() {
           </dl>
         </section>
 
-        <section className="landing-section">
+        <section>
           <div className="section-heading">
             <h2>Two questions, one toolkit</h2>
             <p>The specification defines a valid file. Your team decides what a good one is.</p>
@@ -109,15 +117,13 @@ export function LandingPage() {
           </div>
         </section>
 
-        <section className="landing-section highlights-section" aria-label="Highlights">
-          <div className="feature-grid">
-            {HIGHLIGHTS.map(({ title, body }) => (
-              <article key={title} className="pane feature">
-                <h2 className="pane-title">{title}</h2>
-                <p>{body}</p>
-              </article>
-            ))}
-          </div>
+        <section className="feature-grid" aria-label="Highlights">
+          {HIGHLIGHTS.map(({ title, body }) => (
+            <article key={title} className="pane feature">
+              <h2 className="pane-title">{title}</h2>
+              <p>{body}</p>
+            </article>
+          ))}
         </section>
       </main>
     </>

@@ -38,6 +38,7 @@ describe('landing page', () => {
     expect(screen.getByText('runtime dependencies')).toBeTruthy();
     const titles = screen.getAllByRole('heading', { level: 2 }).map((title) => title.textContent);
     expect(titles).toEqual([
+      'At a glance',
       'Two questions, one toolkit',
       'Designers and developers',
       'AI agents',

@@ -123,8 +123,7 @@ html:not(.fixed-page) .site-header {
 .site-header-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--size-3);
+  gap: var(--size-3) var(--size-6);
   padding: var(--size-1-5) var(--size-2);
 }
 @media (min-width: 700px) {
@@ -141,6 +140,10 @@ html:not(.fixed-page) .site-header {
   text-decoration: none;
   filter: drop-shadow(0 0 var(--size-1) color-mix(in oklab, var(--crt-pink) 45%, transparent));
 }
+.site-nav-area {
+  flex: 1;
+  min-width: 0;
+}
 .site-nav,
 .menu-list {
   list-style: none;
@@ -151,6 +154,11 @@ html:not(.fixed-page) .site-header {
   display: flex;
   align-items: center;
   gap: var(--size-1);
+}
+/* Primary links sit by the logo, and the rest at the far end of the bar. */
+.nav-narrow,
+.nav-github {
+  margin-left: auto;
 }
 /* Phones get one Menu. From 700px its links sit in the bar, and from 1000px the version too. */
 .nav-wide,
@@ -168,6 +176,10 @@ html:not(.fixed-page) .site-header {
 @media (min-width: 1000px) {
   .nav-extra-wide {
     display: block;
+    margin-left: auto;
+  }
+  .nav-github {
+    margin-left: 0;
   }
 }
 .nav-link {
@@ -214,6 +226,10 @@ html:not(.fixed-page) .site-header {
   border: var(--border-default) solid var(--crt-frame);
   background: var(--crt-bg);
   box-shadow: var(--size-1) var(--size-1) 0 var(--crt-shadow);
+}
+.nav-wide .menu-panel {
+  right: auto;
+  left: 0;
 }
 .menu-link {
   display: block;
@@ -835,6 +851,7 @@ p.status-error {
   .area-trigger,
   .nav-link,
   .menu-link,
+  .live-sample,
   .button,
   .command-copy {
     min-height: var(--size-11);
@@ -847,68 +864,170 @@ p.status-error {
   }
 }
 
-/* Landing page */
-.landing-section {
-  /* A 1168px content width. */
-  max-width: calc(var(--size-96) * 3 + var(--size-12));
-  margin-inline: auto;
-  padding: var(--size-10) var(--size-4);
+/* Landing page: thin titled frames, as in the playground, with space between them. */
+html:not(.fixed-page) {
+  --landing-width: calc(var(--size-96) * 3.5);
+  --landing-gutter: var(--size-5);
 }
-@media (min-width: 700px) {
-  .landing-section {
-    padding-block: var(--size-16);
+@media (min-width: 1000px) {
+  html:not(.fixed-page) {
+    --landing-gutter: var(--size-10);
   }
 }
-.hero {
+html:not(.fixed-page) .site-header {
+  border-bottom: var(--border-default) solid
+    color-mix(in oklab, var(--crt-frame) 35%, var(--crt-bg));
+}
+html:not(.fixed-page) .site-header-bar {
+  max-width: var(--landing-width);
+  margin-inline: auto;
+  padding: var(--size-3) var(--landing-gutter);
+}
+html:not(.fixed-page) .stripes {
+  display: none;
+}
+.landing {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: var(--size-5);
-  text-align: center;
+  gap: var(--size-10);
+  max-width: var(--landing-width);
+  margin-inline: auto;
+  padding: var(--size-8) var(--landing-gutter) var(--size-16);
+}
+@media (min-width: 700px) {
+  .landing {
+    gap: var(--size-14);
+  }
+}
+.landing .pane {
+  box-shadow: none;
 }
 /* The header's wordmark does this job on phones, where the ASCII art can't fit. */
-.hero-logo {
+.masthead {
   display: none;
+}
+@media (min-width: 700px) {
+  .masthead {
+    display: block;
+  }
+}
+.hero-logo {
+  width: fit-content;
   font-weight: 700;
   white-space: pre;
-  text-align: left;
   /* 172 columns of 0.6em, fit to the width with room for a scrollbar. */
-  font-size: min(calc((100vw - var(--size-8)) / 108), 11px);
+  font-size: min(calc((100vw - var(--size-24)) / 108), 12px);
   line-height: 1.143;
   color: transparent;
   background: var(--crt-spectrum);
   background-clip: text;
-  filter: drop-shadow(0 0 var(--size-1) color-mix(in oklab, var(--crt-pink) 45%, transparent));
+}
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--size-8) var(--size-10);
+}
+.hero-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--size-5);
 }
 .hero-title {
-  max-width: 22ch;
   margin: 0;
   font-size: 2rem;
-  line-height: 1.15;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   text-wrap: balance;
-  text-shadow: var(--size-1) var(--size-1) 0 var(--crt-shadow);
 }
 .hero-copy {
-  max-width: 60ch;
+  max-width: 48ch;
   margin: 0;
   color: var(--crt-dim);
   font-size: 1.1rem;
 }
+/* A fixed height, so a long file or issue list scrolls inside the frame. */
+.hero-media {
+  height: calc(var(--size-96) + var(--size-40));
+  flex: none;
+}
+.live-check {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-3);
+}
+/* One scrolling row on narrow screens, so it can't squeeze out the editor. */
+.live-samples {
+  flex: none;
+  display: flex;
+  gap: var(--size-1);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.live-sample {
+  flex: none;
+  min-height: var(--size-8);
+  padding: var(--size-1) var(--size-2-5);
+  border: 0;
+  background: transparent;
+  color: var(--crt-text);
+  font: inherit;
+  cursor: pointer;
+}
+.live-sample:hover {
+  background: var(--crt-path);
+  color: var(--crt-ink);
+}
+.live-sample[data-pressed] {
+  background: var(--crt-highlight);
+  color: var(--crt-ink);
+  font-weight: 700;
+}
+.live-sample-paste {
+  margin-left: auto;
+}
+/* Back under the scanlines and the sticky header, which it would otherwise scroll over. */
+.live-check .editor {
+  z-index: auto;
+  flex: 3;
+}
+.editor-input::placeholder {
+  color: var(--crt-dim);
+}
+.live-results {
+  flex: 2;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+.live-results .status {
+  flex: none;
+  margin-bottom: var(--size-2);
+}
+.live-results .verdict {
+  box-shadow: none;
+}
+.live-empty {
+  margin: 0;
+  color: var(--crt-dim);
+}
 @media (min-width: 700px) {
-  .hero-logo {
-    display: block;
-  }
   .hero-title {
-    font-size: 3rem;
+    font-size: 3.25rem;
+  }
+}
+@media (min-width: 1000px) {
+  .hero {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 .actions {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   gap: var(--size-3);
 }
-/* Links dressed as the flat cels the playground uses for buttons. */
 .button {
   display: inline-flex;
   align-items: center;
@@ -917,7 +1036,6 @@ p.status-error {
   color: var(--crt-text);
   font-weight: 700;
   text-decoration: none;
-  box-shadow: var(--size-1) var(--size-1) 0 var(--crt-shadow);
 }
 .button-primary {
   border-color: var(--crt-path);
@@ -929,20 +1047,16 @@ p.status-error {
   background: var(--crt-pass);
   color: var(--crt-ink);
 }
-.button:active {
-  box-shadow: none;
-  transform: translate(var(--size-1), var(--size-1));
-}
+/* Sits at the foot of the hero text, level with the bottom of the frame beside it. */
 .command-line {
   display: flex;
   align-items: center;
   gap: var(--size-3);
   width: 100%;
-  max-width: calc(var(--size-96) + var(--size-64));
+  margin-top: auto;
   padding: var(--size-2) var(--size-3);
   border: var(--border-default) solid var(--crt-frame);
   background: var(--crt-well);
-  text-align: left;
 }
 .command-text {
   flex: 1;
@@ -961,36 +1075,17 @@ p.status-error {
   font: inherit;
   font-size: 0.85rem;
   cursor: pointer;
-  box-shadow: var(--size-0-5) var(--size-0-5) 0 var(--crt-shadow);
 }
 .command-copy:hover {
   border-color: var(--crt-path);
   background: var(--crt-path);
   color: var(--crt-ink);
 }
-.command-copy:active {
-  box-shadow: none;
-  transform: translate(var(--size-0-5), var(--size-0-5));
-}
-/* Holds the space for the animated terminal. */
-.hero-media {
-  width: 100%;
-  max-width: calc(var(--size-96) * 2.5);
-  aspect-ratio: 16 / 9;
-  border: var(--border-default) dashed color-mix(in oklab, var(--crt-frame) 50%, transparent);
-  background: color-mix(in oklab, var(--crt-frame) 8%, transparent);
-}
-.stats-section {
-  padding-block: 0;
-}
 .stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--size-px);
+  gap: var(--size-4);
   margin: 0;
-  border: var(--border-default) solid var(--crt-frame);
-  background: var(--crt-frame);
-  box-shadow: var(--size-1) var(--size-1) 0 var(--crt-shadow);
 }
 @media (min-width: 700px) {
   .stats {
@@ -1002,9 +1097,6 @@ p.status-error {
   flex-direction: column-reverse;
   justify-content: flex-end;
   gap: var(--size-1);
-  padding: var(--size-4);
-  background: var(--crt-bg);
-  text-align: center;
 }
 .stat dt {
   color: var(--crt-dim);
@@ -1018,45 +1110,43 @@ p.status-error {
   line-height: 1.2;
 }
 .section-heading {
-  max-width: 70ch;
-  margin: 0 auto var(--size-8);
+  margin-bottom: var(--size-8);
   text-align: center;
 }
 .section-heading h2 {
-  margin: 0 0 var(--size-2);
-  font-size: 1.5rem;
-  line-height: 1.2;
+  margin: 0 0 var(--size-3);
+  font-size: 1.75rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
   text-wrap: balance;
-  text-shadow: var(--size-0-5) var(--size-0-5) 0 var(--crt-shadow);
 }
 .section-heading p {
-  margin: 0;
+  max-width: 60ch;
+  margin: 0 auto;
   color: var(--crt-dim);
 }
 @media (min-width: 700px) {
   .section-heading h2 {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 }
 .feature-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--size-6);
+  gap: var(--size-8) var(--size-6);
 }
-@media (min-width: 700px) {
+@media (min-width: 1000px) {
   .feature-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 .feature {
   gap: var(--size-3);
+  min-width: 0;
   padding-top: var(--size-5);
 }
 .feature > p {
   margin: 0;
-}
-.feature > :last-child {
-  margin-top: auto;
 }
 .feature strong {
   color: var(--crt-path);
@@ -1067,17 +1157,12 @@ p.status-error {
   overflow-wrap: anywhere;
 }
 .code-block {
-  margin: 0;
-  padding: var(--size-3);
+  margin: auto 0 0;
+  padding: var(--size-3) var(--size-4);
   overflow-x: auto;
-  border-left: var(--border-4) solid var(--crt-shadow);
   background: var(--crt-well);
   color: var(--digital-blue-300);
   font-family: var(--crt-code-font);
   font-size: 13px;
   line-height: 1.6;
-}
-/* The section above already leaves this gap. */
-.highlights-section {
-  padding-top: 0;
 }

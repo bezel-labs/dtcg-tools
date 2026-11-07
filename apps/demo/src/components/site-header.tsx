@@ -93,7 +93,7 @@ export function SiteHeader({ current }: SiteHeaderProps) {
         >
           Open Design Tokens
         </a>
-        <nav aria-label="Main">
+        <nav className="site-nav-area" aria-label="Main">
           <ul className="site-nav">
             {primary.map(({ label, ...link }) => (
               <li key={label} className="nav-wide">
@@ -118,7 +118,7 @@ export function SiteHeader({ current }: SiteHeaderProps) {
                 v{version}
               </a>
             </li>
-            <li className="nav-wide">
+            <li className="nav-wide nav-github">
               <a className="nav-link" href={LINKS.github}>
                 GitHub
               </a>
