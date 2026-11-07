@@ -74,12 +74,12 @@ interface SiteHeaderProps {
 /** The menu bar shared by every page. */
 export function SiteHeader({ current }: SiteHeaderProps) {
   const primary = [
-    { label: 'Docs', href: LINKS.docs },
     {
       label: 'Playground',
       href: LINKS.playground,
       ...(current === 'playground' ? { 'aria-current': 'page' as const } : {}),
     },
+    { label: 'Docs', href: LINKS.docs },
     { label: 'API', href: LINKS.api },
   ];
 

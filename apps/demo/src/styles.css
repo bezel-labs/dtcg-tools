@@ -142,8 +142,7 @@ html:not(.fixed-page) .site-header {
   filter: drop-shadow(0 0 var(--size-1) color-mix(in oklab, var(--crt-pink) 45%, transparent));
 }
 .site-nav,
-.menu-list,
-.footer-links {
+.menu-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -850,7 +849,7 @@ p.status-error {
 
 /* Landing page */
 .landing-section {
-  /* A 1168px content width. The placeholder sizes in landing-page.tsx depend on it. */
+  /* A 1168px content width. */
   max-width: calc(var(--size-96) * 3 + var(--size-12));
   margin-inline: auto;
   padding: var(--size-10) var(--size-4);
@@ -881,20 +880,6 @@ p.status-error {
   background-clip: text;
   filter: drop-shadow(0 0 var(--size-1) color-mix(in oklab, var(--crt-pink) 45%, transparent));
 }
-@media (min-width: 700px) {
-  .hero-logo {
-    display: block;
-  }
-}
-.hero-badge {
-  padding: var(--size-0-5) var(--size-2-5);
-  border: var(--border-default) solid var(--crt-frame);
-  color: var(--crt-path);
-  font-size: 0.8rem;
-  font-weight: 700;
-  text-decoration: none;
-  text-transform: uppercase;
-}
 .hero-title {
   max-width: 22ch;
   margin: 0;
@@ -910,6 +895,9 @@ p.status-error {
   font-size: 1.1rem;
 }
 @media (min-width: 700px) {
+  .hero-logo {
+    display: block;
+  }
   .hero-title {
     font-size: 3rem;
   }
@@ -945,24 +933,16 @@ p.status-error {
   box-shadow: none;
   transform: translate(var(--size-1), var(--size-1));
 }
-.command {
-  width: 100%;
-  max-width: calc(var(--size-96) + var(--size-64));
-  text-align: left;
-}
-.command-tabs {
-  display: flex;
-  gap: var(--size-1);
-  border-bottom: var(--border-default) solid var(--crt-frame);
-}
 .command-line {
   display: flex;
   align-items: center;
   gap: var(--size-3);
+  width: 100%;
+  max-width: calc(var(--size-96) + var(--size-64));
   padding: var(--size-2) var(--size-3);
   border: var(--border-default) solid var(--crt-frame);
-  border-top: 0;
   background: var(--crt-well);
+  text-align: left;
 }
 .command-text {
   flex: 1;
@@ -992,41 +972,13 @@ p.status-error {
   box-shadow: none;
   transform: translate(var(--size-0-5), var(--size-0-5));
 }
-/* Marks a graphic still to come: a faint crossed box, labeled with the size to make it. */
-.placeholder {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: var(--size-1);
+/* Holds the space for the animated terminal. */
+.hero-media {
   width: 100%;
-  margin-inline: auto;
-  padding: var(--size-2);
+  max-width: calc(var(--size-96) * 2.5);
+  aspect-ratio: 16 / 9;
   border: var(--border-default) dashed color-mix(in oklab, var(--crt-frame) 50%, transparent);
-  background:
-    linear-gradient(
-      to top right,
-      transparent calc(50% - 1px),
-      color-mix(in oklab, var(--crt-frame) 18%, transparent) 50%,
-      transparent calc(50% + 1px)
-    ),
-    linear-gradient(
-      to bottom right,
-      transparent calc(50% - 1px),
-      color-mix(in oklab, var(--crt-frame) 18%, transparent) 50%,
-      transparent calc(50% + 1px)
-    ),
-    color-mix(in oklab, var(--crt-frame) 8%, transparent);
-  text-align: center;
-}
-.placeholder-label {
-  color: var(--crt-dim);
-  font-size: 0.85rem;
-}
-.placeholder-size {
-  color: var(--crt-path);
-  font-size: 0.85rem;
-  font-weight: 700;
+  background: color-mix(in oklab, var(--crt-frame) 8%, transparent);
 }
 .stats-section {
   padding-block: 0;
@@ -1070,8 +1022,7 @@ p.status-error {
   margin: 0 auto var(--size-8);
   text-align: center;
 }
-.section-heading h2,
-.closing-content h2 {
+.section-heading h2 {
   margin: 0 0 var(--size-2);
   font-size: 1.5rem;
   line-height: 1.2;
@@ -1083,8 +1034,7 @@ p.status-error {
   color: var(--crt-dim);
 }
 @media (min-width: 700px) {
-  .section-heading h2,
-  .closing-content h2 {
+  .section-heading h2 {
     font-size: 2rem;
   }
 }
@@ -1127,65 +1077,7 @@ p.status-error {
   font-size: 13px;
   line-height: 1.6;
 }
-.open-source .section-heading {
-  margin-bottom: var(--size-5);
-}
-/* Text over the background graphic, so the graphic can crop on narrow screens. */
-.closing {
-  display: grid;
-  min-height: var(--size-80);
-}
-.closing > * {
-  grid-area: 1 / 1;
-}
-.closing .placeholder {
-  height: 100%;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
-.closing-content {
-  align-self: center;
-  justify-self: center;
-  padding: var(--size-6) var(--size-4);
-  text-align: center;
-}
-.closing-content p {
-  margin: 0 0 var(--size-5);
-  color: var(--crt-dim);
-}
-.site-footer-body {
-  max-width: calc(var(--size-96) * 3 + var(--size-12));
-  margin-inline: auto;
-  padding: var(--size-8) var(--size-4);
-}
-.footer-columns {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--size-6);
-}
-@media (min-width: 700px) {
-  .footer-columns {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-.footer-title {
-  margin: 0 0 var(--size-2);
-  color: var(--crt-path);
-  font-size: 0.85rem;
-  text-transform: uppercase;
-}
-.footer-links li {
-  margin-bottom: var(--size-1);
-}
-.footer-copyright {
-  margin: var(--size-8) 0 0;
-  color: var(--crt-dim);
-  font-size: 0.85rem;
-}
-@media (pointer: coarse) {
-  .footer-links a {
-    display: inline-flex;
-    align-items: center;
-    min-height: var(--size-11);
-  }
+/* The section above already leaves this gap. */
+.highlights-section {
+  padding-top: 0;
 }
