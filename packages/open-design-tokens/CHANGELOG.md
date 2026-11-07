@@ -1,5 +1,11 @@
 # open-design-tokens
 
+## 0.5.0
+
+### Minor Changes
+
+- [#35](https://github.com/bezel-labs/open-design-tokens/pull/35) [`15a2890`](https://github.com/bezel-labs/open-design-tokens/commit/15a2890b745fede22d9ab2b5dad9b99dfafff330) Thanks [@MyCapsLocked](https://github.com/MyCapsLocked)! - Add `open-design-tokens` as a second name for the `dtcg-lint` command, so `npx open-design-tokens tokens.json` keeps working if the package ever gains another command. `dtcg-lint` is unchanged.
+
 ## 0.4.0
 
 ### Minor Changes
