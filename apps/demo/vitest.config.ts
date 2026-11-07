@@ -6,5 +6,7 @@ export default defineConfig({
   test: {
     environment: 'happy-dom',
     include: ['tests/**/*.test.tsx'],
+    // App renders are DOM-heavy, and CI runners can take over 5 seconds on the first one.
+    testTimeout: 20_000,
   },
 });

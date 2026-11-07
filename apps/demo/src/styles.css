@@ -1,273 +1,739 @@
+/*
+ * CRT terminal crossed with an 80s anime title card.
+ * Every color and font comes from the Bezel tokens in ./bezel/variables.css.
+ * The aliases below only say which token plays which role on the screen.
+ *
+ * Mobile first: base rules are for phones, and min-width queries add to them.
+ * Breakpoints: 700px (ASCII logo fits), 1000px (panels sit side by side).
+ */
 :root {
   color-scheme: dark;
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --crt-bg: color-mix(in oklab, var(--background) 85%, var(--digital-blue-900));
+  --crt-ink: var(--background);
+  --crt-well: color-mix(in oklab, var(--crt-ink) 60%, transparent);
+  /* Header only. The logo's pink and cyan have no token, so they are mixed from tokens. */
+  --crt-pink: color-mix(in oklch, var(--vibrant-red-500), var(--vibrant-violet-500));
+  --crt-cyan: color-mix(in oklch, var(--digital-blue-500), var(--neon-green-500));
+  --crt-spectrum: linear-gradient(
+    to right,
+    var(--vibrant-orange-500),
+    var(--crt-pink),
+    var(--vibrant-violet-500),
+    var(--digital-blue-500),
+    var(--crt-cyan)
+  );
+  --crt-text: var(--digital-blue-100);
+  --crt-dim: var(--digital-blue-300);
+  --crt-frame: var(--digital-blue-400);
+  --crt-shadow: var(--vibrant-violet-800);
+  --crt-highlight: var(--digital-blue-300);
+  --crt-pass: var(--neon-green-500);
+  --crt-fail: var(--vibrant-red-400);
+  --crt-warn: var(--warning-hover);
+  --crt-path: var(--lemon-pastel-400);
+  --crt-code: var(--vibrant-violet-300);
+  --crt-font: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  --crt-code-font: var(--font-code), ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* Above the scanline overlay in body::after, so code stays crisp. */
+  --crt-above-scanlines: 11;
+  font-family: var(--crt-font);
+  font-size: 14px;
+  line-height: 1.5;
 }
 * {
   box-sizing: border-box;
 }
+::selection {
+  background: var(--crt-path);
+  color: var(--crt-ink);
+}
+/* The page itself never scrolls. Each panel scrolls on its own inside .app. */
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+html {
+  scrollbar-color: var(--crt-frame) var(--crt-bg);
+}
 body {
   margin: 0;
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--crt-bg);
+  color: var(--crt-text);
+}
+/* Scanlines and tube vignette. Sits above the page and never takes clicks. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 2px,
+      color-mix(in oklab, var(--crt-ink) 14%, transparent) 2px 3px
+    ),
+    radial-gradient(
+      ellipse at center,
+      transparent 65%,
+      color-mix(in oklab, var(--crt-ink) 65%, transparent) 100%
+    );
 }
 a {
-  color: var(--primary-hover);
+  color: var(--crt-dim);
+  text-underline-offset: 3px;
+}
+a:hover {
+  color: var(--crt-path);
+}
+.header a {
+  color: var(--crt-cyan);
+}
+.header a:hover {
+  color: var(--crt-path);
+}
+:focus-visible {
+  outline: var(--border-2) solid var(--crt-path);
+  outline-offset: var(--size-0-5);
 }
 .app {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  padding: var(--size-4);
+  height: 100dvh;
+  padding: var(--size-2);
 }
-.header h1 {
-  margin: 0 0 var(--size-1);
-  font-size: 1.5rem;
+@media (min-width: 700px) {
+  .app {
+    padding: var(--size-4);
+  }
 }
-.header p {
-  margin: 0 0 var(--size-4);
-  color: var(--muted-foreground);
+.header {
+  flex: none;
 }
 
-/* Two halves: examples left, workspace right. Stacked on narrow screens. */
+/* Title card: the ASCII wordmark lit by the logo gradient, over racing stripes. */
+.logo {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--size-3);
+  margin: 0 0 var(--size-2);
+  font-size: 1.75rem;
+  line-height: 1.15;
+}
+.logo-art,
+.logo-text {
+  width: fit-content;
+  font-weight: 700;
+  color: transparent;
+  background: var(--crt-spectrum);
+  background-clip: text;
+  filter: drop-shadow(0 0 var(--size-1) color-mix(in oklab, var(--crt-pink) 45%, transparent));
+}
+/* The h1 text shows on phones. From 700px there is room for the ASCII art. */
+.logo-art {
+  display: none;
+  flex: none;
+  white-space: pre;
+  /* 172 columns of 0.6em, fit to the width and height. */
+  font-size: min(calc((100vw - var(--size-8)) / 104), 1.5dvh, 12px);
+  line-height: 1.143;
+}
+.tagline {
+  display: none;
+}
+@media (min-width: 700px) {
+  .logo-art {
+    display: block;
+  }
+  .logo-text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .tagline {
+    display: inline;
+  }
+}
+.header p {
+  margin: 0 0 var(--size-2);
+  color: var(--crt-dim);
+}
+.header-stripes {
+  height: var(--size-3-5);
+  margin-bottom: var(--size-3);
+  background: var(--crt-spectrum);
+  /* Three stripes, thinning downward. Only the mask's alpha matters. */
+  mask-image: linear-gradient(
+    to bottom,
+    var(--crt-ink) 0 6px,
+    transparent 6px 8px,
+    var(--crt-ink) 8px 11px,
+    transparent 11px 12px,
+    var(--crt-ink) 12px 14px
+  );
+}
+/* Short screens, like a phone on its side, keep every line for the panels. */
+@media (max-height: 500px) {
+  .header p,
+  .header-stripes {
+    display: none;
+  }
+}
+
+/* Phones and tablets: one panel at a time behind tabs. Wide: every panel visible. */
 .layout {
-  display: grid;
-  gap: var(--size-4);
-  grid-template-columns: 1fr;
-  align-items: start;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-3);
+  /* Room for the titles on the panes' top borders and the pane shadows. */
+  padding: 0 var(--size-1) var(--size-1) 0;
+}
+.tabs {
+  flex: none;
+  display: flex;
+  gap: var(--size-1);
+  border-bottom: var(--border-default) solid var(--crt-frame);
+}
+.tab {
+  flex: 1;
+  min-height: var(--size-11);
+  padding: var(--size-1) var(--size-2);
+  border: var(--border-default) solid var(--crt-frame);
+  border-bottom: 0;
+  background: transparent;
+  color: var(--crt-text);
+  font: inherit;
+  cursor: pointer;
+}
+.tab[data-active] {
+  background: var(--crt-highlight);
+  color: var(--crt-ink);
+  font-weight: 700;
+}
+.tab[data-active] span {
+  color: inherit;
+}
+.tab:focus-visible {
+  outline-offset: calc(var(--border-2) * -1);
+}
+.tab-panel {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--size-2);
+  outline: none;
+}
+.tab-panel:not(.tab-panel-active) {
+  display: none;
 }
 @media (min-width: 1000px) {
   .layout {
-    grid-template-columns: 1fr 1fr;
+    display: grid;
+    gap: var(--size-3) var(--size-5);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: minmax(0, 3fr) minmax(0, 2fr);
   }
-  .examples {
-    position: sticky;
-    top: var(--size-4);
-    max-height: calc(100vh - var(--size-8));
-    overflow-y: auto;
-    padding-right: var(--size-1);
+  .tabs {
+    display: none;
   }
-}
-.workspace {
-  display: grid;
-  gap: var(--size-4);
-  grid-template-columns: 1fr;
+  .tab-panel:not(.tab-panel-active) {
+    display: flex;
+  }
+  .tab-panel-examples {
+    grid-column: 1;
+    grid-row: 1 / -1;
+  }
+  .tab-panel-editor {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .tab-panel-results {
+    grid-column: 2;
+    grid-row: 2;
+  }
 }
 
+/* Base UI scroll areas, with a square terminal scrollbar that stays visible. */
+.scroll-panel {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+}
+.scroll-panel-viewport {
+  height: 100%;
+  overscroll-behavior: contain;
+  padding-right: var(--size-3);
+  outline-offset: calc(var(--border-2) * -1);
+}
+.scroll-panel-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--size-1-5);
+  background: var(--crt-well);
+}
+.scroll-panel-thumb {
+  width: 100%;
+  background: var(--crt-frame);
+}
+.scroll-panel-thumb:hover,
+.scroll-panel-thumb[data-scrolling] {
+  background: var(--crt-highlight);
+}
+
+/* Panes are terminal frames with the title sitting on the top border. */
 .pane {
-  border: var(--border-default) solid var(--border);
-  border-radius: var(--radius-2xl);
-  padding: var(--size-3);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  border: var(--border-default) solid var(--crt-frame);
+  box-shadow: var(--size-1) var(--size-1) 0 var(--crt-shadow);
+  padding: var(--size-4) var(--size-3) var(--size-3);
 }
 .pane-title {
   display: block;
   margin: 0 0 var(--size-2);
-  font-size: 0.9rem;
-  color: var(--muted-foreground);
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--crt-text);
 }
+.editor-field {
+  display: contents;
+}
+.pane > .pane-title,
+.editor-field > .pane-title {
+  position: absolute;
+  top: -0.75em;
+  left: var(--size-3);
+  margin: 0;
+  padding: 0 var(--size-1-5);
+  background: var(--crt-bg);
+}
+/* A transparent textarea over a colored copy. Text metrics must match exactly. */
 .editor {
+  position: relative;
+  z-index: var(--crt-above-scanlines);
+  flex: 1;
+  min-height: 0;
+  background: var(--crt-well);
+  border: var(--border-default) solid var(--crt-frame);
+}
+.editor-highlight,
+.editor-input {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 48vh;
-  min-height: var(--size-72);
-  resize: vertical;
-  font:
-    13px / 1.5 ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    monospace;
-  background: transparent;
-  color: var(--foreground);
-  border: var(--border-default) solid var(--border);
-  border-radius: var(--radius-xl);
+  height: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: var(--radius-none);
   padding: var(--size-2);
+  font-family: var(--crt-code-font);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: normal;
+  tab-size: 2;
+  white-space: pre;
 }
+.editor-highlight {
+  overflow: hidden;
+  /* Lets this layer scroll as far as the textarea when it has a scrollbar. */
+  padding-right: var(--size-8);
+  pointer-events: none;
+}
+.editor-input {
+  overflow: auto;
+  resize: none;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--crt-pass);
+}
+.editor-input:focus-visible {
+  outline-offset: calc(var(--border-2) * -1);
+}
+/* Translucent, so the colored text underneath stays visible while selected. */
+.editor-input::selection {
+  background: color-mix(in oklab, var(--crt-path) 35%, transparent);
+  color: transparent;
+}
+
+/* Status line: each reading has its own color, like a system monitor legend. */
 .status {
-  font-weight: 600;
+  font-weight: 700;
   margin: 0 0 var(--size-3);
+  color: var(--crt-dim);
 }
-.status-ok {
-  color: var(--success);
+.status::after {
+  content: "";
+  display: inline-block;
+  width: 0.6em;
+  height: 1em;
+  margin-left: var(--size-1);
+  vertical-align: text-bottom;
+  background: var(--crt-text);
 }
-.status-error {
-  color: var(--destructive);
+@media (prefers-reduced-motion: no-preference) {
+  .status::after {
+    animation: cursor-blink 1.1s steps(1) infinite;
+  }
+}
+@keyframes cursor-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.verdict {
+  padding: var(--size-0-5) var(--size-2);
+  color: var(--crt-ink);
+  text-transform: uppercase;
+}
+.status-ok .verdict {
+  background: var(--crt-pass);
+  box-shadow: 0 0 var(--size-3) color-mix(in oklab, var(--crt-pass) 60%, transparent);
+}
+.status-error .verdict {
+  background: var(--crt-fail);
+  box-shadow: 0 0 var(--size-3) color-mix(in oklab, var(--crt-fail) 60%, transparent);
+}
+p.status-error {
+  color: var(--crt-fail);
+}
+.stat-error {
+  color: var(--crt-fail);
+}
+.stat-warning {
+  color: var(--crt-warn);
+}
+.stat-clear {
+  color: var(--neon-green-400);
+}
+.stat-spec {
+  color: var(--crt-code);
+}
+.stat-count {
+  color: var(--crt-path);
 }
 .issues {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--size-2);
 }
 .issue {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(0, 1fr);
   gap: var(--size-1) var(--size-2);
   align-items: baseline;
-  border-top: var(--border-default) solid var(--border);
+  border-top: var(--border-default) dashed var(--crt-frame);
   padding-top: var(--size-2);
 }
 .badge {
+  font-family: var(--crt-font);
   font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
   padding: var(--size-0-5) var(--size-1-5);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-none);
 }
 .badge-error {
-  background: var(--destructive);
-  color: var(--destructive-foreground);
+  background: var(--crt-fail);
+  color: var(--crt-ink);
 }
 .badge-warning {
-  background: var(--warning);
-  color: var(--warning-foreground);
+  background: var(--crt-warn);
+  color: var(--crt-ink);
 }
 .path,
-.code {
-  font:
-    12px ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    monospace;
+.code,
+.where,
+.code-ok {
+  font-family: var(--crt-code-font);
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.path {
+  color: var(--crt-path);
 }
 .code {
-  color: var(--muted-foreground);
+  color: var(--crt-code);
 }
 
 /* Examples */
-.hint {
-  color: var(--muted-foreground);
-  margin: 0 0 var(--size-3);
-}
 .area {
-  border: var(--border-default) solid var(--border);
-  border-radius: var(--radius-2xl);
+  border: var(--border-default) solid var(--crt-frame);
   margin-bottom: var(--size-2);
 }
-.area summary {
+.area-header {
+  margin: 0;
+  font: inherit;
+}
+.area-trigger {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   cursor: pointer;
-  padding: var(--size-2-5) var(--size-3);
+  padding: var(--size-1-5) var(--size-3);
   display: flex;
-  gap: var(--size-3);
+  flex-wrap: wrap;
+  gap: 0 var(--size-3);
   align-items: baseline;
 }
+.area-trigger:hover {
+  background: color-mix(in oklab, var(--crt-frame) 25%, transparent);
+}
+/* Inset, because the scrolling column would clip an outline outside the row. */
+.area-trigger:focus-visible {
+  outline-offset: calc(var(--border-2) * -1);
+}
+/* The open group reads like the selected row of a terminal list. */
+.area-trigger[data-panel-open] {
+  background: var(--crt-highlight);
+  color: var(--crt-ink);
+}
 .area-title {
-  font-weight: 600;
+  font-weight: 700;
 }
 .area-spec {
-  color: var(--muted-foreground);
+  color: var(--crt-dim);
   font-size: 0.85rem;
+}
+.area-trigger[data-panel-open] .area-spec {
+  color: var(--crt-ink);
+}
+.area-panel {
+  height: var(--accordion-panel-height);
+  overflow: hidden;
+}
+.area-panel[data-starting-style],
+.area-panel[data-ending-style] {
+  height: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .area-panel {
+    transition: height 120ms ease-out;
+  }
 }
 .example-list {
   list-style: none;
   margin: 0;
-  padding: 0 var(--size-3) var(--size-3);
+  padding: var(--size-3);
   display: grid;
+  /* Without the 0 minimum, the longest JSON line sets the column width. */
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--size-3);
 }
 .example {
-  border-top: var(--border-default) solid var(--border);
+  border-top: var(--border-default) dashed var(--crt-frame);
   padding-top: var(--size-3);
+}
+.example:first-child {
+  border-top: 0;
+  padding-top: 0;
 }
 .example-head {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: var(--size-3);
+  gap: var(--size-2) var(--size-3);
+}
+.example-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--size-1) var(--size-2);
+  min-width: 0;
+}
+.pill {
+  padding: var(--size-0-5) var(--size-2-5);
+  border-radius: var(--radius-full);
+  color: var(--crt-ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+.pill-valid {
+  background: var(--crt-pass);
+}
+.pill-invalid {
+  background: var(--crt-fail);
 }
 .example-desc {
   margin: var(--size-1) 0;
-  color: var(--muted-foreground);
+  color: var(--crt-dim);
 }
 .example-expect {
   margin: var(--size-1) 0 var(--size-2);
   font-size: 0.85rem;
 }
 .code-ok {
-  color: var(--success);
-  font:
-    12px ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    monospace;
+  color: var(--crt-pass);
 }
 .example-json {
   margin: 0;
   padding: var(--size-2);
-  border-radius: var(--radius-xl);
-  border: var(--border-default) solid var(--border);
-  font:
-    12px / 1.5 ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    monospace;
+  border-left: var(--border-4) solid var(--crt-shadow);
+  background: var(--crt-well);
+  position: relative;
+  z-index: var(--crt-above-scanlines);
+  font-family: var(--crt-code-font);
+  font-size: 13px;
+  line-height: 1.6;
   overflow-x: auto;
   max-height: var(--size-60);
 }
-.load {
-  font: inherit;
-  font-size: 0.85rem;
-  padding: var(--size-1) var(--size-2-5);
-  border-radius: var(--radius-xl);
-  cursor: pointer;
-  border: var(--border-default) solid var(--border);
-  background: transparent;
-  color: var(--foreground);
+/* Punctuation and whitespace are plain text, so they take this color. */
+.editor-highlight,
+.example-json {
+  color: var(--digital-blue-400);
 }
-.load:hover {
-  border-color: var(--primary-hover);
+.tok-key {
+  color: var(--digital-blue-300);
+}
+.tok-dtcg-key {
+  color: var(--vibrant-violet-300);
+}
+.tok-string {
+  color: var(--neon-green-300);
+}
+.tok-number {
+  color: var(--vibrant-orange-300);
+}
+.tok-literal {
+  color: var(--lemon-pastel-400);
 }
 
-/* Toolbar */
-.toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--size-2);
-  align-items: center;
-  margin-bottom: var(--size-3);
-}
+/* Buttons are flat cels with a hard shadow, and press into the page. */
+.load,
 .toolbar button,
 .toolbar .toggle {
   font: inherit;
   font-size: 0.85rem;
   padding: var(--size-1) var(--size-2-5);
-  border-radius: var(--radius-xl);
-  border: var(--border-default) solid var(--border);
+  border-radius: var(--radius-none);
+  border: var(--border-default) solid var(--crt-frame);
   background: transparent;
-  color: var(--foreground);
+  color: var(--crt-text);
   cursor: pointer;
 }
+.toggle-label {
+  cursor: pointer;
+}
+.load,
+.toolbar button {
+  box-shadow: var(--size-0-5) var(--size-0-5) 0 var(--crt-shadow);
+}
+.load {
+  flex-shrink: 0;
+}
+.load:hover,
 .toolbar button:hover {
-  border-color: var(--primary-hover);
+  background: var(--crt-path);
+  border-color: var(--crt-path);
+  color: var(--crt-ink);
+}
+.load:active,
+.toolbar button:active {
+  box-shadow: none;
+  transform: translate(var(--size-0-5), var(--size-0-5));
+}
+
+/* Toolbar */
+.toolbar {
+  flex: none;
+  display: flex;
+  gap: var(--size-2);
+  align-items: center;
+  margin-bottom: var(--size-3);
+  /* One scrolling row on narrow screens, so it can't squeeze out the editor. */
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.toolbar > * {
+  flex: none;
+}
+@media (min-width: 1000px) {
+  .toolbar {
+    flex-wrap: wrap;
+    overflow-x: visible;
+  }
 }
 .toolbar .toggle {
   display: inline-flex;
   gap: var(--size-1-5);
   align-items: center;
 }
+.checkbox {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-4);
+  height: var(--size-4);
+  border: var(--border-default) solid var(--crt-frame);
+  background: var(--crt-well);
+  cursor: pointer;
+}
+.checkbox[data-checked] {
+  border-color: var(--crt-pass);
+  background: var(--crt-pass);
+}
+.checkbox-mark {
+  color: var(--crt-ink);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+.toolbar .toggle:has([data-checked]) {
+  border-color: var(--crt-pass);
+  color: var(--crt-pass);
+}
 .spec-link {
   margin-left: auto;
   font-size: 0.85rem;
-  color: var(--muted-foreground);
 }
 
 /* Issue rows */
 .issue-button {
   all: unset;
   display: grid;
-  grid-template-columns: auto auto auto 1fr;
+  grid-column: 1 / -1;
+  grid-template-columns: auto auto auto minmax(0, 1fr);
   gap: var(--size-1) var(--size-2);
   align-items: baseline;
   width: 100%;
   cursor: pointer;
 }
+.issue-button:focus-visible {
+  outline: var(--border-2) solid var(--crt-path);
+  outline-offset: var(--size-0-5);
+}
 .badge-lint {
-  background: var(--muted);
-  color: var(--foreground);
+  background: var(--crt-code);
+  color: var(--crt-ink);
 }
 .where {
-  font:
-    12px ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    monospace;
-  color: var(--muted-foreground);
+  color: var(--crt-dim);
   min-width: 5ch;
 }
 .issue-button .path {
@@ -279,12 +745,22 @@ a {
 }
 .issue-button:hover .message,
 .issue-button:focus-visible .message {
+  color: var(--crt-path);
   text-decoration: underline;
 }
 
-.badge-beta {
-  font-size: 0.65rem;
-  vertical-align: middle;
-  background: var(--warning);
-  color: var(--warning-foreground);
+/* Keeps fingers on target, and stops iOS zooming when the editor takes focus. */
+@media (pointer: coarse) {
+  .load,
+  .toolbar button,
+  .toolbar .toggle,
+  .area-trigger {
+    min-height: var(--size-11);
+  }
+}
+@media (max-width: 699px) {
+  .editor-highlight,
+  .editor-input {
+    font-size: 16px;
+  }
 }

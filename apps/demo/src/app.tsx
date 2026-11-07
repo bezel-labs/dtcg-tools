@@ -1,9 +1,17 @@
+import { Field } from '@base-ui/react/field';
+import { Separator } from '@base-ui/react/separator';
+import { Tabs } from '@base-ui/react/tabs';
 import { createLinter, type LintResult } from 'open-design-tokens/linter';
 import { type ValidationResult, validateDtcg } from 'open-design-tokens/validator';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { flushSync } from 'react-dom';
+import { ExamplesPane } from './components/examples-pane.js';
 import { IssueList, type Row } from './components/issue-list.js';
+import { JsonEditor } from './components/json-editor.js';
+import { ScrollPanel } from './components/scroll-panel.js';
 import { Toolbar } from './components/toolbar.js';
-import { EXAMPLE_GROUPS, FULL_PROJECT_JSON } from './examples.js';
+import { FULL_PROJECT_JSON } from './examples.js';
+import { LOGO_ART } from './lib/logo-art.js';
 import { createPositionIndex } from './lib/positions.js';
 
 /** Inputs above this size are refused before parsing. */
@@ -11,13 +19,41 @@ const MAX_INPUT_BYTES = 2 * 1024 * 1024;
 
 const LINTER = createLinter({ extends: ['recommended'] });
 
+type PanelName = 'examples' | 'editor' | 'results';
+
+interface WorkspacePanelProps {
+  name: PanelName;
+  active: boolean;
+  children: ReactNode;
+}
+
+/**
+ * One tab on narrow screens, one always-visible region on wide ones. Base UI
+ * hides inactive panels with `hidden` and `inert`, so those are switched off
+ * here and styles.css hides inactive panels at narrow widths only.
+ */
+function WorkspacePanel({ name, active, children }: WorkspacePanelProps) {
+  return (
+    <Tabs.Panel
+      value={name}
+      keepMounted
+      hidden={false}
+      inert={false}
+      tabIndex={-1}
+      className={`tab-panel tab-panel-${name}${active ? ' tab-panel-active' : ''}`}
+    >
+      {children}
+    </Tabs.Panel>
+  );
+}
+
 export function App() {
   const [source, setSource] = useState(FULL_PROJECT_JSON);
   const [result, setResult] = useState<ValidationResult | null>(null);
   const [lintResult, setLintResult] = useState<LintResult | null>(null);
   const [lintEnabled, setLintEnabled] = useState(false);
   const [tooLarge, setTooLarge] = useState(false);
-  const [openArea, setOpenArea] = useState<string | null>('Full project');
+  const [activePanel, setActivePanel] = useState<PanelName>('editor');
   const editorRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
@@ -53,6 +89,8 @@ export function App() {
   const select = (offset: number, length: number) => {
     const el = editorRef.current;
     if (!el) return;
+    // On narrow screens the editor may be on another tab, and can't take focus until shown.
+    flushSync(() => setActivePanel('editor'));
     el.focus();
     el.setSelectionRange(offset, offset + length);
     // Scroll the selection into view by measuring the line height.
@@ -60,6 +98,11 @@ export function App() {
     const lineHeight = Number.parseFloat(getComputedStyle(el).lineHeight) || 20;
     el.scrollTop = Math.max(0, line * lineHeight - el.clientHeight / 2);
   };
+
+  const loadExample = useCallback((json: string) => {
+    setSource(json);
+    setActivePanel('editor');
+  }, []);
 
   const format = () => {
     try {
@@ -76,59 +119,42 @@ export function App() {
   return (
     <main className="app">
       <header className="header">
-        <h1>
-          Open Design Tokens Playground <span className="badge badge-beta">beta</span>
+        <h1 className="logo">
+          <span className="logo-art" aria-hidden="true">
+            {LOGO_ART}
+          </span>
+          <span className="logo-text">Open Design Tokens</span>
         </h1>
         <p>
-          TypeScript toolkit for validating and linting DTCG design tokens. <a href="docs/">Docs</a>{' '}
-          · <a href="api/">API reference</a> ·{' '}
+          <span className="tagline">
+            TypeScript toolkit for validating and linting DTCG design tokens.{' '}
+          </span>
+          <a href="docs/">Docs</a> · <a href="api/">API reference</a> ·{' '}
           <a href="https://github.com/bezel-labs/open-design-tokens">GitHub</a>
         </p>
+        <Separator className="header-stripes" />
       </header>
-      <div className="layout">
-        <aside className="examples">
-          <h2 className="pane-title">Examples by validator</h2>
-          <p className="hint">
-            Each example is self-contained. Load one into the editor, then edit it to explore the
-            rule. The codes listed are what the validator should report.
-          </p>
-          {EXAMPLE_GROUPS.map((group) => (
-            <details
-              key={group.area}
-              className="area"
-              open={openArea === group.area}
-              onToggle={(e) => setOpenArea(e.currentTarget.open ? group.area : null)}
-            >
-              <summary>
-                <span className="area-title">{group.area}</span>
-                <span className="area-spec">{group.spec}</span>
-              </summary>
-              <ul className="example-list">
-                {group.examples.map((ex) => (
-                  <li key={ex.title} className="example">
-                    <div className="example-head">
-                      <strong>{ex.title}</strong>
-                      <button type="button" className="load" onClick={() => setSource(ex.json)}>
-                        Load
-                      </button>
-                    </div>
-                    <p className="example-desc">{ex.description}</p>
-                    <p className="example-expect">
-                      Expect:{' '}
-                      {ex.expect.length === 0 ? (
-                        <code className="code-ok">valid</code>
-                      ) : (
-                        <code className="code">{ex.expect.join(', ')}</code>
-                      )}
-                    </p>
-                    <pre className="example-json">{ex.json}</pre>
-                  </li>
-                ))}
-              </ul>
-            </details>
-          ))}
-        </aside>
-        <section className="workspace">
+      <Tabs.Root
+        className="layout"
+        value={activePanel}
+        onValueChange={(value) => setActivePanel(value as PanelName)}
+      >
+        <Tabs.List className="tabs" aria-label="Playground panels">
+          <Tabs.Tab className="tab" value="examples">
+            Examples
+          </Tabs.Tab>
+          <Tabs.Tab className="tab" value="editor">
+            Editor
+          </Tabs.Tab>
+          <Tabs.Tab className="tab" value="results">
+            Results{' '}
+            <span className={valid ? 'stat-clear' : 'stat-error'}>{valid ? 'OK' : errors}</span>
+          </Tabs.Tab>
+        </Tabs.List>
+        <WorkspacePanel name="examples" active={activePanel === 'examples'}>
+          <ExamplesPane onLoad={loadExample} />
+        </WorkspacePanel>
+        <WorkspacePanel name="editor" active={activePanel === 'editor'}>
           <div className="pane">
             <Toolbar
               onLoad={setSource}
@@ -137,18 +163,14 @@ export function App() {
               lintEnabled={lintEnabled}
               onToggleLint={setLintEnabled}
             />
-            <label className="pane-title" htmlFor="editor">
-              tokens.json
-            </label>
-            <textarea
-              id="editor"
-              ref={editorRef}
-              className="editor"
-              spellCheck={false}
-              value={source}
-              onChange={(e) => setSource(e.target.value)}
-            />
+            {/* The toolbar stays outside: its checkbox would register as this field's control. */}
+            <Field.Root className="editor-field">
+              <Field.Label className="pane-title">tokens.json</Field.Label>
+              <JsonEditor id="editor" ref={editorRef} value={source} onChange={setSource} />
+            </Field.Root>
           </div>
+        </WorkspacePanel>
+        <WorkspacePanel name="results" active={activePanel === 'results'}>
           <div className="pane">
             <h2 className="pane-title">
               {lintEnabled ? 'Validation and lint results' : 'Validation results'}
@@ -160,19 +182,29 @@ export function App() {
             ) : result ? (
               <>
                 <p className={`status ${valid ? 'status-ok' : 'status-error'}`} role="status">
-                  {valid ? 'Valid' : 'Invalid'} · {errors} errors · {warnings} warnings · spec{' '}
-                  {result.spec} · {result.stats.tokens} tokens, {result.stats.groups} groups,{' '}
-                  {result.stats.aliases} aliases
+                  <span className="verdict">{valid ? 'Valid' : 'Invalid'}</span> ·{' '}
+                  <span className={errors > 0 ? 'stat-error' : 'stat-clear'}>{errors} errors</span>{' '}
+                  ·{' '}
+                  <span className={warnings > 0 ? 'stat-warning' : 'stat-clear'}>
+                    {warnings} warnings
+                  </span>{' '}
+                  · <span className="stat-spec">spec {result.spec}</span> ·{' '}
+                  <span className="stat-count">
+                    {result.stats.tokens} tokens, {result.stats.groups} groups,{' '}
+                    {result.stats.aliases} aliases
+                  </span>
                   {lintResult && lintResult.skipped.length > 0
                     ? ` · ${lintResult.skipped.length} rule checks skipped on invalid nodes`
                     : ''}
                 </p>
-                <IssueList rows={rows} positions={positions} onSelect={select} />
+                <ScrollPanel>
+                  <IssueList rows={rows} positions={positions} onSelect={select} />
+                </ScrollPanel>
               </>
             ) : null}
           </div>
-        </section>
-      </div>
+        </WorkspacePanel>
+      </Tabs.Root>
     </main>
   );
 }

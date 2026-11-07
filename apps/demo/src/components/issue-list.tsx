@@ -1,3 +1,4 @@
+import { Button } from '@base-ui/react/button';
 import type { LintIssue, ValidationIssue } from 'open-design-tokens';
 import type { PositionIndex } from '../lib/positions.js';
 
@@ -25,8 +26,7 @@ export function IssueList({ rows, positions, onSelect }: Props) {
             key={`${source}|${issue.path.pointer}|${issue.code}|${issue.message}`}
             className="issue"
           >
-            <button
-              type="button"
+            <Button
               className="issue-button"
               onClick={() => pos && onSelect(pos.offset, pos.length)}
               title={pos ? 'Select in editor' : 'Position unknown'}
@@ -37,7 +37,7 @@ export function IssueList({ rows, positions, onSelect }: Props) {
               <code className="path">{issue.path.dot || '(root)'}</code>
               <span className="message">{issue.message}</span>
               <code className="code">{id}</code>
-            </button>
+            </Button>
           </li>
         );
       })}
