@@ -1889,6 +1889,19 @@
               ]
             }
           }
+        },
+        "code": {
+          "$type": "fontFamily",
+          "$root": {
+            "$value": "IBM Plex Mono"
+          },
+          "$extensions": {
+            "new.bezel.app": {
+              "exportName": [
+                "font-code"
+              ]
+            }
+          }
         }
       }
     },

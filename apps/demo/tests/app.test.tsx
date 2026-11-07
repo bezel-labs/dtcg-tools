@@ -1,6 +1,7 @@
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { App } from '../src/app.js';
+import { EXAMPLE_GROUPS } from '../src/examples.js';
 
 describe('playground', () => {
   beforeEach(() => vi.useFakeTimers());
@@ -13,6 +14,56 @@ describe('playground', () => {
   const workspace = () => within(document.querySelector('.workspace') as HTMLElement);
 
   const settle = () => act(() => vi.advanceTimersByTime(200));
+
+  it('names the h1 with readable text, not the ASCII logo', () => {
+    render(<App />);
+    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain('Open Design Tokens');
+    expect(screen.getByRole('heading', { level: 1, name: /^Open Design Tokens/ })).toBeTruthy();
+  });
+
+  it('keeps one example group open at a time', () => {
+    render(<App />);
+    const area = (title: string) =>
+      screen.getByText(title).closest('details') as HTMLDetailsElement;
+    const toggle = (el: HTMLDetailsElement) => fireEvent(el, new Event('toggle'));
+    const fullProject = area('Full project');
+    const groups = area('Groups');
+    expect(fullProject.open).toBe(true);
+
+    // The browser opens the clicked group and fires its toggle event.
+    groups.open = true;
+    toggle(groups);
+    expect(fullProject.open).toBe(false);
+
+    // The group React just closed fires its own toggle, which must not clear the new one.
+    toggle(fullProject);
+    expect(groups.open).toBe(true);
+    expect(fullProject.open).toBe(false);
+
+    // Clicking the open group closes it, leaving none open.
+    groups.open = false;
+    toggle(groups);
+    expect(groups.open).toBe(false);
+    expect(fullProject.open).toBe(false);
+  });
+
+  it('lists Full project first, then the example groups in spec section order', () => {
+    const [first, ...rest] = EXAMPLE_GROUPS;
+    expect(first?.area).toBe('Full project');
+    const sections = rest.map((group) => /§([\d.]+)/.exec(group.spec)?.[1] ?? '');
+    const sorted = [...sections].sort((a, b) => a.localeCompare(b, 'en', { numeric: true }));
+    expect(sections).toEqual(sorted);
+  });
+
+  it('marks each example valid or invalid from the validator result', () => {
+    render(<App />);
+    const pill = (title: string) =>
+      screen.getByText(title).closest('li')?.querySelector('.pill')?.textContent;
+    expect(pill('Empty document')).toBe('Valid');
+    expect(pill('Root is not an object')).toBe('Invalid');
+    // Lists a code in `expect`, but it is only a warning.
+    expect(pill('Unknown $-property')).toBe('Valid');
+  });
 
   it('validates the default sample as valid', () => {
     render(<App />);

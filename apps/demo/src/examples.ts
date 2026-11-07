@@ -172,6 +172,135 @@ export const EXAMPLE_GROUPS: ExampleGroup[] = [
     ],
   },
   {
+    area: 'Group extension',
+    spec: '§6.4 $extends',
+    examples: [
+      {
+        title: 'Extend and override',
+        description:
+          'The extending group inherits tokens and $type; local tokens replace inherited ones at the same path.',
+        expect: [],
+        json: j({
+          button: {
+            $type: 'color',
+            bg: { $value: { colorSpace: 'srgb', components: [0, 0.4, 0.8] } },
+          },
+          'button-primary': {
+            $extends: '{button}',
+            bg: { $value: { colorSpace: 'srgb', components: [0.8, 0, 0.4] } },
+          },
+          link: { $value: '{button-primary.bg}' },
+        }),
+      },
+      {
+        title: 'Missing target and token target',
+        description: '$extends must reference an existing group, not a token.',
+        expect: ['extends.target.missing', 'extends.target.not-group'],
+        json: j({
+          t: { $type: 'number', $value: 1 },
+          a: { $extends: '{nope}' },
+          b: { $extends: '{t}' },
+        }),
+      },
+      {
+        title: 'Circular extension',
+        description: 'Groups cannot extend themselves, an ancestor, or each other.',
+        expect: ['extends.cycle', 'extends.cycle'],
+        json: j({ a: { $extends: '{b}' }, b: { $extends: '{a}' } }),
+      },
+      {
+        title: 'Inherited token invalid in the new group',
+        description: 'An inherited color token under a group typed dimension is invalid there.',
+        expect: ['extends.inherited-token.invalid'],
+        json: j({
+          base: { $type: 'color', c: { $value: { colorSpace: 'srgb', components: [0, 0, 0] } } },
+          ext: { $extends: '{base}', $type: 'dimension' },
+        }),
+      },
+    ],
+  },
+  {
+    area: 'Aliases',
+    spec: '§7.1.1 Curly braces',
+    examples: [
+      {
+        title: 'Alias and chained alias',
+        description: 'Aliases resolve to tokens; untyped aliases take the type of the chain end.',
+        expect: [],
+        json: j({
+          base: { $type: 'number', $value: 1 },
+          a: { $value: '{base}' },
+          b: { $value: '{a}' },
+        }),
+      },
+      {
+        title: 'Missing target and group target',
+        description:
+          'Targets must exist and be tokens; a group cannot be aliased (use {group.$root}).',
+        expect: ['alias.target.missing', 'alias.target.not-token'],
+        json: j({
+          g: { $type: 'number', t: { $value: 1 } },
+          a: { $value: '{nope}' },
+          b: { $value: '{g}' },
+        }),
+      },
+      {
+        title: 'Circular aliases',
+        description: 'Every token in the cycle is reported, plus any token aliasing into it.',
+        expect: ['alias.cycle', 'alias.cycle', 'alias.cycle'],
+        json: j({ a: { $value: '{b}' }, b: { $value: '{a}' }, c: { $value: '{a}' } }),
+      },
+      {
+        title: 'Type mismatch',
+        description: 'A declared or inherited type must match the resolved target type.',
+        expect: ['alias.type.mismatch'],
+        json: j({ n: { $type: 'number', $value: 1 }, c: { $type: 'color', $value: '{n}' } }),
+      },
+      {
+        title: 'Malformed alias',
+        description: 'Alias-shaped strings must follow {group.token} with non-empty segments.',
+        expect: ['alias.syntax.invalid'],
+        json: j({ a: { $type: 'number', $value: 1 }, b: { $type: 'number', $value: '{a..}' } }),
+      },
+    ],
+  },
+  {
+    area: 'JSON pointer references',
+    spec: '§7.1.2 $ref',
+    examples: [
+      {
+        title: 'Whole-value and fragment references',
+        description:
+          '$ref may replace $value (reference node) or appear as the value; fragments are typed by the referencing token.',
+        expect: [],
+        json: j({
+          colors: {
+            blue: { $type: 'color', $value: { colorSpace: 'srgb', components: [0, 0.4, 0.8] } },
+          },
+          primary: { $ref: '#/colors/blue/$value', $type: 'color' },
+          red: { $type: 'number', $value: { $ref: '#/colors/blue/$value/components/0' } },
+        }),
+      },
+      {
+        title: 'Non-local reference',
+        description:
+          'Only "#/..." pointers inside the document are followed; nothing is ever fetched.',
+        expect: ['ref.not-local'],
+        json: j({ n: { $type: 'number', $value: { $ref: 'https://example.com/tokens.json#/n' } } }),
+      },
+      {
+        title: 'Missing target and bad fragment type',
+        description: "The pointer must resolve; a fragment is validated against the token's type.",
+        expect: ['ref.target.missing', 'number.value.not-number'],
+        json: j({
+          c: { $type: 'color', $value: { colorSpace: 'srgb', components: [0, 0, 0] } },
+          a: { $type: 'number', $value: { $ref: '#/missing' } },
+          b: { $type: 'number', $value: { $ref: '#/c/$value/colorSpace' } },
+        }),
+      },
+    ],
+  },
+  {
     area: 'Color',
     spec: '§8.1 / Color Module 2025.10',
     examples: [
@@ -323,135 +452,6 @@ export const EXAMPLE_GROUPS: ExampleGroup[] = [
         description: 'A number token value must be a JSON number.',
         expect: ['number.value.not-number'],
         json: j({ n: { $type: 'number', $value: '2' } }),
-      },
-    ],
-  },
-  {
-    area: 'Aliases',
-    spec: '§7.1.1 Curly braces',
-    examples: [
-      {
-        title: 'Alias and chained alias',
-        description: 'Aliases resolve to tokens; untyped aliases take the type of the chain end.',
-        expect: [],
-        json: j({
-          base: { $type: 'number', $value: 1 },
-          a: { $value: '{base}' },
-          b: { $value: '{a}' },
-        }),
-      },
-      {
-        title: 'Missing target and group target',
-        description:
-          'Targets must exist and be tokens; a group cannot be aliased (use {group.$root}).',
-        expect: ['alias.target.missing', 'alias.target.not-token'],
-        json: j({
-          g: { $type: 'number', t: { $value: 1 } },
-          a: { $value: '{nope}' },
-          b: { $value: '{g}' },
-        }),
-      },
-      {
-        title: 'Circular aliases',
-        description: 'Every token in the cycle is reported, plus any token aliasing into it.',
-        expect: ['alias.cycle', 'alias.cycle', 'alias.cycle'],
-        json: j({ a: { $value: '{b}' }, b: { $value: '{a}' }, c: { $value: '{a}' } }),
-      },
-      {
-        title: 'Type mismatch',
-        description: 'A declared or inherited type must match the resolved target type.',
-        expect: ['alias.type.mismatch'],
-        json: j({ n: { $type: 'number', $value: 1 }, c: { $type: 'color', $value: '{n}' } }),
-      },
-      {
-        title: 'Malformed alias',
-        description: 'Alias-shaped strings must follow {group.token} with non-empty segments.',
-        expect: ['alias.syntax.invalid'],
-        json: j({ a: { $type: 'number', $value: 1 }, b: { $type: 'number', $value: '{a..}' } }),
-      },
-    ],
-  },
-  {
-    area: 'JSON pointer references',
-    spec: '§7.1.2 $ref',
-    examples: [
-      {
-        title: 'Whole-value and fragment references',
-        description:
-          '$ref may replace $value (reference node) or appear as the value; fragments are typed by the referencing token.',
-        expect: [],
-        json: j({
-          colors: {
-            blue: { $type: 'color', $value: { colorSpace: 'srgb', components: [0, 0.4, 0.8] } },
-          },
-          primary: { $ref: '#/colors/blue/$value', $type: 'color' },
-          red: { $type: 'number', $value: { $ref: '#/colors/blue/$value/components/0' } },
-        }),
-      },
-      {
-        title: 'Non-local reference',
-        description:
-          'Only "#/..." pointers inside the document are followed; nothing is ever fetched.',
-        expect: ['ref.not-local'],
-        json: j({ n: { $type: 'number', $value: { $ref: 'https://example.com/tokens.json#/n' } } }),
-      },
-      {
-        title: 'Missing target and bad fragment type',
-        description: "The pointer must resolve; a fragment is validated against the token's type.",
-        expect: ['ref.target.missing', 'number.value.not-number'],
-        json: j({
-          c: { $type: 'color', $value: { colorSpace: 'srgb', components: [0, 0, 0] } },
-          a: { $type: 'number', $value: { $ref: '#/missing' } },
-          b: { $type: 'number', $value: { $ref: '#/c/$value/colorSpace' } },
-        }),
-      },
-    ],
-  },
-  {
-    area: 'Group extension',
-    spec: '§6.4 $extends',
-    examples: [
-      {
-        title: 'Extend and override',
-        description:
-          'The extending group inherits tokens and $type; local tokens replace inherited ones at the same path.',
-        expect: [],
-        json: j({
-          button: {
-            $type: 'color',
-            bg: { $value: { colorSpace: 'srgb', components: [0, 0.4, 0.8] } },
-          },
-          'button-primary': {
-            $extends: '{button}',
-            bg: { $value: { colorSpace: 'srgb', components: [0.8, 0, 0.4] } },
-          },
-          link: { $value: '{button-primary.bg}' },
-        }),
-      },
-      {
-        title: 'Missing target and token target',
-        description: '$extends must reference an existing group, not a token.',
-        expect: ['extends.target.missing', 'extends.target.not-group'],
-        json: j({
-          t: { $type: 'number', $value: 1 },
-          a: { $extends: '{nope}' },
-          b: { $extends: '{t}' },
-        }),
-      },
-      {
-        title: 'Circular extension',
-        description: 'Groups cannot extend themselves, an ancestor, or each other.',
-        expect: ['extends.cycle', 'extends.cycle'],
-        json: j({ a: { $extends: '{b}' }, b: { $extends: '{a}' } }),
-      },
-      {
-        title: 'Inherited token invalid in the new group',
-        description: 'An inherited color token under a group typed dimension is invalid there.',
-        expect: ['extends.inherited-token.invalid'],
-        json: j({
-          base: { $type: 'color', c: { $value: { colorSpace: 'srgb', components: [0, 0, 0] } } },
-          ext: { $extends: '{base}', $type: 'dimension' },
-        }),
       },
     ],
   },

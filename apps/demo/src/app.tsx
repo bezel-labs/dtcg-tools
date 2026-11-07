@@ -4,12 +4,21 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { IssueList, type Row } from './components/issue-list.js';
 import { Toolbar } from './components/toolbar.js';
 import { EXAMPLE_GROUPS, FULL_PROJECT_JSON } from './examples.js';
+import { LOGO_ART } from './lib/logo-art.js';
 import { createPositionIndex } from './lib/positions.js';
 
 /** Inputs above this size are refused before parsing. */
 const MAX_INPUT_BYTES = 2 * 1024 * 1024;
 
 const LINTER = createLinter({ extends: ['recommended'] });
+
+/**
+ * Examples the validator accepts. A non-empty `expect` does not mean invalid,
+ * because some examples only report warnings.
+ */
+const VALID_EXAMPLES = new Set(
+  EXAMPLE_GROUPS.flatMap((group) => group.examples).filter((ex) => validateDtcg(ex.json).valid),
+);
 
 export function App() {
   const [source, setSource] = useState(FULL_PROJECT_JSON);
@@ -76,8 +85,12 @@ export function App() {
   return (
     <main className="app">
       <header className="header">
-        <h1>
-          Open Design Tokens Playground <span className="badge badge-beta">beta</span>
+        <h1 className="logo">
+          <span className="logo-art" aria-hidden="true">
+            {LOGO_ART}
+          </span>
+          <span className="logo-text">Open Design Tokens</span>{' '}
+          <span className="badge badge-beta">beta</span>
         </h1>
         <p>
           TypeScript toolkit for validating and linting DTCG design tokens. <a href="docs/">Docs</a>{' '}
@@ -86,47 +99,62 @@ export function App() {
         </p>
       </header>
       <div className="layout">
-        <aside className="examples">
+        <aside className="examples pane">
           <h2 className="pane-title">Examples by validator</h2>
           <p className="hint">
             Each example is self-contained. Load one into the editor, then edit it to explore the
             rule. The codes listed are what the validator should report.
           </p>
-          {EXAMPLE_GROUPS.map((group) => (
-            <details
-              key={group.area}
-              className="area"
-              open={openArea === group.area}
-              onToggle={(e) => setOpenArea(e.currentTarget.open ? group.area : null)}
-            >
-              <summary>
-                <span className="area-title">{group.area}</span>
-                <span className="area-spec">{group.spec}</span>
-              </summary>
-              <ul className="example-list">
-                {group.examples.map((ex) => (
-                  <li key={ex.title} className="example">
-                    <div className="example-head">
-                      <strong>{ex.title}</strong>
-                      <button type="button" className="load" onClick={() => setSource(ex.json)}>
-                        Load
-                      </button>
-                    </div>
-                    <p className="example-desc">{ex.description}</p>
-                    <p className="example-expect">
-                      Expect:{' '}
-                      {ex.expect.length === 0 ? (
-                        <code className="code-ok">valid</code>
-                      ) : (
-                        <code className="code">{ex.expect.join(', ')}</code>
-                      )}
-                    </p>
-                    <pre className="example-json">{ex.json}</pre>
-                  </li>
-                ))}
-              </ul>
-            </details>
-          ))}
+          <div className="examples-scroll">
+            {EXAMPLE_GROUPS.map((group) => (
+              <details
+                key={group.area}
+                className="area"
+                open={openArea === group.area}
+                onToggle={(e) => {
+                  const isOpen = e.currentTarget.open;
+                  // A group closed by opening another also fires toggle; it must not clear that one.
+                  setOpenArea((current) =>
+                    isOpen ? group.area : current === group.area ? null : current,
+                  );
+                }}
+              >
+                <summary>
+                  <span className="area-title">{group.area}</span>
+                  <span className="area-spec">{group.spec}</span>
+                </summary>
+                <ul className="example-list">
+                  {group.examples.map((ex) => (
+                    <li key={ex.title} className="example">
+                      <div className="example-head">
+                        <div className="example-name">
+                          <strong>{ex.title}</strong>
+                          {VALID_EXAMPLES.has(ex) ? (
+                            <span className="pill pill-valid">Valid</span>
+                          ) : (
+                            <span className="pill pill-invalid">Invalid</span>
+                          )}
+                        </div>
+                        <button type="button" className="load" onClick={() => setSource(ex.json)}>
+                          Load
+                        </button>
+                      </div>
+                      <p className="example-desc">{ex.description}</p>
+                      <p className="example-expect">
+                        Expect:{' '}
+                        {ex.expect.length === 0 ? (
+                          <code className="code-ok">valid</code>
+                        ) : (
+                          <code className="code">{ex.expect.join(', ')}</code>
+                        )}
+                      </p>
+                      <pre className="example-json">{ex.json}</pre>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ))}
+          </div>
         </aside>
         <section className="workspace">
           <div className="pane">
@@ -160,9 +188,17 @@ export function App() {
             ) : result ? (
               <>
                 <p className={`status ${valid ? 'status-ok' : 'status-error'}`} role="status">
-                  {valid ? 'Valid' : 'Invalid'} · {errors} errors · {warnings} warnings · spec{' '}
-                  {result.spec} · {result.stats.tokens} tokens, {result.stats.groups} groups,{' '}
-                  {result.stats.aliases} aliases
+                  <span className="verdict">{valid ? 'Valid' : 'Invalid'}</span> ·{' '}
+                  <span className={errors > 0 ? 'stat-error' : 'stat-clear'}>{errors} errors</span>{' '}
+                  ·{' '}
+                  <span className={warnings > 0 ? 'stat-warning' : 'stat-clear'}>
+                    {warnings} warnings
+                  </span>{' '}
+                  · <span className="stat-spec">spec {result.spec}</span> ·{' '}
+                  <span className="stat-count">
+                    {result.stats.tokens} tokens, {result.stats.groups} groups,{' '}
+                    {result.stats.aliases} aliases
+                  </span>
                   {lintResult && lintResult.skipped.length > 0
                     ? ` · ${lintResult.skipped.length} rule checks skipped on invalid nodes`
                     : ''}
