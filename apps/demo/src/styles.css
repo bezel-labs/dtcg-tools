@@ -137,8 +137,8 @@ a:hover {
   display: none;
   flex: none;
   white-space: pre;
-  /* 172 columns of 0.6em, fit to the width and height, leaving room for the badge. */
-  font-size: min(calc((100vw - var(--size-24)) / 104), 1.5dvh, 12px);
+  /* 172 columns of 0.6em, fit to the width and height. */
+  font-size: min(calc((100vw - var(--size-8)) / 104), 1.5dvh, 12px);
   line-height: 1.143;
 }
 .tagline {
@@ -746,14 +746,6 @@ p.status-error {
 .issue-button:focus-visible .message {
   color: var(--crt-path);
   text-decoration: underline;
-}
-
-.badge-beta {
-  display: inline-block;
-  font-size: 0.65rem;
-  vertical-align: middle;
-  background: var(--secondary);
-  color: var(--secondary-foreground);
 }
 
 /* Keeps fingers on target, and stops iOS zooming when the editor takes focus. */

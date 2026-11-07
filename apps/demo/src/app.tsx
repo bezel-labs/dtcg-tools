@@ -123,8 +123,7 @@ export function App() {
           <span className="logo-art" aria-hidden="true">
             {LOGO_ART}
           </span>
-          <span className="logo-text">Open Design Tokens</span>{' '}
-          <span className="badge badge-beta">beta</span>
+          <span className="logo-text">Open Design Tokens</span>
         </h1>
         <p>
           <span className="tagline">
