@@ -2,6 +2,9 @@
  * CRT terminal crossed with an 80s anime title card.
  * Every color and font comes from the Bezel tokens in ./bezel/variables.css.
  * The aliases below only say which token plays which role on the screen.
+ *
+ * Mobile first: base rules are for phones, and min-width queries add to them.
+ * Breakpoints: 700px (ASCII logo fits), 1000px (panels sit side by side).
  */
 :root {
   color-scheme: dark;
@@ -100,7 +103,12 @@ a:hover {
   flex-direction: column;
   width: 100%;
   height: 100dvh;
-  padding: var(--size-4);
+  padding: var(--size-2);
+}
+@media (min-width: 700px) {
+  .app {
+    padding: var(--size-4);
+  }
 }
 .header {
   flex: none;
@@ -124,45 +132,41 @@ a:hover {
   background-clip: text;
   filter: drop-shadow(0 0 var(--size-1) color-mix(in oklab, var(--crt-pink) 45%, transparent));
 }
-/* The art is 172 columns of 0.6em. Fit the width and leave room for the badge. */
+/* The h1 text shows on phones. From 700px there is room for the ASCII art. */
 .logo-art {
-  display: block;
+  display: none;
   flex: none;
   white-space: pre;
+  /* 172 columns of 0.6em, fit to the width and height, leaving room for the badge. */
   font-size: min(calc((100vw - var(--size-24)) / 104), 1.5dvh, 12px);
   line-height: 1.143;
 }
-.logo-text {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+.tagline {
+  display: none;
 }
-/* Below this width the art is too small to read, so the h1 text shows instead. */
-@media (max-width: 699px) {
+@media (min-width: 700px) {
   .logo-art {
-    display: none;
+    display: block;
   }
   .logo-text {
-    position: static;
-    width: fit-content;
-    height: auto;
-    overflow: visible;
-    clip-path: none;
-    white-space: normal;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .tagline {
+    display: inline;
   }
 }
 .header p {
-  margin: 0 0 var(--size-3);
+  margin: 0 0 var(--size-2);
   color: var(--crt-dim);
 }
-.header::after {
-  content: "";
-  display: block;
+.header-stripes {
   height: var(--size-3-5);
-  margin-bottom: var(--size-5);
+  margin-bottom: var(--size-3);
   background: var(--crt-spectrum);
   /* Three stripes, thinning downward. Only the mask's alpha matters. */
   mask-image: linear-gradient(
@@ -174,36 +178,118 @@ a:hover {
     var(--crt-ink) 12px 14px
   );
 }
+/* Short screens, like a phone on its side, keep every line for the panels. */
+@media (max-height: 500px) {
+  .header p,
+  .header-stripes {
+    display: none;
+  }
+}
 
-/* Two halves: examples left, workspace right. Stacked on narrow screens. */
+/* Phones and tablets: one panel at a time behind tabs. Wide: every panel visible. */
 .layout {
   flex: 1;
   min-height: 0;
-  display: grid;
-  gap: var(--size-5);
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: minmax(0, 2fr) minmax(0, 3fr);
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-3);
   /* Room for the titles on the panes' top borders and the pane shadows. */
-  padding: var(--size-2) var(--size-1) var(--size-1) 0;
+  padding: 0 var(--size-1) var(--size-1) 0;
+}
+.tabs {
+  flex: none;
+  display: flex;
+  gap: var(--size-1);
+  border-bottom: var(--border-default) solid var(--crt-frame);
+}
+.tab {
+  flex: 1;
+  min-height: var(--size-11);
+  padding: var(--size-1) var(--size-2);
+  border: var(--border-default) solid var(--crt-frame);
+  border-bottom: 0;
+  background: transparent;
+  color: var(--crt-text);
+  font: inherit;
+  cursor: pointer;
+}
+.tab[data-active] {
+  background: var(--crt-highlight);
+  color: var(--crt-ink);
+  font-weight: 700;
+}
+.tab[data-active] span {
+  color: inherit;
+}
+.tab:focus-visible {
+  outline-offset: calc(var(--border-2) * -1);
+}
+.tab-panel {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--size-2);
+  outline: none;
+}
+.tab-panel:not(.tab-panel-active) {
+  display: none;
 }
 @media (min-width: 1000px) {
   .layout {
+    display: grid;
+    gap: var(--size-3) var(--size-5);
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-template-rows: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 3fr) minmax(0, 2fr);
+  }
+  .tabs {
+    display: none;
+  }
+  .tab-panel:not(.tab-panel-active) {
+    display: flex;
+  }
+  .tab-panel-examples {
+    grid-column: 1;
+    grid-row: 1 / -1;
+  }
+  .tab-panel-editor {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .tab-panel-results {
+    grid-column: 2;
+    grid-row: 2;
   }
 }
-.examples-scroll {
+
+/* Base UI scroll areas, with a square terminal scrollbar that stays visible. */
+.scroll-panel {
+  position: relative;
   flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  padding-right: var(--size-1);
 }
-.workspace {
-  min-height: 0;
-  display: grid;
-  gap: var(--size-6);
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: minmax(0, 3fr) minmax(0, 2fr);
+.scroll-panel-viewport {
+  height: 100%;
+  overscroll-behavior: contain;
+  padding-right: var(--size-3);
+  outline-offset: calc(var(--border-2) * -1);
+}
+.scroll-panel-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: var(--size-1-5);
+  background: var(--crt-well);
+}
+.scroll-panel-thumb {
+  width: 100%;
+  background: var(--crt-frame);
+}
+.scroll-panel-thumb:hover,
+.scroll-panel-thumb[data-scrolling] {
+  background: var(--crt-highlight);
 }
 
 /* Panes are terminal frames with the title sitting on the top border. */
@@ -211,6 +297,7 @@ a:hover {
   position: relative;
   display: flex;
   flex-direction: column;
+  flex: 1;
   min-height: 0;
   border: var(--border-default) solid var(--crt-frame);
   box-shadow: var(--size-1) var(--size-1) 0 var(--crt-shadow);
@@ -223,7 +310,11 @@ a:hover {
   font-weight: 400;
   color: var(--crt-text);
 }
-.pane > .pane-title {
+.editor-field {
+  display: contents;
+}
+.pane > .pane-title,
+.editor-field > .pane-title {
   position: absolute;
   top: -0.75em;
   left: var(--size-3);
@@ -343,12 +434,7 @@ p.status-error {
   padding: 0;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  align-content: start;
   gap: var(--size-2);
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  padding-right: var(--size-1);
 }
 .issue {
   display: grid;
@@ -390,15 +476,21 @@ p.status-error {
 }
 
 /* Examples */
-.hint {
-  color: var(--crt-dim);
-  margin: 0 0 var(--size-3);
-}
 .area {
   border: var(--border-default) solid var(--crt-frame);
   margin-bottom: var(--size-2);
 }
-.area summary {
+.area-header {
+  margin: 0;
+  font: inherit;
+}
+.area-trigger {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   cursor: pointer;
   padding: var(--size-1-5) var(--size-3);
   display: flex;
@@ -406,11 +498,15 @@ p.status-error {
   gap: 0 var(--size-3);
   align-items: baseline;
 }
-.area summary:hover {
+.area-trigger:hover {
   background: color-mix(in oklab, var(--crt-frame) 25%, transparent);
 }
+/* Inset, because the scrolling column would clip an outline outside the row. */
+.area-trigger:focus-visible {
+  outline-offset: calc(var(--border-2) * -1);
+}
 /* The open group reads like the selected row of a terminal list. */
-.area[open] summary {
+.area-trigger[data-panel-open] {
   background: var(--crt-highlight);
   color: var(--crt-ink);
 }
@@ -421,8 +517,21 @@ p.status-error {
   color: var(--crt-dim);
   font-size: 0.85rem;
 }
-.area[open] .area-spec {
+.area-trigger[data-panel-open] .area-spec {
   color: var(--crt-ink);
+}
+.area-panel {
+  height: var(--accordion-panel-height);
+  overflow: hidden;
+}
+.area-panel[data-starting-style],
+.area-panel[data-ending-style] {
+  height: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .area-panel {
+    transition: height 120ms ease-out;
+  }
 }
 .example-list {
   list-style: none;
@@ -443,9 +552,10 @@ p.status-error {
 }
 .example-head {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: var(--size-3);
+  gap: var(--size-2) var(--size-3);
 }
 .example-name {
   display: flex;
@@ -525,6 +635,9 @@ p.status-error {
   color: var(--crt-text);
   cursor: pointer;
 }
+.toggle-label {
+  cursor: pointer;
+}
 .load,
 .toolbar button {
   box-shadow: var(--size-0-5) var(--size-0-5) 0 var(--crt-shadow);
@@ -569,10 +682,28 @@ p.status-error {
   gap: var(--size-1-5);
   align-items: center;
 }
-.toggle input {
-  accent-color: var(--crt-pass);
+.checkbox {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-4);
+  height: var(--size-4);
+  border: var(--border-default) solid var(--crt-frame);
+  background: var(--crt-well);
+  cursor: pointer;
 }
-.toolbar .toggle:has(input:checked) {
+.checkbox[data-checked] {
+  border-color: var(--crt-pass);
+  background: var(--crt-pass);
+}
+.checkbox-mark {
+  color: var(--crt-ink);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+.toolbar .toggle:has([data-checked]) {
   border-color: var(--crt-pass);
   color: var(--crt-pass);
 }
@@ -623,4 +754,20 @@ p.status-error {
   vertical-align: middle;
   background: var(--secondary);
   color: var(--secondary-foreground);
+}
+
+/* Keeps fingers on target, and stops iOS zooming when the editor takes focus. */
+@media (pointer: coarse) {
+  .load,
+  .toolbar button,
+  .toolbar .toggle,
+  .area-trigger {
+    min-height: var(--size-11);
+  }
+}
+@media (max-width: 699px) {
+  .editor-highlight,
+  .editor-input {
+    font-size: 16px;
+  }
 }

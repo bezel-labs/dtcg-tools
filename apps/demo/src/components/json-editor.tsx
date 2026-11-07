@@ -1,3 +1,4 @@
+import { Field } from '@base-ui/react/field';
 import { type Ref, type UIEvent, useRef } from 'react';
 import { HighlightedJson } from './code-preview.js';
 
@@ -36,15 +37,19 @@ export function JsonEditor({ id, ref, value, onChange }: Props) {
         {/* Lets this layer scroll as far as the textarea when it has a scrollbar. */}
         {'\n'}
       </pre>
-      <textarea
+      <Field.Control
         id={id}
-        ref={ref}
-        className="editor-input"
-        spellCheck={false}
-        wrap="off"
         value={value}
-        onChange={(event) => onChange(event.target.value)}
-        onScroll={syncScroll}
+        onValueChange={(next) => onChange(next)}
+        render={
+          <textarea
+            ref={ref}
+            className="editor-input"
+            spellCheck={false}
+            wrap="off"
+            onScroll={syncScroll}
+          />
+        }
       />
     </div>
   );
