@@ -17,7 +17,11 @@
       "!**/out",
       "!**/.source",
       "!**/next-env.d.ts",
-      "!.changeset"
+      "!.changeset",
+      "!apps/demo/.claude",
+      "!apps/demo/.mcp.json",
+      "!apps/demo/design-tokens.json",
+      "!apps/demo/design-tokens-lock.json"
     ]
   },
   "formatter": {
