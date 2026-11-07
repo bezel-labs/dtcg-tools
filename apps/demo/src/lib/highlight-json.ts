@@ -3,14 +3,7 @@ import Prism from 'prismjs/components/prism-core';
 import 'prismjs/components/prism-json';
 import type { Grammar, TokenStream } from 'prismjs';
 
-export type JsonTokenKind =
-  | 'key'
-  | 'dtcg-key'
-  | 'string'
-  | 'number'
-  | 'literal'
-  | 'punctuation'
-  | 'plain';
+export type JsonTokenKind = 'key' | 'dtcg-key' | 'string' | 'number' | 'literal' | 'plain';
 
 export interface JsonToken {
   text: string;
@@ -23,8 +16,6 @@ const KIND_BY_PRISM_TYPE: Record<string, JsonTokenKind> = {
   number: 'number',
   boolean: 'literal',
   null: 'literal',
-  punctuation: 'punctuation',
-  operator: 'punctuation',
 };
 
 const flatten = (stream: TokenStream, kind: JsonTokenKind): JsonToken[] => {
@@ -36,12 +27,21 @@ const flatten = (stream: TokenStream, kind: JsonTokenKind): JsonToken[] => {
 /**
  * Splits JSON into colorable tokens, without producing HTML. Joining every
  * token's text gives back the source exactly, and broken JSON is fine.
+ *
+ * Punctuation and whitespace merge into `plain` runs. They are most of a token
+ * file, and rendering them as text instead of spans keeps the DOM small.
  */
 export function highlightJson(source: string): JsonToken[] {
   const stream = Prism.tokenize(source, Prism.languages.json as Grammar);
-  return flatten(stream, 'plain').map(({ text, kind }) => ({
-    text,
-    // DTCG reserves $-prefixed keys, which are what the examples teach.
-    kind: kind === 'key' && text.startsWith('"$') ? 'dtcg-key' : kind,
-  }));
+  const tokens: JsonToken[] = [];
+  for (const { text, kind } of flatten(stream, 'plain')) {
+    const previous = tokens.at(-1);
+    if (kind === 'plain' && previous?.kind === 'plain') {
+      previous.text += text;
+    } else {
+      // DTCG reserves $-prefixed keys, which are what the examples teach.
+      tokens.push({ text, kind: kind === 'key' && text.startsWith('"$') ? 'dtcg-key' : kind });
+    }
+  }
+  return tokens;
 }

@@ -353,7 +353,6 @@ a:hover {
   overflow: hidden;
   /* Lets this layer scroll as far as the textarea when it has a scrollbar. */
   padding-right: var(--size-8);
-  color: var(--crt-text);
   pointer-events: none;
 }
 .editor-input {
@@ -603,6 +602,11 @@ p.status-error {
   overflow-x: auto;
   max-height: var(--size-60);
 }
+/* Punctuation and whitespace are plain text, so they take this color. */
+.editor-highlight,
+.example-json {
+  color: var(--digital-blue-400);
+}
 .tok-key {
   color: var(--digital-blue-300);
 }
@@ -617,9 +621,6 @@ p.status-error {
 }
 .tok-literal {
   color: var(--lemon-pastel-400);
-}
-.tok-punctuation {
-  color: var(--digital-blue-400);
 }
 
 /* Buttons are flat cels with a hard shadow, and press into the page. */

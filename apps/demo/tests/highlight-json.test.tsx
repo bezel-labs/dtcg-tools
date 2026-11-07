@@ -19,10 +19,13 @@ describe('highlightJson', () => {
     expect(textsOf(source, 'string')).toEqual(['"color"', '"a"']);
   });
 
-  it('labels numbers, literals, and punctuation', () => {
+  it('labels numbers and literals', () => {
     expect(textsOf(source, 'number')).toEqual(['-1.5']);
     expect(textsOf(source, 'literal')).toEqual(['true', 'null']);
-    expect(textsOf('{"a":[]}', 'punctuation')).toEqual(['{', ':', '[', ']', '}']);
+  });
+
+  it('merges punctuation and whitespace into one plain run', () => {
+    expect(textsOf('{ "a": [ ] }', 'plain')).toEqual(['{ ', ': [ ] }']);
   });
 
   it('gives back every example exactly', () => {
@@ -92,6 +95,11 @@ describe('JsonEditor', () => {
 
 describe('CodePreview', () => {
   afterEach(cleanup);
+
+  it('renders punctuation as text, so the DOM stays small', () => {
+    const { container } = render(<CodePreview source={'{ "a": [ 1 ] }'} />);
+    expect(container.querySelectorAll('span')).toHaveLength(2);
+  });
 
   it('renders colored spans and treats markup in the source as text', () => {
     const source = '{"$value":"<img src=x onerror=alert(1)>"}';

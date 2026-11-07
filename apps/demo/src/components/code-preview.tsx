@@ -9,12 +9,16 @@ interface Props {
 export const HighlightedJson = memo(function HighlightedJson({ source }: Props) {
   return (
     <>
-      {highlightJson(source).map(({ text, kind }, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: index keys reuse spans while typing; offset keys would rebuild them all.
-        <span key={index} className={`tok-${kind}`}>
-          {text}
-        </span>
-      ))}
+      {highlightJson(source).map(({ text, kind }, index) =>
+        kind === 'plain' ? (
+          text
+        ) : (
+          // biome-ignore lint/suspicious/noArrayIndexKey: index keys reuse spans while typing; offset keys would rebuild them all.
+          <span key={index} className={`tok-${kind}`}>
+            {text}
+          </span>
+        ),
+      )}
     </>
   );
 });
