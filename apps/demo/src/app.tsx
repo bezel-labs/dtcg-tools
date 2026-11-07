@@ -1,7 +1,9 @@
 import { createLinter, type LintResult } from 'open-design-tokens/linter';
 import { type ValidationResult, validateDtcg } from 'open-design-tokens/validator';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { CodePreview } from './components/code-preview.js';
 import { IssueList, type Row } from './components/issue-list.js';
+import { JsonEditor } from './components/json-editor.js';
 import { Toolbar } from './components/toolbar.js';
 import { EXAMPLE_GROUPS, FULL_PROJECT_JSON } from './examples.js';
 import { LOGO_ART } from './lib/logo-art.js';
@@ -101,10 +103,7 @@ export function App() {
       <div className="layout">
         <aside className="examples pane">
           <h2 className="pane-title">Examples by validator</h2>
-          <p className="hint">
-            Each example is self-contained. Load one into the editor, then edit it to explore the
-            rule. The codes listed are what the validator should report.
-          </p>
+
           <div className="examples-scroll">
             {EXAMPLE_GROUPS.map((group) => (
               <details
@@ -148,7 +147,7 @@ export function App() {
                           <code className="code">{ex.expect.join(', ')}</code>
                         )}
                       </p>
-                      <pre className="example-json">{ex.json}</pre>
+                      <CodePreview source={ex.json} />
                     </li>
                   ))}
                 </ul>
@@ -168,14 +167,7 @@ export function App() {
             <label className="pane-title" htmlFor="editor">
               tokens.json
             </label>
-            <textarea
-              id="editor"
-              ref={editorRef}
-              className="editor"
-              spellCheck={false}
-              value={source}
-              onChange={(e) => setSource(e.target.value)}
-            />
+            <JsonEditor id="editor" ref={editorRef} value={source} onChange={setSource} />
           </div>
           <div className="pane">
             <h2 className="pane-title">

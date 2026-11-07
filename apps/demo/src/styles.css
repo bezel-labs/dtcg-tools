@@ -231,23 +231,54 @@ a:hover {
   padding: 0 var(--size-1-5);
   background: var(--crt-bg);
 }
+/* A transparent textarea over a colored copy. Text metrics must match exactly. */
 .editor {
-  display: block;
-  flex: 1;
-  min-height: 0;
-  width: 100%;
-  resize: none;
   position: relative;
   z-index: var(--crt-above-scanlines);
-  font-family: var(--crt-code-font);
-  font-size: 14px;
-  line-height: 1.6;
+  flex: 1;
+  min-height: 0;
   background: var(--crt-well);
-  color: var(--crt-text);
-  caret-color: var(--crt-pass);
   border: var(--border-default) solid var(--crt-frame);
+}
+.editor-highlight,
+.editor-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border: 0;
   border-radius: var(--radius-none);
   padding: var(--size-2);
+  font-family: var(--crt-code-font);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: normal;
+  tab-size: 2;
+  white-space: pre;
+}
+.editor-highlight {
+  overflow: hidden;
+  /* Lets this layer scroll as far as the textarea when it has a scrollbar. */
+  padding-right: var(--size-8);
+  color: var(--crt-text);
+  pointer-events: none;
+}
+.editor-input {
+  overflow: auto;
+  resize: none;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--crt-pass);
+}
+.editor-input:focus-visible {
+  outline-offset: calc(var(--border-2) * -1);
+}
+/* Translucent, so the colored text underneath stays visible while selected. */
+.editor-input::selection {
+  background: color-mix(in oklab, var(--crt-path) 35%, transparent);
+  color: transparent;
 }
 
 /* Status line: each reading has its own color, like a system monitor legend. */
@@ -461,6 +492,24 @@ p.status-error {
   line-height: 1.6;
   overflow-x: auto;
   max-height: var(--size-60);
+}
+.tok-key {
+  color: var(--digital-blue-300);
+}
+.tok-dtcg-key {
+  color: var(--vibrant-violet-300);
+}
+.tok-string {
+  color: var(--neon-green-300);
+}
+.tok-number {
+  color: var(--vibrant-orange-300);
+}
+.tok-literal {
+  color: var(--lemon-pastel-400);
+}
+.tok-punctuation {
+  color: var(--digital-blue-400);
 }
 
 /* Buttons are flat cels with a hard shadow, and press into the page. */
