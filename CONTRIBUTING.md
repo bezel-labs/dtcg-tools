@@ -13,7 +13,7 @@ git clone https://github.com/bezel-labs/open-design-tokens.git
 cd open-design-tokens
 npm ci
 npx turbo run lint typecheck test build
-npm run dev   # playground at http://localhost:5173
+npm run dev   # site at http://localhost:5173, playground at /playground/
 ```
 
 Requirements: Node 20.19 or newer and npm 10.
@@ -27,7 +27,7 @@ Requirements: Node 20.19 or newer and npm 10.
 | `packages/open-design-tokens/src/linter`    | Configurable policy rules, presets, formatters, config loading, CLI support.                                                |
 | `packages/open-design-tokens/tests`         | Unit, fixture, security, style, and CLI tests.                                                                              |
 | `fixtures/2025.10`                          | Spec-derived fixtures and `manifest.json`; `lint/` holds per-rule pass/fail cases; `samples/` holds the playground files.   |
-| `apps/demo`                                 | The playground (Vite + React). `src/examples.ts` holds the per-validator examples.                                          |
+| `apps/demo`                                 | The landing page and playground (Vite + React). `src/examples.ts` holds the per-validator examples.                         |
 | `scripts`                                   | Maintenance scripts such as the spec-coverage generator.                                                                    |
 | `docs`                                      | Generated and hand-written documentation.                                                                                   |
 

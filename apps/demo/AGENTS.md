@@ -1,11 +1,12 @@
-## UI rules for the playground
+## UI rules for the site
 
+- **Each page is its own HTML entry** (`index.html`, `playground/index.html`, both listed in `vite.config.ts`), so it loads directly from static hosting with no router. A new entry needs the same Content Security Policy, and links go through `src/lib/links.ts` so they work under any base path. Pages share `SiteHeader`.
 - **Build with Base UI.** Use a `@base-ui/react` component whenever one exists for the element (button, tabs, toolbar, field, checkbox, tooltip, scroll area, accordion, and so on), and check its source or types before relying on a behavior. Use plain HTML only when Base UI has no equivalent, such as links and static text.
-- **Check the size of new components first.** `Tooltip` is deliberately not used: it adds about 28 KB gzipped, so hover hints use the `title` attribute.
+- **Check the size of new components first.** `Tooltip` is deliberately not used: it adds about 28 KB gzipped, so hover hints use the `title` attribute. `NavigationMenu` adds about 39 KB, so the header dropdown is built on `Collapsible`.
 - **`Field.Root` wraps only its own label and control.** Any form control inside it, such as a checkbox, registers as the field's control and takes its label.
 - **Style only with the Bezel variables.** Base UI ships no styles. All styling lives in `src/styles.css`, using `var(--...)` from `src/bezel/variables.css` or aliases mixed from them. Do not hard-code colors or fonts.
 - **Every change must be responsive.** Write mobile-first CSS: base rules are for phones, and `min-width` queries add to them. The breakpoints are 700px (ASCII logo fits) and 1000px (panels sit side by side). Below 1000px, panels are tabs.
-- **The page itself never scrolls.** Each panel scrolls inside itself, so new content goes in a pane, using `ScrollPanel` when it can overflow. Nothing may widen the page at any width.
+- **The playground page never scrolls.** Each panel scrolls inside itself, so new content goes in a pane, using `ScrollPanel` when it can overflow. Its `<html>` has the `fixed-page` class; other pages scroll normally. Nothing may widen any page at any width.
 - **Touch targets** are at least `--size-11` under `pointer: coarse`.
 - **Panels stay mounted.** Anything that acts on a panel on another tab, like selecting text in the editor, must switch to that tab first.
 

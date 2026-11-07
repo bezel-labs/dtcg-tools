@@ -1,7 +1,7 @@
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { App } from '../src/app.js';
 import { EXAMPLE_GROUPS } from '../src/examples.js';
+import { PlaygroundPage } from '../src/pages/playground-page.js';
 
 describe('playground', () => {
   beforeEach(() => vi.useFakeTimers());
@@ -15,10 +15,12 @@ describe('playground', () => {
 
   const settle = () => act(() => vi.advanceTimersByTime(200));
 
-  it('names the h1 with readable text, not the ASCII logo', () => {
-    render(<App />);
-    expect(screen.getByRole('heading', { level: 1 }).textContent).toContain('Open Design Tokens');
-    expect(screen.getByRole('heading', { level: 1, name: /^Open Design Tokens/ })).toBeTruthy();
+  it('names the page in its h1 and marks its header link as current', () => {
+    render(<PlaygroundPage />);
+    expect(screen.getByRole('heading', { level: 1, name: 'Playground' })).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Playground' }).getAttribute('aria-current')).toBe(
+      'page',
+    );
   });
 
   describe('responsive panels', () => {
@@ -27,12 +29,12 @@ describe('playground', () => {
       screen.getByRole('tab', { selected: true }).textContent?.replace(/ .*/, '');
 
     it('starts on the editor tab', () => {
-      render(<App />);
+      render(<PlaygroundPage />);
       expect(selected()).toBe('Editor');
     });
 
     it('leaves hiding to CSS, so wide screens can show every panel', () => {
-      render(<App />);
+      render(<PlaygroundPage />);
       for (const name of ['examples', 'editor', 'results']) {
         expect(element(name).hasAttribute('hidden')).toBe(false);
         expect(element(name).hasAttribute('inert')).toBe(false);
@@ -46,7 +48,7 @@ describe('playground', () => {
     });
 
     it('goes to the editor after loading an example', () => {
-      render(<App />);
+      render(<PlaygroundPage />);
       fireEvent.click(screen.getByRole('tab', { name: 'Examples' }));
       const emptyDocument = screen.getByText('Empty document').closest('li') as HTMLElement;
       fireEvent.click(within(emptyDocument).getByRole('button', { name: 'Load', hidden: true }));
@@ -55,7 +57,7 @@ describe('playground', () => {
     });
 
     it('goes to the editor and selects the text when an issue is chosen', () => {
-      render(<App />);
+      render(<PlaygroundPage />);
       fireEvent.click(panel('editor').getByRole('button', { name: 'Invalid sample' }));
       settle();
       fireEvent.click(screen.getByRole('tab', { name: /^Results/ }));
@@ -68,13 +70,13 @@ describe('playground', () => {
     });
 
     it('labels only the editor with tokens.json, not the lint checkbox', () => {
-      render(<App />);
+      render(<PlaygroundPage />);
       expect(screen.getByLabelText('tokens.json').tagName).toBe('TEXTAREA');
       expect(panel('editor').getByRole('checkbox', { name: /^Lint/ })).toBeTruthy();
     });
 
     it('toggles the lint checkbox once per click', () => {
-      render(<App />);
+      render(<PlaygroundPage />);
       const box = panel('editor').getByRole('checkbox');
       fireEvent.click(box);
       expect(box.getAttribute('aria-checked')).toBe('true');
@@ -83,7 +85,7 @@ describe('playground', () => {
     });
 
     it('shows the verdict on the results tab', () => {
-      render(<App />);
+      render(<PlaygroundPage />);
       settle();
       expect(screen.getByRole('tab', { name: 'Results OK' })).toBeTruthy();
       fireEvent.click(panel('editor').getByRole('button', { name: 'Invalid sample' }));
@@ -92,7 +94,7 @@ describe('playground', () => {
     });
 
     it('stops long lines widening a scroll panel', () => {
-      render(<App />);
+      render(<PlaygroundPage />);
       const content = document.querySelector('.scroll-panel [role="presentation"]') as HTMLElement;
       expect(content.style.minWidth).toMatch(/^0/);
     });
@@ -104,7 +106,7 @@ describe('playground', () => {
     const isOpen = (title: string) => trigger(title).getAttribute('aria-expanded') === 'true';
 
     it('keeps one group open at a time, and can close them all', () => {
-      render(<App />);
+      render(<PlaygroundPage />);
       expect(isOpen('Full project')).toBe(true);
 
       fireEvent.click(trigger('Groups'));
@@ -117,7 +119,7 @@ describe('playground', () => {
     });
 
     it('keeps closed groups findable by browser search', () => {
-      render(<App />);
+      render(<PlaygroundPage />);
       const panel = screen.getByText('Root is not an object').closest('.area-panel');
       expect(panel?.getAttribute('hidden')).toBe('until-found');
     });
@@ -132,7 +134,7 @@ describe('playground', () => {
   });
 
   it('marks each example valid or invalid from the validator result', () => {
-    render(<App />);
+    render(<PlaygroundPage />);
     const pill = (title: string) =>
       screen.getByText(title).closest('li')?.querySelector('.pill')?.textContent;
     expect(pill('Empty document')).toBe('Valid');
@@ -142,13 +144,13 @@ describe('playground', () => {
   });
 
   it('validates the default sample as valid', () => {
-    render(<App />);
+    render(<PlaygroundPage />);
     settle();
     expect(screen.getByRole('status').textContent).toContain('Valid');
   });
 
   it('loads the invalid sample and shows issues with positions', () => {
-    render(<App />);
+    render(<PlaygroundPage />);
     settle();
     fireEvent.click(panel('editor').getByRole('button', { name: 'Invalid sample' }));
     settle();
@@ -160,7 +162,7 @@ describe('playground', () => {
   });
 
   it('reports a parse error for broken JSON and formats valid JSON', () => {
-    render(<App />);
+    render(<PlaygroundPage />);
     const editor = screen.getByLabelText('tokens.json') as HTMLTextAreaElement;
     fireEvent.change(editor, { target: { value: '{ "a": ' } });
     settle();
@@ -171,7 +173,7 @@ describe('playground', () => {
   });
 
   it('adds lint findings when the lint toggle is on', () => {
-    render(<App />);
+    render(<PlaygroundPage />);
     const editor = screen.getByLabelText('tokens.json') as HTMLTextAreaElement;
     fireEvent.change(editor, {
       target: { value: '{"a":{"$type":"number","$value":1},"empty":{}}' },

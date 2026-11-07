@@ -21,7 +21,7 @@ npx open-design-tokens tokens.json
   <a href="https://www.bestpractices.dev/projects/16302"><img src="https://img.shields.io/cii/level/16302?style=for-the-badge&label=OpenSSF%20Best%20Practices" alt="OpenSSF Best Practices" /></a>
 </p>
 
-<p align="center">Try it in the <a href="https://opendesigntokens.com/">playground</a>, and read the <a href="https://opendesigntokens.com/docs/">documentation</a>.</p>
+<p align="center">Try it in the <a href="https://opendesigntokens.com/playground/">playground</a>, and read the <a href="https://opendesigntokens.com/docs/">documentation</a>.</p>
 
 Design tokens store colors, spacing, typography, and other design decisions as data that tools can share. The [Design Tokens Community Group](https://www.designtokens.org/) (DTCG) defines a standard JSON format for them. Open Design Tokens tells you whether a file follows that format and your project's own policies. It's free and MIT licensed.
 

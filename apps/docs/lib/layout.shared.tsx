@@ -8,7 +8,7 @@ export function baseOptions(): BaseLayoutProps {
       url: '/',
     },
     links: [
-      { text: 'Playground', url: `${siteUrl}/`, external: true },
+      { text: 'Playground', url: `${siteUrl}/playground/`, external: true },
       { text: 'API reference', url: `${siteUrl}/api/`, external: true },
       {
         text: 'Discussions',
