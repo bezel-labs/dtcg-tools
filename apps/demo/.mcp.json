@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "bezel": {
+      "type": "http",
+      "url": "https://mcp.bezel.new/mcp"
+    }
+  }
+}
