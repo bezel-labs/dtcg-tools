@@ -5,6 +5,8 @@
  *
  * Mobile first: base rules are for phones, and min-width queries add to them.
  * Breakpoints: 700px (ASCII logo fits), 1000px (panels sit side by side).
+ *
+ * Sections: page and header, then the playground, then the landing page.
  */
 :root {
   color-scheme: dark;
@@ -47,13 +49,6 @@
   background: var(--crt-path);
   color: var(--crt-ink);
 }
-/* The page itself never scrolls. Each panel scrolls on its own inside .app. */
-html,
-body {
-  height: 100%;
-  overflow: hidden;
-  overscroll-behavior: none;
-}
 html {
   scrollbar-color: var(--crt-frame) var(--crt-bg);
 }
@@ -61,6 +56,18 @@ body {
   margin: 0;
   background: var(--crt-bg);
   color: var(--crt-text);
+}
+/* The playground never scrolls: each panel scrolls on its own inside .app. */
+html.fixed-page,
+html.fixed-page body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+.fixed-page #root {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
 }
 /* Scanlines and tube vignette. Sits above the page and never takes clicks. */
 body::after {
@@ -88,87 +95,146 @@ a {
 a:hover {
   color: var(--crt-path);
 }
-.header a {
-  color: var(--crt-cyan);
-}
-.header a:hover {
-  color: var(--crt-path);
-}
 :focus-visible {
   outline: var(--border-2) solid var(--crt-path);
   outline-offset: var(--size-0-5);
 }
-.app {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100dvh;
-  padding: var(--size-2);
-}
-@media (min-width: 700px) {
-  .app {
-    padding: var(--size-4);
-  }
-}
-.header {
-  flex: none;
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-/* Title card: the ASCII wordmark lit by the logo gradient, over racing stripes. */
-.logo {
-  display: flex;
-  align-items: flex-end;
-  gap: var(--size-3);
-  margin: 0 0 var(--size-2);
-  font-size: 1.75rem;
-  line-height: 1.15;
+/* Shared header: a terminal menu bar over the logo's racing stripes. */
+.site-header {
+  position: relative;
+  flex: none;
+  background: var(--crt-bg);
 }
-.logo-art,
-.logo-text {
-  width: fit-content;
+/* Scrolling pages keep it in view. Below the scanlines, above the page content. */
+html:not(.fixed-page) .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+.site-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--size-3);
+  padding: var(--size-1-5) var(--size-2);
+}
+@media (min-width: 700px) {
+  .site-header-bar {
+    padding-inline: var(--size-4);
+  }
+}
+.site-logo {
+  flex: none;
   font-weight: 700;
   color: transparent;
   background: var(--crt-spectrum);
   background-clip: text;
+  text-decoration: none;
   filter: drop-shadow(0 0 var(--size-1) color-mix(in oklab, var(--crt-pink) 45%, transparent));
 }
-/* The h1 text shows on phones. From 700px there is room for the ASCII art. */
-.logo-art {
-  display: none;
-  flex: none;
-  white-space: pre;
-  /* 172 columns of 0.6em, fit to the width and height. */
-  font-size: min(calc((100vw - var(--size-8)) / 104), 1.5dvh, 12px);
-  line-height: 1.143;
+.site-nav,
+.menu-list,
+.footer-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.tagline {
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--size-1);
+}
+/* Phones get one Menu. From 700px its links sit in the bar, and from 1000px the version too. */
+.nav-wide,
+.nav-extra-wide {
   display: none;
 }
 @media (min-width: 700px) {
-  .logo-art {
+  .nav-wide {
     display: block;
   }
-  .logo-text {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
-  }
-  .tagline {
-    display: inline;
+  .nav-narrow {
+    display: none;
   }
 }
-.header p {
-  margin: 0 0 var(--size-2);
-  color: var(--crt-dim);
+@media (min-width: 1000px) {
+  .nav-extra-wide {
+    display: block;
+  }
 }
-.header-stripes {
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--size-1);
+  min-height: var(--size-8);
+  padding: var(--size-1) var(--size-2-5);
+  border: 0;
+  background: transparent;
+  color: var(--crt-text);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.nav-link:hover {
+  background: var(--crt-path);
+  color: var(--crt-ink);
+}
+/* The current page and an open menu read like the selected row of a terminal list. */
+.nav-link[aria-current="page"],
+.menu-trigger[data-panel-open] {
+  background: var(--crt-highlight);
+  color: var(--crt-ink);
+  font-weight: 700;
+}
+.nav-version {
+  color: var(--crt-code);
+}
+.menu {
+  position: relative;
+}
+/* Above the editor and the scanlines, because it opens over the playground panes. */
+.menu-panel {
+  position: absolute;
+  top: calc(100% + var(--size-1));
+  right: 0;
+  z-index: 12;
+  width: var(--size-56);
+  max-width: calc(100vw - var(--size-4));
+  max-height: calc(100dvh - var(--size-16));
+  overflow-y: auto;
+  padding: var(--size-1);
+  border: var(--border-default) solid var(--crt-frame);
+  background: var(--crt-bg);
+  box-shadow: var(--size-1) var(--size-1) 0 var(--crt-shadow);
+}
+.menu-link {
+  display: block;
+  padding: var(--size-1-5) var(--size-2-5);
+  color: var(--crt-text);
+  text-decoration: none;
+}
+.menu-link:hover {
+  background: var(--crt-path);
+  color: var(--crt-ink);
+}
+.menu-link[aria-current="page"] {
+  background: var(--crt-highlight);
+  color: var(--crt-ink);
+  font-weight: 700;
+}
+/* Three stripes, thinning downward. Only the mask's alpha matters. */
+.stripes {
   height: var(--size-3-5);
-  margin-bottom: var(--size-3);
   background: var(--crt-spectrum);
-  /* Three stripes, thinning downward. Only the mask's alpha matters. */
   mask-image: linear-gradient(
     to bottom,
     var(--crt-ink) 0 6px,
@@ -180,9 +246,22 @@ a:hover {
 }
 /* Short screens, like a phone on its side, keep every line for the panels. */
 @media (max-height: 500px) {
-  .header p,
-  .header-stripes {
+  .fixed-page .stripes {
     display: none;
+  }
+}
+
+.app {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: var(--size-3) var(--size-2) var(--size-2);
+}
+@media (min-width: 700px) {
+  .app {
+    padding: var(--size-4);
   }
 }
 
@@ -754,7 +833,11 @@ p.status-error {
   .load,
   .toolbar button,
   .toolbar .toggle,
-  .area-trigger {
+  .area-trigger,
+  .nav-link,
+  .menu-link,
+  .button,
+  .command-copy {
     min-height: var(--size-11);
   }
 }
@@ -762,5 +845,347 @@ p.status-error {
   .editor-highlight,
   .editor-input {
     font-size: 16px;
+  }
+}
+
+/* Landing page */
+.landing-section {
+  /* A 1168px content width. The placeholder sizes in landing-page.tsx depend on it. */
+  max-width: calc(var(--size-96) * 3 + var(--size-12));
+  margin-inline: auto;
+  padding: var(--size-10) var(--size-4);
+}
+@media (min-width: 700px) {
+  .landing-section {
+    padding-block: var(--size-16);
+  }
+}
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--size-5);
+  text-align: center;
+}
+/* The header's wordmark does this job on phones, where the ASCII art can't fit. */
+.hero-logo {
+  display: none;
+  font-weight: 700;
+  white-space: pre;
+  text-align: left;
+  /* 172 columns of 0.6em, fit to the width with room for a scrollbar. */
+  font-size: min(calc((100vw - var(--size-8)) / 108), 11px);
+  line-height: 1.143;
+  color: transparent;
+  background: var(--crt-spectrum);
+  background-clip: text;
+  filter: drop-shadow(0 0 var(--size-1) color-mix(in oklab, var(--crt-pink) 45%, transparent));
+}
+@media (min-width: 700px) {
+  .hero-logo {
+    display: block;
+  }
+}
+.hero-badge {
+  padding: var(--size-0-5) var(--size-2-5);
+  border: var(--border-default) solid var(--crt-frame);
+  color: var(--crt-path);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.hero-title {
+  max-width: 22ch;
+  margin: 0;
+  font-size: 2rem;
+  line-height: 1.15;
+  text-wrap: balance;
+  text-shadow: var(--size-1) var(--size-1) 0 var(--crt-shadow);
+}
+.hero-copy {
+  max-width: 60ch;
+  margin: 0;
+  color: var(--crt-dim);
+  font-size: 1.1rem;
+}
+@media (min-width: 700px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+}
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--size-3);
+}
+/* Links dressed as the flat cels the playground uses for buttons. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--size-2) var(--size-4);
+  border: var(--border-default) solid var(--crt-frame);
+  color: var(--crt-text);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--size-1) var(--size-1) 0 var(--crt-shadow);
+}
+.button-primary {
+  border-color: var(--crt-path);
+  background: var(--crt-path);
+  color: var(--crt-ink);
+}
+.button:hover {
+  border-color: var(--crt-pass);
+  background: var(--crt-pass);
+  color: var(--crt-ink);
+}
+.button:active {
+  box-shadow: none;
+  transform: translate(var(--size-1), var(--size-1));
+}
+.command {
+  width: 100%;
+  max-width: calc(var(--size-96) + var(--size-64));
+  text-align: left;
+}
+.command-tabs {
+  display: flex;
+  gap: var(--size-1);
+  border-bottom: var(--border-default) solid var(--crt-frame);
+}
+.command-line {
+  display: flex;
+  align-items: center;
+  gap: var(--size-3);
+  padding: var(--size-2) var(--size-3);
+  border: var(--border-default) solid var(--crt-frame);
+  border-top: 0;
+  background: var(--crt-well);
+}
+.command-text {
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  font-family: var(--crt-code-font);
+  white-space: nowrap;
+  color: var(--crt-pass);
+}
+.command-copy {
+  flex: none;
+  padding: var(--size-1) var(--size-2-5);
+  border: var(--border-default) solid var(--crt-frame);
+  background: transparent;
+  color: var(--crt-text);
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+  box-shadow: var(--size-0-5) var(--size-0-5) 0 var(--crt-shadow);
+}
+.command-copy:hover {
+  border-color: var(--crt-path);
+  background: var(--crt-path);
+  color: var(--crt-ink);
+}
+.command-copy:active {
+  box-shadow: none;
+  transform: translate(var(--size-0-5), var(--size-0-5));
+}
+/* Marks a graphic still to come: a faint crossed box, labeled with the size to make it. */
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--size-1);
+  width: 100%;
+  margin-inline: auto;
+  padding: var(--size-2);
+  border: var(--border-default) dashed color-mix(in oklab, var(--crt-frame) 50%, transparent);
+  background:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 1px),
+      color-mix(in oklab, var(--crt-frame) 18%, transparent) 50%,
+      transparent calc(50% + 1px)
+    ),
+    linear-gradient(
+      to bottom right,
+      transparent calc(50% - 1px),
+      color-mix(in oklab, var(--crt-frame) 18%, transparent) 50%,
+      transparent calc(50% + 1px)
+    ),
+    color-mix(in oklab, var(--crt-frame) 8%, transparent);
+  text-align: center;
+}
+.placeholder-label {
+  color: var(--crt-dim);
+  font-size: 0.85rem;
+}
+.placeholder-size {
+  color: var(--crt-path);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+.stats-section {
+  padding-block: 0;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--size-px);
+  margin: 0;
+  border: var(--border-default) solid var(--crt-frame);
+  background: var(--crt-frame);
+  box-shadow: var(--size-1) var(--size-1) 0 var(--crt-shadow);
+}
+@media (min-width: 700px) {
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--size-1);
+  padding: var(--size-4);
+  background: var(--crt-bg);
+  text-align: center;
+}
+.stat dt {
+  color: var(--crt-dim);
+  font-size: 0.85rem;
+}
+.stat dd {
+  margin: 0;
+  color: var(--crt-path);
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+.section-heading {
+  max-width: 70ch;
+  margin: 0 auto var(--size-8);
+  text-align: center;
+}
+.section-heading h2,
+.closing-content h2 {
+  margin: 0 0 var(--size-2);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  text-wrap: balance;
+  text-shadow: var(--size-0-5) var(--size-0-5) 0 var(--crt-shadow);
+}
+.section-heading p {
+  margin: 0;
+  color: var(--crt-dim);
+}
+@media (min-width: 700px) {
+  .section-heading h2,
+  .closing-content h2 {
+    font-size: 2rem;
+  }
+}
+.feature-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--size-6);
+}
+@media (min-width: 700px) {
+  .feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.feature {
+  gap: var(--size-3);
+  padding-top: var(--size-5);
+}
+.feature > p {
+  margin: 0;
+}
+.feature > :last-child {
+  margin-top: auto;
+}
+.feature strong {
+  color: var(--crt-path);
+}
+.inline-code {
+  color: var(--crt-code);
+  font-family: var(--crt-code-font);
+  overflow-wrap: anywhere;
+}
+.code-block {
+  margin: 0;
+  padding: var(--size-3);
+  overflow-x: auto;
+  border-left: var(--border-4) solid var(--crt-shadow);
+  background: var(--crt-well);
+  color: var(--digital-blue-300);
+  font-family: var(--crt-code-font);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.open-source .section-heading {
+  margin-bottom: var(--size-5);
+}
+/* Text over the background graphic, so the graphic can crop on narrow screens. */
+.closing {
+  display: grid;
+  min-height: var(--size-80);
+}
+.closing > * {
+  grid-area: 1 / 1;
+}
+.closing .placeholder {
+  height: 100%;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.closing-content {
+  align-self: center;
+  justify-self: center;
+  padding: var(--size-6) var(--size-4);
+  text-align: center;
+}
+.closing-content p {
+  margin: 0 0 var(--size-5);
+  color: var(--crt-dim);
+}
+.site-footer-body {
+  max-width: calc(var(--size-96) * 3 + var(--size-12));
+  margin-inline: auto;
+  padding: var(--size-8) var(--size-4);
+}
+.footer-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--size-6);
+}
+@media (min-width: 700px) {
+  .footer-columns {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.footer-title {
+  margin: 0 0 var(--size-2);
+  color: var(--crt-path);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+.footer-links li {
+  margin-bottom: var(--size-1);
+}
+.footer-copyright {
+  margin: var(--size-8) 0 0;
+  color: var(--crt-dim);
+  font-size: 0.85rem;
+}
+@media (pointer: coarse) {
+  .footer-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--size-11);
   }
 }

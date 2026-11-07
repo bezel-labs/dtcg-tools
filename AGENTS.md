@@ -6,7 +6,7 @@ Open Design Tokens: a TypeScript validator and linter for DTCG 2025.10 design to
 
 - `packages/open-design-tokens`: the published package (`src/core`, `src/validator`, `src/linter`, `src/cli.ts`).
 - `fixtures/2025.10`: spec-derived test fixtures, indexed by `manifest.json`.
-- `apps/demo`: the playground (Vite + React), served at opendesigntokens.com.
+- `apps/demo`: the landing page and playground (Vite + React), served at opendesigntokens.com and `/playground/`.
 - `apps/docs`: the docs site (Next.js + Fumadocs, static export), served at `/docs`.
 
 ## Commands
@@ -15,7 +15,7 @@ Open Design Tokens: a TypeScript validator and linter for DTCG 2025.10 design to
 npm ci
 npx turbo run lint typecheck test build   # everything CI runs
 npm run check                             # Biome lint and format
-npm run dev                               # playground
+npm run dev                               # landing page and playground
 npm run docs:dev                          # docs site
 ```
 

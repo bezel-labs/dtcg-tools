@@ -24,7 +24,7 @@ npx dtcg-lint 'tokens/**/*.json' --format github
 ```
 
 - Documentation: https://opendesigntokens.com/docs/
-- Playground: https://opendesigntokens.com/
+- Playground: https://opendesigntokens.com/playground/
 - API reference: https://opendesigntokens.com/api/
 - Source: https://github.com/bezel-labs/open-design-tokens
 
