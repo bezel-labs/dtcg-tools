@@ -118,7 +118,7 @@ export function SiteHeader({ current }: SiteHeaderProps) {
                 v{version}
               </a>
             </li>
-            <li className="nav-wide nav-github">
+            <li className="nav-wide">
               <a className="nav-link" href={LINKS.github}>
                 GitHub
               </a>

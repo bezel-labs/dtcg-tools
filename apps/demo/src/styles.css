@@ -153,12 +153,8 @@ html:not(.fixed-page) .site-header {
 .site-nav {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: var(--size-1);
-}
-/* Primary links sit by the logo, and the rest at the far end of the bar. */
-.nav-narrow,
-.nav-github {
-  margin-left: auto;
 }
 /* Phones get one Menu. From 700px its links sit in the bar, and from 1000px the version too. */
 .nav-wide,
@@ -176,10 +172,6 @@ html:not(.fixed-page) .site-header {
 @media (min-width: 1000px) {
   .nav-extra-wide {
     display: block;
-    margin-left: auto;
-  }
-  .nav-github {
-    margin-left: 0;
   }
 }
 .nav-link {
@@ -226,10 +218,6 @@ html:not(.fixed-page) .site-header {
   border: var(--border-default) solid var(--crt-frame);
   background: var(--crt-bg);
   box-shadow: var(--size-1) var(--size-1) 0 var(--crt-shadow);
-}
-.nav-wide .menu-panel {
-  right: auto;
-  left: 0;
 }
 .menu-link {
   display: block;
@@ -864,10 +852,27 @@ p.status-error {
   }
 }
 
-/* Landing page: thin titled frames, as in the playground, with space between them. */
+/*
+ * Landing page: thin titled frames, as in the playground, with space between them.
+ *
+ * Vertical rhythm: every line height sits on the 4px grid of the size tokens, and
+ * every gap is one of these steps. The closer two things are related, the smaller
+ * the step between them.
+ */
 html:not(.fixed-page) {
   --landing-width: calc(var(--size-96) * 3.5);
   --landing-gutter: var(--size-5);
+  --rhythm-tight: var(--size-2); /* A label and its value. */
+  --rhythm-text: var(--size-4); /* Text within one group. */
+  --rhythm-group: var(--size-8); /* Groups within one section. */
+  --rhythm-section: var(--size-12); /* Sections of the page. */
+  --pane-inset: var(--size-4);
+}
+@media (min-width: 700px) {
+  html:not(.fixed-page) {
+    --rhythm-section: var(--size-24);
+    --pane-inset: var(--size-6);
+  }
 }
 @media (min-width: 1000px) {
   html:not(.fixed-page) {
@@ -889,17 +894,14 @@ html:not(.fixed-page) .stripes {
 .landing {
   display: flex;
   flex-direction: column;
-  gap: var(--size-10);
+  gap: var(--rhythm-section);
   max-width: var(--landing-width);
   margin-inline: auto;
-  padding: var(--size-8) var(--landing-gutter) var(--size-16);
-}
-@media (min-width: 700px) {
-  .landing {
-    gap: var(--size-14);
-  }
+  padding: var(--rhythm-group) var(--landing-gutter) var(--rhythm-section);
+  line-height: var(--size-6);
 }
 .landing .pane {
+  padding: var(--rhythm-group) var(--pane-inset);
   box-shadow: none;
 }
 /* The header's wordmark does this job on phones, where the ASCII art can't fit. */
@@ -909,6 +911,8 @@ html:not(.fixed-page) .stripes {
 @media (min-width: 700px) {
   .masthead {
     display: block;
+    /* The logo and hero read as one section. */
+    margin-bottom: calc(var(--rhythm-group) - var(--rhythm-section));
   }
 }
 .hero-logo {
@@ -925,38 +929,39 @@ html:not(.fixed-page) .stripes {
 .hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--size-8) var(--size-10);
+  gap: var(--rhythm-group) var(--size-10);
 }
 .hero-text {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--size-5);
 }
 .hero-title {
-  margin: 0;
+  margin: 0 0 var(--rhythm-text);
   font-size: 2rem;
-  line-height: 1.1;
+  line-height: var(--size-8);
   letter-spacing: -0.03em;
   text-wrap: balance;
 }
 .hero-copy {
   max-width: 48ch;
-  margin: 0;
+  margin: 0 0 var(--rhythm-group);
   color: var(--crt-dim);
   font-size: 1.1rem;
 }
-/* A fixed height, so a long file or issue list scrolls inside the frame. */
-.hero-media {
-  height: calc(var(--size-96) + var(--size-40));
-  flex: none;
+/* As tall as the text beside it, with this as the least on any screen. */
+.landing .hero-media {
+  min-height: calc(var(--size-96) + var(--size-40));
+  padding: var(--size-6) var(--rhythm-text) var(--rhythm-text);
 }
+/* Size containment stops a long file or issue list growing the frame, so they scroll. */
 .live-check {
+  contain: size;
   flex: 1;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--size-3);
+  gap: var(--rhythm-text);
 }
 /* One scrolling row on narrow screens, so it can't squeeze out the editor. */
 .live-samples {
@@ -1004,7 +1009,7 @@ html:not(.fixed-page) .stripes {
 }
 .live-results .status {
   flex: none;
-  margin-bottom: var(--size-2);
+  margin-bottom: var(--rhythm-tight);
 }
 .live-results .verdict {
   box-shadow: none;
@@ -1016,6 +1021,7 @@ html:not(.fixed-page) .stripes {
 @media (min-width: 700px) {
   .hero-title {
     font-size: 3.25rem;
+    line-height: var(--size-12);
   }
 }
 @media (min-width: 1000px) {
@@ -1027,6 +1033,7 @@ html:not(.fixed-page) .stripes {
   display: flex;
   flex-wrap: wrap;
   gap: var(--size-3);
+  margin-bottom: var(--rhythm-group);
 }
 .button {
   display: inline-flex;
@@ -1047,13 +1054,12 @@ html:not(.fixed-page) .stripes {
   background: var(--crt-pass);
   color: var(--crt-ink);
 }
-/* Sits at the foot of the hero text, level with the bottom of the frame beside it. */
 .command-line {
   display: flex;
   align-items: center;
   gap: var(--size-3);
   width: 100%;
-  margin-top: auto;
+  margin-bottom: var(--rhythm-group);
   padding: var(--size-2) var(--size-3);
   border: var(--border-default) solid var(--crt-frame);
   background: var(--crt-well);
@@ -1081,42 +1087,42 @@ html:not(.fixed-page) .stripes {
   background: var(--crt-path);
   color: var(--crt-ink);
 }
+/* Ends level with the bottom of the frame beside it. */
 .stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--size-4);
-  margin: 0;
-}
-@media (min-width: 700px) {
-  .stats {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
+  align-self: stretch;
+  margin: auto 0 0;
 }
 .stat {
   display: flex;
   flex-direction: column-reverse;
   justify-content: flex-end;
-  gap: var(--size-1);
+  gap: var(--rhythm-tight);
+  padding: var(--rhythm-text);
+  background: color-mix(in oklab, var(--crt-frame) 8%, transparent);
 }
 .stat dt {
   color: var(--crt-dim);
   font-size: 0.85rem;
+  line-height: var(--size-5);
 }
 .stat dd {
   margin: 0;
   color: var(--crt-path);
   font-size: 1.75rem;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: var(--size-8);
 }
 .section-heading {
-  margin-bottom: var(--size-8);
+  margin-bottom: var(--rhythm-group);
   text-align: center;
 }
 .section-heading h2 {
-  margin: 0 0 var(--size-3);
+  margin: 0 0 var(--rhythm-text);
   font-size: 1.75rem;
-  line-height: 1.1;
+  line-height: var(--size-8);
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
@@ -1128,12 +1134,13 @@ html:not(.fixed-page) .stripes {
 @media (min-width: 700px) {
   .section-heading h2 {
     font-size: 2.5rem;
+    line-height: var(--size-10);
   }
 }
 .feature-grid {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--size-8) var(--size-6);
+  gap: var(--rhythm-group);
 }
 @media (min-width: 1000px) {
   .feature-grid {
@@ -1141,9 +1148,8 @@ html:not(.fixed-page) .stripes {
   }
 }
 .feature {
-  gap: var(--size-3);
+  gap: var(--rhythm-text);
   min-width: 0;
-  padding-top: var(--size-5);
 }
 .feature > p {
   margin: 0;
@@ -1158,11 +1164,11 @@ html:not(.fixed-page) .stripes {
 }
 .code-block {
   margin: auto 0 0;
-  padding: var(--size-3) var(--size-4);
+  padding: var(--rhythm-text);
   overflow-x: auto;
   background: var(--crt-well);
   color: var(--digital-blue-300);
   font-family: var(--crt-code-font);
   font-size: 13px;
-  line-height: 1.6;
+  line-height: var(--size-5);
 }

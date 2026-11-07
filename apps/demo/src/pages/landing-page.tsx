@@ -64,22 +64,18 @@ export function LandingPage() {
               </a>
             </div>
             <CommandLine command="npx open-design-tokens tokens.json" />
+            <dl className="stats">
+              {STATS.map(({ value, label }) => (
+                <div key={label} className="stat">
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
           <div className="pane hero-media">
             <LiveCheck />
           </div>
-        </section>
-
-        <section className="pane">
-          <h2 className="pane-title">At a glance</h2>
-          <dl className="stats">
-            {STATS.map(({ value, label }) => (
-              <div key={label} className="stat">
-                <dt>{label}</dt>
-                <dd>{value}</dd>
-              </div>
-            ))}
-          </dl>
         </section>
 
         <section>
